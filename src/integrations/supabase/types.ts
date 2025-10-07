@@ -14,11 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      deals: {
+        Row: {
+          booking_link: string
+          created_at: string
+          currency: string
+          destination_id: string
+          id: string
+          outbound_date: string
+          price: number
+          return_date: string
+          sent_at: string | null
+          sent_to_subscribers: boolean
+        }
+        Insert: {
+          booking_link: string
+          created_at?: string
+          currency?: string
+          destination_id: string
+          id?: string
+          outbound_date: string
+          price: number
+          return_date: string
+          sent_at?: string | null
+          sent_to_subscribers?: boolean
+        }
+        Update: {
+          booking_link?: string
+          created_at?: string
+          currency?: string
+          destination_id?: string
+          id?: string
+          outbound_date?: string
+          price?: number
+          return_date?: string
+          sent_at?: string | null
+          sent_to_subscribers?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deals_destination_id_fkey"
+            columns: ["destination_id"]
+            isOneToOne: false
+            referencedRelation: "destinations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       destinations: {
         Row: {
           airport_code: string
           city_name: string
           country: string
+          created_at: string
           id: string
           is_active: boolean
           priority: number
@@ -27,6 +75,7 @@ export type Database = {
           airport_code: string
           city_name: string
           country: string
+          created_at?: string
           id?: string
           is_active?: boolean
           priority: number
@@ -35,6 +84,7 @@ export type Database = {
           airport_code?: string
           city_name?: string
           country?: string
+          created_at?: string
           id?: string
           is_active?: boolean
           priority?: number
@@ -79,30 +129,98 @@ export type Database = {
           },
         ]
       }
+      sent_emails: {
+        Row: {
+          click_rate: number | null
+          deal_id: string
+          id: string
+          open_rate: number | null
+          sent_at: string
+          subject: string
+          subscriber_count: number
+        }
+        Insert: {
+          click_rate?: number | null
+          deal_id: string
+          id?: string
+          open_rate?: number | null
+          sent_at?: string
+          subject: string
+          subscriber_count: number
+        }
+        Update: {
+          click_rate?: number | null
+          deal_id?: string
+          id?: string
+          open_rate?: number | null
+          sent_at?: string
+          subject?: string
+          subscriber_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sent_emails_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       subscribers: {
         Row: {
+          created_at: string
           email: string
           id: string
           is_active: boolean
+          is_verified: boolean
           name: string
           subscribed_at: string
+          updated_at: string
           verification_token: string | null
         }
         Insert: {
+          created_at?: string
           email: string
           id?: string
           is_active?: boolean
+          is_verified?: boolean
           name: string
           subscribed_at?: string
+          updated_at?: string
           verification_token?: string | null
         }
         Update: {
+          created_at?: string
           email?: string
           id?: string
           is_active?: boolean
+          is_verified?: boolean
           name?: string
           subscribed_at?: string
+          updated_at?: string
           verification_token?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -111,10 +229,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -241,6 +362,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
