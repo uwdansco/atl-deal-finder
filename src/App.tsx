@@ -4,7 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Onboarding from "./pages/Onboarding";
 import Auth from "./pages/Auth";
 import Verify from "./pages/Verify";
 import Unsubscribe from "./pages/Unsubscribe";
@@ -28,15 +32,31 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/deals" element={<Deals />} />
             <Route path="/deals/:id" element={<DealDetails />} />
-            <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/verify" element={<Verify />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             
+            {/* Legacy auth route (redirect to login) */}
+            <Route path="/auth" element={<Auth />} />
+            
+            {/* Protected Routes */}
+            <Route path="/onboarding" element={
+              <ProtectedRoute>
+                <Onboarding />
+              </ProtectedRoute>
+            } />
+            
             {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
               <Route index element={<DashboardOverview />} />
               <Route path="subscribers" element={<SubscribersPage />} />
               <Route path="destinations" element={<DestinationsPage />} />

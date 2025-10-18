@@ -1,8 +1,8 @@
-import { Mail, LogIn } from "lucide-react";
+import { Mail, LogIn, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
@@ -14,6 +14,16 @@ const Hero = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const { user, isAdmin } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
+    navigate('/');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,17 +99,44 @@ const Hero = () => {
 
       {/* Content */}
       <div className="container relative z-10 px-4 py-20 mx-auto text-center">
-        {/* Admin Link */}
-        {user && isAdmin && (
-          <div className="absolute top-4 right-4">
-            <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
-              <Link to="/admin">
-                <LogIn className="h-4 w-4 mr-2" />
-                Admin Dashboard
-              </Link>
-            </Button>
-          </div>
-        )}
+        {/* Top Navigation */}
+        <div className="absolute top-4 right-4 flex gap-2">
+          {user ? (
+            <>
+              {isAdmin && (
+                <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
+                  <Link to="/admin">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Admin Dashboard
+                  </Link>
+                </Button>
+              )}
+              <Button 
+                onClick={handleLogout} 
+                variant="outline" 
+                className="bg-card/80 backdrop-blur-sm"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
+                <Link to="/login">
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Login
+                </Link>
+              </Button>
+              <Button asChild className="bg-gradient-sunset">
+                <Link to="/signup">
+                  <User className="h-4 w-4 mr-2" />
+                  Sign Up
+                </Link>
+              </Button>
+            </>
+          )}
+        </div>
         
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           {/* Badge */}
