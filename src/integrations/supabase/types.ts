@@ -129,6 +129,62 @@ export type Database = {
           },
         ]
       }
+      price_statistics: {
+        Row: {
+          all_time_high: number | null
+          all_time_low: number | null
+          avg_30day: number | null
+          avg_7day: number | null
+          avg_90day: number | null
+          destination_id: string
+          id: string
+          last_calculated: string | null
+          percentile_25: number | null
+          percentile_50: number | null
+          percentile_75: number | null
+          std_deviation: number | null
+          total_samples: number | null
+        }
+        Insert: {
+          all_time_high?: number | null
+          all_time_low?: number | null
+          avg_30day?: number | null
+          avg_7day?: number | null
+          avg_90day?: number | null
+          destination_id: string
+          id?: string
+          last_calculated?: string | null
+          percentile_25?: number | null
+          percentile_50?: number | null
+          percentile_75?: number | null
+          std_deviation?: number | null
+          total_samples?: number | null
+        }
+        Update: {
+          all_time_high?: number | null
+          all_time_low?: number | null
+          avg_30day?: number | null
+          avg_7day?: number | null
+          avg_90day?: number | null
+          destination_id?: string
+          id?: string
+          last_calculated?: string | null
+          percentile_25?: number | null
+          percentile_50?: number | null
+          percentile_75?: number | null
+          std_deviation?: number | null
+          total_samples?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "price_statistics_destination_id_fkey"
+            columns: ["destination_id"]
+            isOneToOne: true
+            referencedRelation: "destinations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sent_emails: {
         Row: {
           click_rate: number | null
@@ -232,6 +288,10 @@ export type Database = {
       is_admin: {
         Args: { _user_id: string }
         Returns: boolean
+      }
+      refresh_price_statistics: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {
