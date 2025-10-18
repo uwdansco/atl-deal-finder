@@ -135,35 +135,103 @@ export type Database = {
       }
       price_alerts: {
         Row: {
+          all_time_low: number | null
+          avg_90day_price: number | null
+          booking_link: string | null
           dates: string
+          deal_quality: string | null
           destination_id: string
+          email_opened: boolean | null
           id: string
+          link_clicked: boolean | null
           price: number
           received_at: string
+          savings_percent: number | null
           sent_to_subscribers: boolean
           tracking_threshold: number | null
+          user_id: string | null
         }
         Insert: {
+          all_time_low?: number | null
+          avg_90day_price?: number | null
+          booking_link?: string | null
           dates: string
+          deal_quality?: string | null
           destination_id: string
+          email_opened?: boolean | null
           id?: string
+          link_clicked?: boolean | null
           price: number
           received_at?: string
+          savings_percent?: number | null
           sent_to_subscribers?: boolean
           tracking_threshold?: number | null
+          user_id?: string | null
         }
         Update: {
+          all_time_low?: number | null
+          avg_90day_price?: number | null
+          booking_link?: string | null
           dates?: string
+          deal_quality?: string | null
           destination_id?: string
+          email_opened?: boolean | null
           id?: string
+          link_clicked?: boolean | null
           price?: number
           received_at?: string
+          savings_percent?: number | null
           sent_to_subscribers?: boolean
           tracking_threshold?: number | null
+          user_id?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "price_alerts_destination_id_fkey"
+            columns: ["destination_id"]
+            isOneToOne: false
+            referencedRelation: "destinations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      price_history: {
+        Row: {
+          booking_link: string | null
+          checked_at: string
+          created_at: string
+          destination_id: string
+          flight_details: Json | null
+          id: string
+          outbound_date: string | null
+          price: number
+          return_date: string | null
+        }
+        Insert: {
+          booking_link?: string | null
+          checked_at?: string
+          created_at?: string
+          destination_id: string
+          flight_details?: Json | null
+          id?: string
+          outbound_date?: string | null
+          price: number
+          return_date?: string | null
+        }
+        Update: {
+          booking_link?: string | null
+          checked_at?: string
+          created_at?: string
+          destination_id?: string
+          flight_details?: Json | null
+          id?: string
+          outbound_date?: string | null
+          price?: number
+          return_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "price_history_destination_id_fkey"
             columns: ["destination_id"]
             isOneToOne: false
             referencedRelation: "destinations"
@@ -300,6 +368,50 @@ export type Database = {
           verification_token?: string | null
         }
         Relationships: []
+      }
+      user_destinations: {
+        Row: {
+          alert_cooldown_days: number
+          created_at: string
+          destination_id: string
+          id: string
+          is_active: boolean
+          last_alert_sent_at: string | null
+          price_threshold: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alert_cooldown_days?: number
+          created_at?: string
+          destination_id: string
+          id?: string
+          is_active?: boolean
+          last_alert_sent_at?: string | null
+          price_threshold: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alert_cooldown_days?: number
+          created_at?: string
+          destination_id?: string
+          id?: string
+          is_active?: boolean
+          last_alert_sent_at?: string | null
+          price_threshold?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_destinations_destination_id_fkey"
+            columns: ["destination_id"]
+            isOneToOne: false
+            referencedRelation: "destinations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_preferences: {
         Row: {

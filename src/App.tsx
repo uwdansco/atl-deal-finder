@@ -21,6 +21,7 @@ import SubscribersPage from "./pages/admin/SubscribersPage";
 import DestinationsPage from "./pages/admin/DestinationsPage";
 import DealsPage from "./pages/admin/DealsPage";
 import SendEmailPage from "./pages/admin/SendEmailPage";
+import PriceMonitoring from "./pages/admin/PriceMonitoring";
 import { DashboardLayout } from "./components/dashboard/DashboardLayout";
 import MyDestinations from "./pages/dashboard/MyDestinations";
 import PriceAlerts from "./pages/dashboard/PriceAlerts";
@@ -78,6 +79,7 @@ const App = () => (
               <Route path="destinations" element={<DestinationsPage />} />
               <Route path="deals" element={<DealsPage />} />
               <Route path="send-email" element={<SendEmailPage />} />
+              <Route path="monitoring" element={<PriceMonitoring />} />
             </Route>
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

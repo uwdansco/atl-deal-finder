@@ -7,7 +7,8 @@ import {
   Mail, 
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Activity
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,7 @@ const menuItems = [
   { title: "Destinations", url: "/admin/destinations", icon: MapPin },
   { title: "Deals", url: "/admin/deals", icon: Plane },
   { title: "Send Email", url: "/admin/send-email", icon: Mail },
+  { title: "Price Monitoring", url: "/admin/monitoring", icon: Activity },
 ];
 
 export function AdminSidebar() {
