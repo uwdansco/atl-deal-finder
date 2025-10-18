@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit_log: {
+        Row: {
+          action_description: string
+          action_type: string
+          admin_user_id: string
+          affected_record_id: string | null
+          affected_table: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          action_description: string
+          action_type: string
+          admin_user_id: string
+          affected_record_id?: string | null
+          affected_table?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          action_description?: string
+          action_type?: string
+          admin_user_id?: string
+          affected_record_id?: string | null
+          affected_table?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
+      admin_settings: {
+        Row: {
+          description: string | null
+          id: string
+          setting_key: string
+          setting_value: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          setting_key: string
+          setting_value: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       deals: {
         Row: {
           booking_link: string
