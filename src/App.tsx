@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Verify from "./pages/Verify";
 import Unsubscribe from "./pages/Unsubscribe";
+import Deals from "./pages/Deals";
+import DealDetails from "./pages/DealDetails";
 import NotFound from "./pages/NotFound";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import DashboardOverview from "./pages/admin/DashboardOverview";
@@ -27,6 +29,8 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/deals" element={<Deals />} />
+            <Route path="/deals/:id" element={<DealDetails />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/verify" element={<Verify />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />

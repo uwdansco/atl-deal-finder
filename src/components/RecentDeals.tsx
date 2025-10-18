@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card } from "@/components/ui/card";
-import { Plane, TrendingDown } from "lucide-react";
+import { TrendingDown } from "lucide-react";
+import DealCard from "./DealCard";
+import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 
 interface Deal {
   id: string;
   price: number;
-  dates: string;
+  currency: string;
+  outbound_date: string;
+  return_date: string;
+  booking_link: string;
   destination: {
     city_name: string;
     country: string;
@@ -22,18 +27,22 @@ const RecentDeals = () => {
     const fetchDeals = async () => {
       try {
         const { data, error } = await supabase
-          .from("price_alerts")
+          .from("deals")
           .select(`
             id,
             price,
-            dates,
+            currency,
+            outbound_date,
+            return_date,
+            booking_link,
             destination:destinations (
               city_name,
               country,
               airport_code
             )
           `)
-          .order("received_at", { ascending: false })
+          .eq("sent_to_subscribers", true)
+          .order("sent_at", { ascending: false })
           .limit(6);
 
         if (error) throw error;
@@ -76,63 +85,47 @@ const RecentDeals = () => {
         </div>
 
         {/* Deals Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {deals.map((deal, index) => (
-            <Card 
-              key={deal.id} 
-              className="group p-6 hover:shadow-deal transition-all duration-300 hover:-translate-y-1 border-2 hover:border-accent/30 animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Destination */}
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    {deal.destination?.city_name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {deal.destination?.country} ({deal.destination?.airport_code})
-                  </p>
-                </div>
-                <Plane className="w-6 h-6 text-primary group-hover:rotate-45 transition-transform duration-300" />
-              </div>
+        {deals.length === 0 ? (
+          <div className="text-center py-16">
+            <h3 className="text-2xl font-bold mb-2">Stay tuned for amazing deals!</h3>
+            <p className="text-muted-foreground">
+              We'll send the latest flight deals to your inbox daily.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {deals.map((deal, index) => (
+                <DealCard
+                  key={deal.id}
+                  id={deal.id}
+                  destination={deal.destination}
+                  price={deal.price}
+                  currency={deal.currency}
+                  outbound_date={deal.outbound_date}
+                  return_date={deal.return_date}
+                  booking_link={deal.booking_link}
+                  animationDelay={index * 100}
+                />
+              ))}
+            </div>
 
-              {/* Price */}
-              <div className="mb-4">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold bg-gradient-sunset bg-clip-text text-transparent">
-                    ${deal.price}
-                  </span>
-                  <span className="text-lg text-muted-foreground">roundtrip</span>
-                </div>
-              </div>
-
-              {/* Dates */}
-              <div className="pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground">
-                  Travel Dates: <span className="font-semibold text-foreground">{deal.dates}</span>
-                </p>
-              </div>
-
-              {/* Deal Badge */}
-              <div className="mt-4">
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold">
-                  <TrendingDown className="w-3 h-3" />
-                  Great Deal
-                </span>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <p className="text-lg text-muted-foreground">
-            These deals were sent to our subscribers. 
-            <a href="#subscribe" className="ml-2 font-semibold text-primary hover:underline">
-              Subscribe now to get the next one →
-            </a>
-          </p>
-        </div>
+            {/* CTA */}
+            <div className="text-center mt-12 space-y-4">
+              <p className="text-lg text-muted-foreground">
+                These deals were sent to our subscribers. 
+                <a href="#subscribe" className="ml-2 font-semibold text-primary hover:underline">
+                  Subscribe now to get the next one →
+                </a>
+              </p>
+              <Link to="/deals">
+                <Button variant="outline" size="lg">
+                  View All Deals
+                </Button>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
