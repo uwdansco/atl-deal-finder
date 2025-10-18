@@ -79,8 +79,8 @@ const Onboarding = () => {
         description: 'Your account is all set up.',
       });
 
-      // Navigate to dashboard or home
-      navigate('/');
+      // Navigate to dashboard
+      navigate('/dashboard');
     } catch (error: any) {
       toast({
         title: 'Error',

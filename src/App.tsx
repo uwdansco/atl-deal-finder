@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
@@ -21,6 +21,10 @@ import SubscribersPage from "./pages/admin/SubscribersPage";
 import DestinationsPage from "./pages/admin/DestinationsPage";
 import DealsPage from "./pages/admin/DealsPage";
 import SendEmailPage from "./pages/admin/SendEmailPage";
+import { DashboardLayout } from "./components/dashboard/DashboardLayout";
+import MyDestinations from "./pages/dashboard/MyDestinations";
+import PriceAlerts from "./pages/dashboard/PriceAlerts";
+import AccountSettings from "./pages/dashboard/AccountSettings";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +54,18 @@ const App = () => (
                 <Onboarding />
               </ProtectedRoute>
             } />
+
+            {/* User Dashboard Routes */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<Navigate to="/dashboard/destinations" replace />} />
+              <Route path="destinations" element={<MyDestinations />} />
+              <Route path="alerts" element={<PriceAlerts />} />
+              <Route path="settings" element={<AccountSettings />} />
+            </Route>
             
             {/* Admin Routes */}
             <Route path="/admin" element={
