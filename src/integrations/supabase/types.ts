@@ -91,6 +91,48 @@ export type Database = {
         }
         Relationships: []
       }
+      email_queue: {
+        Row: {
+          created_at: string
+          email_data: Json
+          email_type: string
+          error_message: string | null
+          id: string
+          max_retries: number
+          retry_count: number
+          scheduled_for: string
+          sent_at: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_data: Json
+          email_type: string
+          error_message?: string | null
+          id?: string
+          max_retries?: number
+          retry_count?: number
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email_data?: Json
+          email_type?: string
+          error_message?: string | null
+          id?: string
+          max_retries?: number
+          retry_count?: number
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       price_alerts: {
         Row: {
           dates: string
@@ -259,6 +301,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_preferences: {
+        Row: {
+          created_at: string
+          email_frequency: string
+          email_notifications_enabled: boolean
+          id: string
+          last_login_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_frequency?: string
+          email_notifications_enabled?: boolean
+          id?: string
+          last_login_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email_frequency?: string
+          email_notifications_enabled?: boolean
+          id?: string
+          last_login_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -288,6 +360,15 @@ export type Database = {
       is_admin: {
         Args: { _user_id: string }
         Returns: boolean
+      }
+      queue_email: {
+        Args: {
+          p_email_data: Json
+          p_email_type: string
+          p_scheduled_for?: string
+          p_user_id: string
+        }
+        Returns: string
       }
       refresh_price_statistics: {
         Args: Record<PropertyKey, never>
