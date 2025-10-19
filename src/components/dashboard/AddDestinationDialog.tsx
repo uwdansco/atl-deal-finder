@@ -285,27 +285,58 @@ export const AddDestinationDialog = ({
     setLoading(true);
 
     try {
-      // First, create the destination
-      const { data: destData, error: destError } = await (supabase as any)
-        .from('destinations')
-        .insert({
-          city_name: newCity.trim(),
-          country: newCountry.trim(),
-          airport_code: newAirportCode.trim().toUpperCase() || 'N/A',
-          priority: 999,
-          is_active: true,
-        })
-        .select()
-        .single();
+      let destinationId: string;
+      const airportCode = newAirportCode.trim().toUpperCase() || null;
+      
+      // Check if destination already exists (by airport code or city/country combination)
+      let existingDest = null;
+      
+      if (airportCode && airportCode !== 'N/A') {
+        const { data: byAirport } = await (supabase as any)
+          .from('destinations')
+          .select('id')
+          .eq('airport_code', airportCode)
+          .single();
+        existingDest = byAirport;
+      }
+      
+      if (!existingDest) {
+        const { data: byCity } = await (supabase as any)
+          .from('destinations')
+          .select('id')
+          .eq('city_name', newCity.trim())
+          .eq('country', newCountry.trim())
+          .single();
+        existingDest = byCity;
+      }
 
-      if (destError) throw destError;
+      if (existingDest) {
+        // Use existing destination
+        destinationId = existingDest.id;
+      } else {
+        // Create new destination
+        const { data: destData, error: destError } = await (supabase as any)
+          .from('destinations')
+          .insert({
+            city_name: newCity.trim(),
+            country: newCountry.trim(),
+            airport_code: airportCode || `${newCity.trim().substring(0, 3).toUpperCase()}`,
+            priority: 999,
+            is_active: true,
+          })
+          .select()
+          .single();
 
-      // Then track it
+        if (destError) throw destError;
+        destinationId = destData.id;
+      }
+
+      // Now track it
       const { error: trackError } = await (supabase as any)
         .from('user_destinations')
         .insert({
           user_id: user.id,
-          destination_id: destData.id,
+          destination_id: destinationId,
           price_threshold: threshold || 500,
           is_active: true,
         });
