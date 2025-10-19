@@ -8,7 +8,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  Activity
+  Activity,
+  TestTube2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ const menuItems = [
   { title: "Deals", url: "/admin/deals", icon: Plane },
   { title: "Send Email", url: "/admin/send-email", icon: Mail },
   { title: "Price Monitoring", url: "/admin/monitoring", icon: Activity },
+  { title: "Test Alerts", url: "/admin/test-alerts", icon: TestTube2 },
   { title: "Audit Log", url: "/admin/audit", icon: Mail },
 ];
 
