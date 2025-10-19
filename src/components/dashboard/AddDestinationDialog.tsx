@@ -22,8 +22,6 @@ type Destination = {
   city_name: string;
   country: string;
   airport_code: string;
-  region: string;
-  average_price: number;
 };
 
 interface AddDestinationDialogProps {
@@ -116,8 +114,6 @@ export const AddDestinationDialog = ({
         city_name: d.city_name,
         country: d.country,
         airport_code: d.airport_code,
-        region: d.region || 'Other',
-        average_price: d.average_price || 500,
       }));
 
       console.log('Processed destinations:', typedData.length, 'destinations');
@@ -167,18 +163,18 @@ export const AddDestinationDialog = ({
       });
     } catch (error: any) {
       console.error('Error getting AI recommendation:', error);
-      // Fallback to simple calculation
-      const fallbackThreshold = Math.round(dest.average_price * 0.75);
+      // Fallback to default threshold
+      const fallbackThreshold = 500;
       setThreshold(fallbackThreshold);
       setAiRecommendation({
         threshold: fallbackThreshold,
-        reasoning: 'Using default calculation (75% of average price)',
+        reasoning: 'Using default threshold value',
         confidence: 'low',
       });
       
       toast({
         title: 'Using Default Threshold',
-        description: 'AI recommendation unavailable, using 75% of average price',
+        description: 'AI recommendation unavailable, using default value',
         variant: 'destructive',
       });
     } finally {
@@ -267,7 +263,6 @@ export const AddDestinationDialog = ({
                   <p className="text-sm text-muted-foreground">{dest.country}</p>
                   <div className="flex items-center justify-between mt-2">
                     <Badge variant="secondary">{dest.airport_code}</Badge>
-                    <span className="text-sm">Avg: ${Math.round(dest.average_price)}</span>
                   </div>
                 </button>
               ))}
@@ -279,9 +274,6 @@ export const AddDestinationDialog = ({
               <h3 className="font-semibold text-lg">{selectedDestination.city_name}</h3>
               <p className="text-sm text-muted-foreground">
                 {selectedDestination.country} ({selectedDestination.airport_code})
-              </p>
-              <p className="text-sm mt-2">
-                Average price: <span className="font-semibold">${Math.round(selectedDestination.average_price)}</span>
               </p>
             </div>
 
@@ -316,15 +308,15 @@ export const AddDestinationDialog = ({
               <Slider
                 value={[threshold]}
                 onValueChange={([value]) => setThreshold(value)}
-                min={Math.round(selectedDestination.average_price * 0.5)}
-                max={Math.round(selectedDestination.average_price * 1.5)}
+                min={200}
+                max={1500}
                 step={10}
                 className="w-full"
               />
 
               <div className="flex justify-between text-xs text-muted-foreground">
-                <span>${Math.round(selectedDestination.average_price * 0.5)}</span>
-                <span>${Math.round(selectedDestination.average_price * 1.5)}</span>
+                <span>$200</span>
+                <span>$1500</span>
               </div>
             </div>
 
