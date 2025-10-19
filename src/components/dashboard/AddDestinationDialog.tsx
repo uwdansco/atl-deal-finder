@@ -123,11 +123,21 @@ export const AddDestinationDialog = ({
     setLoadingAI(true);
     
     try {
+      console.log('Calling recommend-threshold for destination:', dest.id);
       const { data, error } = await supabase.functions.invoke('recommend-threshold', {
         body: { destination_id: dest.id }
       });
 
-      if (error) throw error;
+      console.log('AI Response:', { data, error });
+
+      if (error) {
+        console.error('Error from edge function:', error);
+        throw error;
+      }
+
+      if (!data || !data.recommended_threshold) {
+        throw new Error('Invalid response from AI function');
+      }
 
       setAiRecommendation({
         threshold: data.recommended_threshold,
@@ -140,7 +150,7 @@ export const AddDestinationDialog = ({
         title: '✨ AI Recommendation Ready',
         description: data.reasoning,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error getting AI recommendation:', error);
       // Fallback to simple calculation
       const fallbackThreshold = Math.round(dest.average_price * 0.75);
@@ -149,6 +159,12 @@ export const AddDestinationDialog = ({
         threshold: fallbackThreshold,
         reasoning: 'Using default calculation (75% of average price)',
         confidence: 'low',
+      });
+      
+      toast({
+        title: 'Using Default Threshold',
+        description: 'AI recommendation unavailable, using 75% of average price',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAI(false);
