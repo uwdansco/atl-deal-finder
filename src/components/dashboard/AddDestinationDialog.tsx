@@ -81,20 +81,33 @@ export const AddDestinationDialog = ({
     if (!user) return;
 
     try {
+      console.log('Fetching available destinations for user:', user.id);
+      
       // Get user's tracked destinations
-      const { data: tracked } = await (supabase as any)
+      const { data: tracked, error: trackedError } = await (supabase as any)
         .from('user_destinations')
         .select('destination_id')
         .eq('user_id', user.id);
 
-      const trackedIds = (tracked || []).map((t: any) => t.destination_id);
+      console.log('Tracked destinations:', tracked, 'Error:', trackedError);
 
-      // Get all destinations not already tracked
-      const { data, error } = await (supabase as any)
+      const trackedIds = (tracked || []).map((t: any) => t.destination_id);
+      console.log('Tracked IDs:', trackedIds);
+
+      // Get all active destinations
+      let query = (supabase as any)
         .from('destinations')
         .select('*')
-        .eq('is_active', true)
-        .not('id', 'in', `(${trackedIds.join(',')})`);
+        .eq('is_active', true);
+
+      // Only filter out tracked destinations if user has any
+      if (trackedIds.length > 0) {
+        query = query.not('id', 'in', `(${trackedIds.join(',')})`);
+      }
+
+      const { data, error } = await query;
+
+      console.log('Available destinations:', data, 'Error:', error);
 
       if (error) throw error;
 
@@ -107,9 +120,11 @@ export const AddDestinationDialog = ({
         average_price: d.average_price || 500,
       }));
 
+      console.log('Processed destinations:', typedData.length, 'destinations');
       setDestinations(typedData);
       setFilteredDestinations(typedData);
     } catch (error: any) {
+      console.error('Error loading destinations:', error);
       toast({
         title: 'Error',
         description: 'Failed to load destinations',
