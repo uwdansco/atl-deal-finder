@@ -20,8 +20,6 @@ export type TrackedDestination = {
     city_name: string;
     country: string;
     airport_code: string;
-    region: string;
-    average_price: number;
   };
   current_price?: number;
 };

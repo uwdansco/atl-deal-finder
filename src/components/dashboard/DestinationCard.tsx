@@ -31,14 +31,13 @@ export const DestinationCard = ({
 }: DestinationCardProps) => {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
 
-  const currentPrice = destination.current_price || destination.destination.average_price;
+  const currentPrice = destination.current_price;
   const threshold = destination.price_threshold;
-  const avgPrice = destination.destination.average_price;
 
   const getPriceTrend = () => {
-    if (!currentPrice || !avgPrice) return 'neutral';
-    if (currentPrice < avgPrice * 0.9) return 'down';
-    if (currentPrice > avgPrice * 1.1) return 'up';
+    if (!currentPrice || !threshold) return 'neutral';
+    if (currentPrice < threshold * 0.9) return 'down';
+    if (currentPrice > threshold * 1.1) return 'up';
     return 'neutral';
   };
 

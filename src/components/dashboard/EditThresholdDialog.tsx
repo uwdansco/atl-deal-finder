@@ -39,9 +39,8 @@ export const EditThresholdDialog = ({
     confidence: string;
   } | null>(null);
 
-  const avgPrice = destination.destination.average_price;
-  const minPrice = Math.round(avgPrice * 0.5);
-  const maxPrice = Math.round(avgPrice * 1.5);
+  const minPrice = 200;
+  const maxPrice = 1500;
 
   const getAIRecommendation = async () => {
     setLoadingAI(true);
@@ -127,8 +126,8 @@ export const EditThresholdDialog = ({
 
         <div className="space-y-6 py-4">
           <div className="p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground">Average price</p>
-            <p className="text-2xl font-bold">${Math.round(avgPrice)}</p>
+            <p className="text-sm text-muted-foreground">Current threshold</p>
+            <p className="text-2xl font-bold">${Math.round(destination.price_threshold)}</p>
           </div>
 
           {/* AI Recommendation Button */}
