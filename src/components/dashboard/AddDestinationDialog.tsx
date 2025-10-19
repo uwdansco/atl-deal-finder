@@ -183,9 +183,16 @@ export const AddDestinationDialog = ({
   };
 
   const handleAdd = async () => {
-    if (!selectedDestination || !user) return;
+    if (!selectedDestination || !user) {
+      console.error('Missing required data:', { selectedDestination, user });
+      return;
+    }
+
+    console.log('Starting add destination process...');
+    console.log('Current count:', currentCount, 'Max count:', maxCount);
 
     if (currentCount >= maxCount) {
+      console.log('Limit reached');
       toast({
         title: 'Limit reached',
         description: 'Upgrade to Pro to track unlimited destinations',
@@ -195,29 +202,47 @@ export const AddDestinationDialog = ({
     }
 
     setLoading(true);
+    console.log('Attempting to insert:', {
+      user_id: user.id,
+      destination_id: selectedDestination.id,
+      price_threshold: threshold,
+    });
 
     try {
-      const { error } = await (supabase as any)
+      const { data, error } = await (supabase as any)
         .from('user_destinations')
         .insert({
           user_id: user.id,
           destination_id: selectedDestination.id,
           price_threshold: threshold,
           is_active: true,
-        });
+        })
+        .select();
 
-      if (error) throw error;
+      console.log('Insert result:', { data, error });
 
+      if (error) {
+        console.error('Insert error:', error);
+        throw error;
+      }
+
+      console.log('Successfully added destination');
       toast({
         title: 'Success!',
         description: `Now tracking ${selectedDestination.city_name}`,
       });
 
+      console.log('Calling onSuccess callback');
       onSuccess();
+      
+      console.log('Closing dialog');
       onOpenChange(false);
+      
+      console.log('Resetting state');
       setSelectedDestination(null);
       setSearchQuery('');
     } catch (error: any) {
+      console.error('Error in handleAdd:', error);
       toast({
         title: 'Error',
         description: error.message,
@@ -225,6 +250,7 @@ export const AddDestinationDialog = ({
       });
     } finally {
       setLoading(false);
+      console.log('Add process complete');
     }
   };
 
