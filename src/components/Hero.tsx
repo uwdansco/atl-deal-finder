@@ -103,6 +103,12 @@ const Hero = () => {
         <div className="absolute top-4 right-4 flex gap-2">
           {user ? (
             <>
+              <Button asChild className="bg-gradient-sunset">
+                <Link to="/dashboard/destinations">
+                  <User className="h-4 w-4 mr-2" />
+                  My Dashboard
+                </Link>
+              </Button>
               {isAdmin && (
                 <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
                   <Link to="/admin">
