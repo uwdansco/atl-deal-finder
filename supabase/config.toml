@@ -3,6 +3,9 @@ project_id = "nlrdiznleytpuwvugloi"
 [functions.recommend-threshold]
 verify_jwt = false
 
+[functions.suggest-threshold]
+verify_jwt = false
+
 [api]
 enabled = true
 port = 54321

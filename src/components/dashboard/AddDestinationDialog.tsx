@@ -59,6 +59,11 @@ export const AddDestinationDialog = ({
   const [newCity, setNewCity] = useState('');
   const [newCountry, setNewCountry] = useState('');
   const [newAirportCode, setNewAirportCode] = useState('');
+  const [newDestAiRecommendation, setNewDestAiRecommendation] = useState<{
+    threshold: number;
+    reasoning: string;
+    confidence: string;
+  } | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -80,6 +85,50 @@ export const AddDestinationDialog = ({
       setFilteredDestinations(destinations);
     }
   }, [searchQuery, destinations]);
+
+  // Auto-suggest threshold when user types new destination
+  useEffect(() => {
+    const getSuggestion = async () => {
+      if (!newCity.trim() || !newCountry.trim()) {
+        setNewDestAiRecommendation(null);
+        return;
+      }
+
+      setLoadingAI(true);
+      try {
+        console.log('Getting AI suggestion for new destination:', { newCity, newCountry, newAirportCode });
+        const { data, error } = await supabase.functions.invoke('suggest-threshold', {
+          body: {
+            city: newCity.trim(),
+            country: newCountry.trim(),
+            airport_code: newAirportCode.trim(),
+          }
+        });
+
+        console.log('AI suggestion response:', { data, error });
+
+        if (error) throw error;
+
+        if (data && data.recommended_threshold) {
+          setNewDestAiRecommendation({
+            threshold: data.recommended_threshold,
+            reasoning: data.reasoning,
+            confidence: data.confidence,
+          });
+          setThreshold(data.recommended_threshold);
+        }
+      } catch (error: any) {
+        console.error('Error getting AI suggestion:', error);
+        setNewDestAiRecommendation(null);
+      } finally {
+        setLoadingAI(false);
+      }
+    };
+
+    // Debounce the API call
+    const timeoutId = setTimeout(getSuggestion, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [newCity, newCountry, newAirportCode]);
 
   const fetchAvailableDestinations = async () => {
     if (!user) return;
@@ -437,10 +486,32 @@ export const AddDestinationDialog = ({
               </div>
 
               <div className="space-y-4 pt-4">
-                <div className="flex items-center justify-between">
-                  <Label>Price alert threshold:</Label>
-                  <div className="text-2xl font-bold">${threshold || 500}</div>
-                </div>
+                {loadingAI ? (
+                  <div className="flex items-center justify-center gap-2 py-4 text-muted-foreground">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span>AI analyzing destination...</span>
+                  </div>
+                ) : (
+                  <>
+                    {newDestAiRecommendation && (
+                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Sparkles className="h-4 w-4 text-primary" />
+                          <span className="text-sm font-medium">AI Recommendation</span>
+                          <Badge variant={newDestAiRecommendation.confidence === 'high' ? 'default' : 'secondary'} className="text-xs">
+                            {newDestAiRecommendation.confidence} confidence
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground italic">{newDestAiRecommendation.reasoning}</p>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between">
+                      <Label>Price alert threshold:</Label>
+                      <div className="text-2xl font-bold">${threshold || 500}</div>
+                    </div>
+                  </>
+                )}
 
                 <Slider
                   value={[threshold || 500]}
@@ -449,6 +520,7 @@ export const AddDestinationDialog = ({
                   max={1500}
                   step={10}
                   className="w-full"
+                  disabled={loadingAI}
                 />
 
                 <div className="flex justify-between text-xs text-muted-foreground">
