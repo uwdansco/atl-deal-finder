@@ -30,3 +30,6 @@ verify_jwt = false
 
 [functions.check-flight-prices]
 verify_jwt = false
+
+[functions.process-email-queue]
+verify_jwt = false
