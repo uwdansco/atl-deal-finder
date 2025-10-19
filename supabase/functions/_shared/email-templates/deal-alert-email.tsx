@@ -67,7 +67,7 @@ export const DealAlertEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>🎉 {deal_quality} Deal: Atlanta to {destination_city} - ${Math.round(current_price)}</Preview>
+      <Preview>🎉 {deal_quality} Deal: Atlanta to {destination_city} - ${Math.round(current_price).toString()}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>

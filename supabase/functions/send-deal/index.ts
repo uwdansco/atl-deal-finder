@@ -105,13 +105,18 @@ const handler = async (req: Request): Promise<Response> => {
         // Render React Email template
         const emailHtml = await renderAsync(
           React.createElement(DealAlertEmail, {
-            destination: deal.destinations,
-            price: deal.price,
-            currency: deal.currency || 'USD',
+            destination_city: deal.destinations.city_name,
+            destination_country: deal.destinations.country,
+            current_price: deal.price,
+            user_threshold: deal.price, // For manual deals, use the deal price
             outbound_date: deal.outbound_date,
             return_date: deal.return_date,
             booking_link: deal.booking_link,
             unsubscribeUrl,
+            deal_quality: '🎯 SPECIAL DEAL',
+            savings_percent: 0,
+            recommendation: 'Handpicked deal from our team!',
+            urgency: 'moderate',
           })
         );
 
