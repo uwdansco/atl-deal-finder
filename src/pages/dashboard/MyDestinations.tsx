@@ -150,11 +150,9 @@ const MyDestinations = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
-        <div className="flex items-center gap-3">
-          <h2 className="text-3xl font-bold">My Tracked Destinations</h2>
-          <Badge variant={destinations.length >= MAX_DESTINATIONS ? 'destructive' : 'secondary'}>
-            {destinations.length}/{MAX_DESTINATIONS} destinations
-          </Badge>
+        <div>
+          <h2 className="text-3xl font-bold">My Destinations</h2>
+          <p className="text-muted-foreground mt-1">Track flight prices to your preferred destinations</p>
         </div>
         <Button onClick={() => setAddDialogOpen(true)} disabled={destinations.length >= MAX_DESTINATIONS}>
           <Plus className="h-4 w-4 mr-2" />
@@ -163,26 +161,36 @@ const MyDestinations = () => {
       </div>
 
       {destinations.length === 0 ? (
-        <div className="text-center py-12 bg-card rounded-lg border-2 border-dashed">
-          <p className="text-xl text-muted-foreground mb-4">
-            You're not tracking any destinations yet
-          </p>
-          <Button onClick={() => setAddDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Your First Destination
-          </Button>
+        <div className="text-center py-16 bg-card rounded-lg border-2 border-dashed">
+          <div className="max-w-md mx-auto">
+            <h3 className="text-2xl font-semibold mb-2">Start Tracking Prices</h3>
+            <p className="text-muted-foreground mb-6">
+              Add destinations you want to travel to and set your ideal price. We'll alert you when prices drop.
+            </p>
+            <Button onClick={() => setAddDialogOpen(true)} size="lg">
+              <Plus className="h-5 w-5 mr-2" />
+              Add Your First Destination
+            </Button>
+          </div>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {destinations.map((dest) => (
-            <DestinationCard
-              key={dest.id}
-              destination={dest}
-              onToggleActive={handleToggleActive}
-              onEdit={() => setEditingDestination(dest)}
-              onRemove={handleRemove}
-            />
-          ))}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {destinations.length} of {MAX_DESTINATIONS} destinations
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {destinations.map((dest) => (
+              <DestinationCard
+                key={dest.id}
+                destination={dest}
+                onToggleActive={handleToggleActive}
+                onEdit={() => setEditingDestination(dest)}
+                onRemove={handleRemove}
+              />
+            ))}
+          </div>
         </div>
       )}
 
