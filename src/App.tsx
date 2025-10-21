@@ -29,6 +29,7 @@ import PriceMonitoring from "./pages/admin/PriceMonitoring";
 import AdminSettings from "./pages/admin/AdminSettings";
 import TestEmailAlerts from "./pages/admin/TestEmailAlerts";
 import TestEmail from "./pages/admin/TestEmail";
+import TestAlerts from "./pages/admin/TestAlerts";
 import { DashboardLayout } from "./components/dashboard/DashboardLayout";
 import MyDestinations from "./pages/dashboard/MyDestinations";
 import PriceAlerts from "./pages/dashboard/PriceAlerts";
@@ -105,6 +106,7 @@ const App = () => (
               <Route path="monitoring" element={<PriceMonitoring />} />
               <Route path="test-alerts" element={<TestEmailAlerts />} />
               <Route path="test-email" element={<TestEmail />} />
+              <Route path="test-system" element={<TestAlerts />} />
               <Route path="audit" element={<AdminSettings />} />
             </Route>
 
