@@ -1,15 +1,3 @@
-import {
-  Body,
-  Button,
-  Container,
-  Head,
-  Heading,
-  Html,
-  Link,
-  Preview,
-  Section,
-  Text,
-} from 'https://esm.sh/@react-email/components@0.0.22';
 import * as React from 'https://esm.sh/react@18.3.1';
 
 interface WelcomeEmailProps {
@@ -23,97 +11,102 @@ interface WelcomeEmailProps {
   unsubscribeUrl: string;
 }
 
+// Simple HTML email template without react-email components
 export const WelcomeEmail = ({
   name,
   email,
   recentDeal,
   unsubscribeUrl,
-}: WelcomeEmailProps) => (
-  <Html>
-    <Head />
-    <Preview>Welcome to Cheap Atlanta Flights! ✈️</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        {/* Header */}
-        <Section style={header}>
-          <Heading style={h1}>✈️ Cheap Atlanta Flights</Heading>
-        </Section>
+}: WelcomeEmailProps) => {
+  return (
+    <html>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body style={main}>
+        <div style={container}>
+          {/* Header */}
+          <div style={header}>
+            <h1 style={h1}>✈️ Cheap Atlanta Flights</h1>
+          </div>
 
-        {/* Main Content */}
-        <Section style={content}>
-          <Heading style={h2}>Welcome aboard, {name || 'Traveler'}! 🎉</Heading>
-          <Text style={paragraph}>
-            Your subscription is now active! You're all set to receive the best flight deals from Atlanta.
-          </Text>
+          {/* Main Content */}
+          <div style={content}>
+            <h2 style={h2}>Welcome aboard, {name || 'Traveler'}! 🎉</h2>
+            <p style={paragraph}>
+              Your subscription is now active! You're all set to receive the best flight deals from Atlanta.
+            </p>
 
-          <Section style={highlightBox}>
-            <Heading style={h3}>What to Expect:</Heading>
-            <Text style={bulletPoint}>✈️ Daily monitoring of 50+ destinations worldwide</Text>
-            <Text style={bulletPoint}>⚡ Instant alerts when prices drop</Text>
-            <Text style={bulletPoint}>💰 Exclusive deals sent straight to your inbox</Text>
-            <Text style={bulletPoint}>📅 Flexible travel dates to maximize savings</Text>
-          </Section>
+            <div style={highlightBox}>
+              <h3 style={h3}>What to Expect:</h3>
+              <p style={bulletPoint}>✈️ Daily monitoring of 50+ destinations worldwide</p>
+              <p style={bulletPoint}>⚡ Instant alerts when prices drop</p>
+              <p style={bulletPoint}>💰 Exclusive deals sent straight to your inbox</p>
+              <p style={bulletPoint}>📅 Flexible travel dates to maximize savings</p>
+            </div>
 
-          {recentDeal && (
-            <>
-              <Heading style={h3}>Check Out This Recent Deal:</Heading>
-              <Section style={dealBox}>
-                <Text style={dealDestination}>{recentDeal.destination}</Text>
-                <Text style={dealPrice}>${recentDeal.price}</Text>
-                <Text style={dealDetails}>roundtrip</Text>
-                <Text style={dealDates}>{recentDeal.dates}</Text>
-              </Section>
-              <Text style={paragraph}>
-                Deals like this will be sent to you as soon as we find them!
-              </Text>
-            </>
-          )}
+            {recentDeal && (
+              <>
+                <h3 style={h3}>Check Out This Recent Deal:</h3>
+                <div style={dealBox}>
+                  <p style={dealDestination}>{recentDeal.destination}</p>
+                  <p style={dealPrice}>${recentDeal.price}</p>
+                  <p style={dealDetails}>roundtrip</p>
+                  <p style={dealDates}>{recentDeal.dates}</p>
+                </div>
+                <p style={paragraph}>
+                  Deals like this will be sent to you as soon as we find them!
+                </p>
+              </>
+            )}
 
-          <Text style={paragraph}>
-            We search for the best prices daily, so you don't have to. Just sit back, relax, and wait for the perfect deal to land in your inbox.
-          </Text>
+            <p style={paragraph}>
+              We search for the best prices daily, so you don't have to. Just sit back, relax, and wait for the perfect deal to land in your inbox.
+            </p>
 
-          <Section style={buttonContainer}>
-            <Button style={button} href="https://cheapatlantaflights.com/deals">
-              Browse Current Deals
-            </Button>
-          </Section>
+            <div style={buttonContainer}>
+              <a style={button} href="https://cheapatlantaflights.com/deals">
+                Browse Current Deals
+              </a>
+            </div>
 
-          <Section style={socialSection}>
-            <Text style={paragraph}>
-              Follow us for travel tips and inspiration:
-            </Text>
-            <Text style={socialLinks}>
-              <Link href="#" style={socialLink}>Twitter</Link> • 
-              <Link href="#" style={socialLink}> Facebook</Link> • 
-              <Link href="#" style={socialLink}> Instagram</Link>
-            </Text>
-          </Section>
-        </Section>
+            <div style={socialSection}>
+              <p style={paragraph}>
+                Follow us for travel tips and inspiration:
+              </p>
+              <p style={socialLinks}>
+                <a href="#" style={socialLink}>Twitter</a> • 
+                <a href="#" style={socialLink}> Facebook</a> • 
+                <a href="#" style={socialLink}> Instagram</a>
+              </p>
+            </div>
+          </div>
 
-        {/* Footer */}
-        <Section style={footer}>
-          <Text style={footerText}>
-            Happy travels!
-          </Text>
-          <Text style={footerText}>
-            The Cheap Atlanta Flights Team
-          </Text>
-          <Text style={footerText}>
-            <Link href={unsubscribeUrl} style={footerLink}>
-              Unsubscribe
-            </Link> • 
-            <Link href="mailto:support@cheapatlantaflights.com" style={footerLink}>
-              {' '}Contact Us
-            </Link>
-          </Text>
-        </Section>
-      </Container>
-    </Body>
-  </Html>
-);
+          {/* Footer */}
+          <div style={footer}>
+            <p style={footerText}>
+              Happy travels!
+            </p>
+            <p style={footerText}>
+              The Cheap Atlanta Flights Team
+            </p>
+            <p style={footerText}>
+              <a href={unsubscribeUrl} style={footerLink}>
+                Unsubscribe
+              </a> • 
+              <a href="mailto:support@cheapatlantaflights.com" style={footerLink}>
+                {' '}Contact Us
+              </a>
+            </p>
+          </div>
+        </div>
+      </body>
+    </html>
+  );
+};
 
-export default WelcomeEmail;
+
 
 // Styles
 const main = {
