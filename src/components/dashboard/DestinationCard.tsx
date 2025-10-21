@@ -75,7 +75,7 @@ export const DestinationCard = ({
                 <>
                   <p className="text-2xl font-bold text-muted-foreground">—</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    No price data yet. Prices are checked automatically every 6 hours.
+                    Checking prices soon...
                   </p>
                 </>
               )}
