@@ -625,18 +625,12 @@ export type Database = {
         }
         Returns: boolean
       }
-      cleanup_old_rate_limits: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_old_rate_limits: { Args: never; Returns: undefined }
       create_password_reset_token: {
         Args: { p_user_id: string }
         Returns: string
       }
-      is_admin: {
-        Args: { _user_id: string }
-        Returns: boolean
-      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
       queue_email: {
         Args: {
           p_email_data: Json
@@ -646,10 +640,7 @@ export type Database = {
         }
         Returns: string
       }
-      refresh_price_statistics: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      refresh_price_statistics: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"
