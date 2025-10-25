@@ -193,10 +193,15 @@ const Hero = () => {
                 disabled={isLoading}
               />
               <Button 
-                type="submit"
+                type="button"
                 size="lg" 
                 className="h-14 px-8 text-lg font-semibold bg-gradient-sunset hover:opacity-90 transition-opacity"
                 disabled={isLoading}
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("Button clicked directly!");
+                  handleSubmit(e as any);
+                }}
               >
                 <Mail className="mr-2 h-5 w-5" />
                 {isLoading ? "Subscribing..." : "Get Deals"}
