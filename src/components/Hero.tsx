@@ -72,6 +72,8 @@ const Hero = () => {
         });
         setEmail("");
         setName("");
+        // Redirect to verify page after successful subscription
+        navigate('/verify');
       }
     } catch (error) {
       console.error("Subscription error:", error);
