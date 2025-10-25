@@ -63,6 +63,7 @@ const Hero = () => {
       console.log("Edge function response:", { data, error });
 
       if (error) {
+        console.log("Subscription error from edge function:", error);
         if (error.message?.includes("already subscribed")) {
           toast({
             title: "Already subscribed!",
@@ -72,14 +73,15 @@ const Hero = () => {
           throw error;
         }
       } else {
+        console.log("Subscription successful!");
         toast({
           title: "Check your email! 📧",
           description: "We've sent you a verification link. Click it to confirm your subscription.",
+          duration: 6000,
         });
         setEmail("");
         setName("");
-        // Redirect to verify page after successful subscription
-        navigate('/verify');
+        // Don't redirect - user needs to click the link in their email
       }
     } catch (error) {
       console.error("Subscription error:", error);
@@ -193,15 +195,10 @@ const Hero = () => {
                 disabled={isLoading}
               />
               <Button 
-                type="button"
+                type="submit"
                 size="lg" 
                 className="h-14 px-8 text-lg font-semibold bg-gradient-sunset hover:opacity-90 transition-opacity"
                 disabled={isLoading}
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log("Button clicked directly!");
-                  handleSubmit(e as any);
-                }}
               >
                 <Mail className="mr-2 h-5 w-5" />
                 {isLoading ? "Subscribing..." : "Get Deals"}
