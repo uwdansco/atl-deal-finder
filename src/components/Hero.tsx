@@ -27,8 +27,10 @@ const Hero = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form submitted", { email, name });
     
     if (!email || !name) {
+      console.log("Validation failed: missing email or name");
       toast({
         title: "Missing information",
         description: "Please enter both your name and email",
@@ -40,6 +42,7 @@ const Hero = () => {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      console.log("Validation failed: invalid email format");
       toast({
         title: "Invalid email",
         description: "Please enter a valid email address",
@@ -48,13 +51,16 @@ const Hero = () => {
       return;
     }
 
+    console.log("Starting subscription process...");
     setIsLoading(true);
 
     try {
+      console.log("Calling send-verification edge function...");
       // Call edge function to handle subscription and send verification email
       const { data, error } = await supabase.functions.invoke("send-verification", {
         body: { email, name },
       });
+      console.log("Edge function response:", { data, error });
 
       if (error) {
         if (error.message?.includes("already subscribed")) {
