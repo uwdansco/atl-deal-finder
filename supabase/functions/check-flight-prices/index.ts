@@ -381,6 +381,25 @@ serve(async (req) => {
             continue;
           }
 
+          // 6. Check for duplicate alerts (within last 24 hours for same destination)
+          const { data: recentDuplicateAlert } = await supabase
+            .from("price_alerts")
+            .select("id, triggered_price")
+            .eq("user_id", userDest.user_id)
+            .eq("destination_id", destination.id)
+            .gte("sent_at", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
+            .order("sent_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+          if (recentDuplicateAlert) {
+            const priceDifference = Math.abs(recentDuplicateAlert.triggered_price - price);
+            if (priceDifference < 5) { // Less than $5 difference
+              console.log(`Duplicate alert prevented: similar price ($${price}) sent within last 24h for user ${userDest.user_id}`);
+              continue;
+            }
+          }
+
           // All checks passed - create price alert with Google Flights URL
           const bookingLink = `https://www.google.com/travel/flights?q=flights+from+${origin}+to+${destination.airport_code}+on+${departureDate}+returning+${returnDate}`;
           
