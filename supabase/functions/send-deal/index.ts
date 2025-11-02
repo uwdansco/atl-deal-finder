@@ -121,7 +121,7 @@ const handler = async (req: Request): Promise<Response> => {
         );
 
         await resend.emails.send({
-          from: "Cheap Atlanta Flights <deals@cheapatlantaflights.online>",
+          from: "Cheap Atlanta Flights <alerts@cheapatlantaflights.online>",
           to: [subscriber.email],
           subject,
           html: emailHtml,
