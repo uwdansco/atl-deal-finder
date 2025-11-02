@@ -15,6 +15,7 @@ import Signup from "./pages/Signup";
 import Onboarding from "./pages/Onboarding";
 import Auth from "./pages/Auth";
 import Verify from "./pages/Verify";
+import CheckEmail from "./pages/CheckEmail";
 import Unsubscribe from "./pages/Unsubscribe";
 import Deals from "./pages/Deals";
 import DealDetails from "./pages/DealDetails";
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/verify" element={<Verify />} />
+            <Route path="/check-email" element={<CheckEmail />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             
             {/* Legacy auth route (redirect to login) */}

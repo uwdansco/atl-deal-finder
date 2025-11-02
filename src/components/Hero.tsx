@@ -74,14 +74,10 @@ const Hero = () => {
         }
       } else {
         console.log("Subscription successful!");
-        toast({
-          title: "Check your email! 📧",
-          description: "We've sent you a verification link. Click it to confirm your subscription.",
-          duration: 6000,
-        });
         setEmail("");
         setName("");
-        // Don't redirect - user needs to click the link in their email
+        // Redirect to check email page
+        navigate('/check-email');
       }
     } catch (error) {
       console.error("Subscription error:", error);
