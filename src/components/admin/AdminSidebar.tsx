@@ -10,7 +10,8 @@ import {
   ChevronRight,
   Activity,
   TestTube2,
-  FlaskConical
+  FlaskConical,
+  Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ const menuItems = [
   { title: "Subscribers", url: "/admin/subscribers", icon: Users },
   { title: "Destinations", url: "/admin/destinations", icon: MapPin },
   { title: "Deals", url: "/admin/deals", icon: Plane },
+  { title: "Guarantee Claims", url: "/admin/guarantee-claims", icon: Shield },
   { title: "Send Email", url: "/admin/send-email", icon: Mail },
   { title: "Price Monitoring", url: "/admin/monitoring", icon: Activity },
   { title: "Test Alerts", url: "/admin/test-alerts", icon: TestTube2 },

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Sparkles, Loader2, Plus } from 'lucide-react';
+import { useSubscription } from '@/hooks/useSubscription';
+import { Sparkles, Loader2, Plus, CreditCard } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -15,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -42,6 +44,7 @@ export const AddDestinationDialog = ({
 }: AddDestinationDialogProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { isActive, isGrandfathered, isTrialing } = useSubscription();
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [filteredDestinations, setFilteredDestinations] = useState<Destination[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -64,6 +67,9 @@ export const AddDestinationDialog = ({
     reasoning: string;
     confidence: string;
   } | null>(null);
+
+  // Check subscription status
+  const hasAccess = isActive || isGrandfathered;
 
   useEffect(() => {
     if (open) {
@@ -372,11 +378,29 @@ export const AddDestinationDialog = ({
         <DialogHeader>
           <DialogTitle>Add Destination to Track</DialogTitle>
           <DialogDescription>
-            Choose an existing destination or add a new one
+            {hasAccess ? 'Choose an existing destination or add a new one' : 'Subscription required to add destinations'}
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="existing" className="w-full">
+        {!hasAccess ? (
+          <div className="space-y-4">
+            <Alert>
+              <CreditCard className="h-4 w-4" />
+              <AlertDescription>
+                You need an active subscription to add destinations and receive price alerts.
+              </AlertDescription>
+            </Alert>
+            <div className="flex gap-3">
+              <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+                Cancel
+              </Button>
+              <Button onClick={() => window.location.href = '/pricing'} className="flex-1">
+                View Plans
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <Tabs defaultValue="existing" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="existing">Existing Destinations</TabsTrigger>
             <TabsTrigger value="new">Add New Destination</TabsTrigger>
@@ -580,6 +604,7 @@ export const AddDestinationDialog = ({
             </div>
           </TabsContent>
         </Tabs>
+        )}
       </DialogContent>
     </Dialog>
   );

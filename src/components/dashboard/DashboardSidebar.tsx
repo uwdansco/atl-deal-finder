@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Plane, MapPin, Bell, Settings } from 'lucide-react';
+import { Plane, MapPin, Bell, Settings, Shield } from 'lucide-react';
+import { useSubscription } from '@/hooks/useSubscription';
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +13,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 
-const items = [
+const baseItems = [
   { title: 'My Destinations', url: '/dashboard/destinations', icon: MapPin },
   { title: 'Price Alerts', url: '/dashboard/alerts', icon: Bell },
   { title: 'Account Settings', url: '/dashboard/settings', icon: Settings },
@@ -21,11 +22,17 @@ const items = [
 export const DashboardSidebar = () => {
   const { open } = useSidebar();
   const location = useLocation();
+  const { planType } = useSubscription();
   const currentPath = location.pathname;
 
   const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? 'bg-primary text-primary-foreground font-medium' : 'hover:bg-muted/50';
+
+  // Add Booking Guarantee link for annual subscribers
+  const items = planType === 'annual' 
+    ? [...baseItems, { title: 'Booking Guarantee', url: '/dashboard/guarantee', icon: Shield }]
+    : baseItems;
 
   return (
     <Sidebar className={open ? 'w-60' : 'w-14'}>
