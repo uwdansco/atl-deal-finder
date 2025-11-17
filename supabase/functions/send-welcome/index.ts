@@ -84,8 +84,9 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     // Send welcome email
+    const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <noreply@cheapatlantaflights.online>";
     const emailResponse = await resend.emails.send({
-      from: "Cheap Atlanta Flights <noreply@cheapatlantaflights.online>",
+      from: emailFrom,
       to: [email],
       subject: "Welcome to Cheap Atlanta Flights! ✈️",
       html: emailHtml,

@@ -97,8 +97,9 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     // Send verification email
+    const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <noreply@cheapatlantaflights.online>";
     const emailResponse = await resend.emails.send({
-      from: "Cheap Atlanta Flights <noreply@cheapatlantaflights.online>",
+      from: emailFrom,
       to: [email],
       subject: "Confirm your subscription to Cheap Atlanta Flights",
       html: emailHtml,

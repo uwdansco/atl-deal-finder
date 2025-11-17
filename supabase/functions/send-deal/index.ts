@@ -120,8 +120,9 @@ const handler = async (req: Request): Promise<Response> => {
           })
         );
 
+        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <alerts@cheapatlantaflights.online>";
         await resend.emails.send({
-          from: "Cheap Atlanta Flights <alerts@cheapatlantaflights.online>",
+          from: emailFrom,
           to: [subscriber.email],
           subject,
           html: emailHtml,
