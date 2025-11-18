@@ -357,9 +357,7 @@ serve(async (req) => {
 
         console.log(`✅ Got price from ${priceSource} for ${destination.city_name}: $${price}`);
 
-        console.log(`Found price for ${destination.city_name}: $${price}`);
-
-        // Save to price history
+        // Save to price history with source tracking
         await supabase
           .from("price_history")
           .insert({
@@ -368,6 +366,7 @@ serve(async (req) => {
             outbound_date: departureDate,
             return_date: returnDate,
             checked_at: new Date().toISOString(),
+            price_source: priceSource
           });
 
         // Refresh price statistics

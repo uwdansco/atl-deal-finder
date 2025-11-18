@@ -369,6 +369,7 @@ export type Database = {
           id: string
           outbound_date: string | null
           price: number
+          price_source: string
           return_date: string | null
         }
         Insert: {
@@ -380,6 +381,7 @@ export type Database = {
           id?: string
           outbound_date?: string | null
           price: number
+          price_source?: string
           return_date?: string | null
         }
         Update: {
@@ -391,6 +393,7 @@ export type Database = {
           id?: string
           outbound_date?: string | null
           price?: number
+          price_source?: string
           return_date?: string | null
         }
         Relationships: [
