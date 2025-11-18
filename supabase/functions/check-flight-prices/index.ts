@@ -129,6 +129,66 @@ function getReturnDate(departureDate: string): string {
   return date.toISOString().split('T')[0];
 }
 
+// Google Flights fallback using SerpApi
+async function searchFlightsWithSerpApi(
+  origin: string,
+  destination: string,
+  departureDate: string,
+  returnDate: string
+): Promise<number | null> {
+  const serpApiKey = Deno.env.get("SERPAPI_API_KEY");
+  
+  if (!serpApiKey) {
+    console.error("❌ SerpApi key not configured");
+    return null;
+  }
+
+  try {
+    const params = new URLSearchParams({
+      engine: "google_flights",
+      departure_id: origin,
+      arrival_id: destination,
+      outbound_date: departureDate,
+      return_date: returnDate,
+      currency: "USD",
+      hl: "en",
+      api_key: serpApiKey
+    });
+
+    const response = await fetch(`https://serpapi.com/search?${params.toString()}`);
+
+    if (!response.ok) {
+      console.error(`❌ SerpApi error: ${response.status} for ${destination}`);
+      return null;
+    }
+
+    const data = await response.json();
+    
+    // Extract cheapest price from best_flights or other_flights
+    const allFlights = [
+      ...(data.best_flights || []),
+      ...(data.other_flights || [])
+    ];
+    
+    if (allFlights.length === 0) {
+      console.log(`No Google Flights found for ${destination}`);
+      return null;
+    }
+
+    const prices = allFlights.map((flight: any) => flight.price).filter((p: number) => p > 0);
+    if (prices.length === 0) {
+      return null;
+    }
+
+    const cheapestPrice = Math.min(...prices);
+    console.log(`✅ Google Flights price for ${destination}: $${cheapestPrice}`);
+    return cheapestPrice;
+  } catch (error) {
+    console.error(`❌ SerpApi exception for ${destination}:`, error);
+    return null;
+  }
+}
+
 async function classifyDeal(currentPrice: number, stats: any): Promise<{
   quality: string;
   badge: string;
@@ -242,6 +302,12 @@ serve(async (req) => {
     const results = [];
     let alertsTriggered = 0;
     const origin = "ATL";
+    
+    // Track API usage statistics
+    let amadeusSuccess = 0;
+    let amadeusFailures = 0;
+    let serpApiSuccess = 0;
+    let serpApiFailures = 0;
 
     for (const destination of destinations || []) {
       try {
@@ -249,12 +315,47 @@ serve(async (req) => {
 
         const departureDate = getNextDepartureDate();
         const returnDate = getReturnDate(departureDate);
-        const price = await searchFlights(accessToken, origin, destination.airport_code, departureDate);
+        
+        // TRY AMADEUS FIRST
+        let price = await searchFlights(accessToken, origin, destination.airport_code, departureDate);
+        let priceSource = "amadeus";
+
+        if (price !== null) {
+          amadeusSuccess++;
+        } else {
+          amadeusFailures++;
+        }
+
+        // FALLBACK TO GOOGLE FLIGHTS (SERPAPI) IF AMADEUS FAILS
+        if (price === null) {
+          console.log(`⚠️ Amadeus failed for ${destination.city_name}, trying Google Flights...`);
+          
+          price = await searchFlightsWithSerpApi(
+            origin,
+            destination.airport_code,
+            departureDate,
+            returnDate
+          );
+          priceSource = "google_flights";
+          
+          if (price !== null) {
+            serpApiSuccess++;
+          } else {
+            serpApiFailures++;
+          }
+        }
 
         if (price === null) {
-          console.log(`No price found for ${destination.city_name}`);
+          console.log(`❌ Both sources failed for ${destination.city_name}`);
+          results.push({
+            destination: destination.city_name,
+            status: "failed",
+            error: "All price sources unavailable"
+          });
           continue;
         }
+
+        console.log(`✅ Got price from ${priceSource} for ${destination.city_name}: $${price}`);
 
         console.log(`Found price for ${destination.city_name}: $${price}`);
 
@@ -487,6 +588,17 @@ serve(async (req) => {
         });
       }
     }
+
+    const totalAttempts = amadeusSuccess + serpApiSuccess;
+    const fallbackRate = totalAttempts > 0 ? (serpApiSuccess / totalAttempts * 100).toFixed(1) : "0.0";
+    
+    console.log(`
+📊 API Usage Summary:
+  Amadeus: ${amadeusSuccess} successes, ${amadeusFailures} failures
+  Google Flights (SerpApi): ${serpApiSuccess} successes, ${serpApiFailures} failures
+  Fallback Rate: ${fallbackRate}%
+  Total Price Checks: ${totalAttempts}
+    `);
 
     console.log(`✅ Price check complete. Checked ${results.length} destinations, triggered ${alertsTriggered} alerts`);
 
