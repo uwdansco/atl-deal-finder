@@ -114,9 +114,9 @@ const RecentDeals = () => {
             <div className="text-center mt-12 space-y-4">
               <p className="text-lg text-muted-foreground">
                 These deals were sent to our subscribers. 
-                <a href="#subscribe" className="ml-2 font-semibold text-primary hover:underline">
+                <Link to="/pricing" className="ml-2 font-semibold text-primary hover:underline">
                   Subscribe now to get the next one →
-                </a>
+                </Link>
               </p>
               <Link to="/deals">
                 <Button variant="outline" size="lg">

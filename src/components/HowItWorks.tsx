@@ -1,4 +1,5 @@
 import { Bell, Search, Mail, Plane } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const steps = [
   {
@@ -82,13 +83,13 @@ const HowItWorks = () => {
             <p className="text-muted-foreground max-w-md">
               Join thousands of Atlanta travelers who never miss a deal. It's completely free.
             </p>
-            <a 
-              href="#subscribe" 
+            <Link 
+              to="/pricing" 
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-sunset text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               <Mail className="w-5 h-5" />
               Subscribe Now
-            </a>
+            </Link>
           </div>
         </div>
       </div>

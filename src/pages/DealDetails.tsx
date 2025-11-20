@@ -359,7 +359,7 @@ const DealDetails = () => {
             <p className="text-lg text-white/90 mb-8">
               Subscribe to get daily flight deals from Atlanta sent to your inbox
             </p>
-            <Link to="/#subscribe">
+            <Link to="/pricing">
               <Button size="lg" variant="secondary">
                 Subscribe Now
               </Button>
