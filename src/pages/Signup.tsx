@@ -59,7 +59,7 @@ const Signup = () => {
         email: validated.email,
         password: validated.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/onboarding`,
+          emailRedirectTo: `${window.location.origin}/pricing`,
           data: {
             full_name: validated.name,
           },
@@ -71,9 +71,9 @@ const Signup = () => {
       if (data.user) {
         toast({
           title: 'Account created!',
-          description: 'Redirecting to onboarding...',
+          description: 'Please select a plan to continue...',
         });
-        navigate('/onboarding');
+        navigate('/pricing');
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
