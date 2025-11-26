@@ -15,6 +15,9 @@ export type TrackedDestination = {
   destination_id: string;
   price_threshold: number;
   is_active: boolean;
+  alert_cooldown_days: number;
+  min_deal_quality: string | null;
+  min_price_drop_percent: number | null;
   destination: {
     id: string;
     city_name: string;
