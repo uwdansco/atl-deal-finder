@@ -177,23 +177,6 @@ const ComprehensiveTest = () => {
     }
   };
 
-  const runInactiveCheck = async () => {
-    try {
-      toast.info("💤 Checking inactive destinations...");
-      const { data, error } = await supabase.functions.invoke(
-        "check-flight-prices",
-        { body: { check_mode: "inactive" } }
-      );
-      
-      if (error) throw error;
-      
-      toast.success(`✅ Inactive check complete! Checked ${data.destinationsChecked} destinations, ${data.alertsTriggered} alerts triggered`);
-      await fetchSystemStatus();
-      await fetchRecentAlerts();
-    } catch (error: any) {
-      toast.error(`Inactive check failed: ${error.message}`);
-    }
-  };
 
   useEffect(() => {
     fetchSystemStatus();
@@ -262,28 +245,18 @@ const ComprehensiveTest = () => {
               )}
             </Button>
             
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                onClick={runPriorityCheck}
-                disabled={isRunningFullTest}
-                variant="outline"
-                size="lg"
-              >
-                🎯 Test Priority Mode
-              </Button>
-              
-              <Button
-                onClick={runInactiveCheck}
-                disabled={isRunningFullTest}
-                variant="outline"
-                size="lg"
-              >
-                💤 Test Inactive Mode
-              </Button>
-            </div>
+            <Button
+              onClick={runPriorityCheck}
+              disabled={isRunningFullTest}
+              variant="outline"
+              size="lg"
+              className="w-full"
+            >
+              🎯 Test User-Tracked Destinations Only
+            </Button>
             
             <p className="text-sm text-muted-foreground text-center mt-2">
-              Priority = User-tracked destinations | Inactive = No active users
+              Only checks destinations that users are actively tracking
             </p>
           </div>
         </CardContent>

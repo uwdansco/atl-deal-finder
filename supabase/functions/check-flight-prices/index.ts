@@ -300,8 +300,19 @@ serve(async (req) => {
     // Get destinations based on check mode
     let destinations;
     
-    if (checkMode === "priority") {
-      // Only check destinations that have active user tracking
+    if (checkMode === "all") {
+      // "all" mode - check everything (for manual testing)
+      const { data: allDests, error: destError } = await supabase
+        .from("destinations")
+        .select("*")
+        .eq("is_active", true);
+      
+      if (destError) throw destError;
+      
+      destinations = allDests || [];
+      console.log(`🌍 All mode: Checking ${destinations.length} active destinations`);
+    } else {
+      // Default "priority" mode - only check user-tracked destinations
       const { data: trackedDests } = await supabase
         .from("user_destinations")
         .select("destination_id")
@@ -317,38 +328,7 @@ serve(async (req) => {
       if (destError) throw destError;
       
       destinations = allDests?.filter(d => trackedIds.has(d.id)) || [];
-      console.log(`🎯 Priority mode: Checking ${destinations.length} user-tracked destinations`);
-      
-    } else if (checkMode === "inactive") {
-      // Only check destinations without active user tracking
-      const { data: trackedDests } = await supabase
-        .from("user_destinations")
-        .select("destination_id")
-        .eq("is_active", true);
-      
-      const trackedIds = new Set(trackedDests?.map(d => d.destination_id) || []);
-      
-      const { data: allDests, error: destError } = await supabase
-        .from("destinations")
-        .select("*")
-        .eq("is_active", true);
-      
-      if (destError) throw destError;
-      
-      destinations = allDests?.filter(d => !trackedIds.has(d.id)) || [];
-      console.log(`💤 Inactive mode: Checking ${destinations.length} destinations without active users`);
-      
-    } else {
-      // "all" mode - check everything
-      const { data: allDests, error: destError } = await supabase
-        .from("destinations")
-        .select("*")
-        .eq("is_active", true);
-      
-      if (destError) throw destError;
-      
-      destinations = allDests || [];
-      console.log(`🌍 All mode: Checking ${destinations.length} active destinations`);
+      console.log(`🎯 Checking ${destinations.length} user-tracked destinations`);
     }
 
     if (destinations.length === 0) {
