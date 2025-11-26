@@ -283,21 +283,89 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log("Starting flight price check...");
+    // Parse request body for check mode
+    let checkMode = "priority"; // default to priority (user-tracked only)
+    try {
+      const body = await req.json();
+      checkMode = body.check_mode || "priority";
+    } catch {
+      // If no body or invalid JSON, use default
+    }
+
+    console.log(`Starting flight price check in '${checkMode}' mode...`);
 
     const accessToken = await getAmadeusAccessToken();
     console.log("Got Amadeus access token");
 
-    const { data: destinations, error: destError } = await supabase
-      .from("destinations")
-      .select("*")
-      .eq("is_active", true);
-
-    if (destError) {
-      throw destError;
+    // Get destinations based on check mode
+    let destinations;
+    
+    if (checkMode === "priority") {
+      // Only check destinations that have active user tracking
+      const { data: trackedDests } = await supabase
+        .from("user_destinations")
+        .select("destination_id")
+        .eq("is_active", true);
+      
+      const trackedIds = new Set(trackedDests?.map(d => d.destination_id) || []);
+      
+      const { data: allDests, error: destError } = await supabase
+        .from("destinations")
+        .select("*")
+        .eq("is_active", true);
+      
+      if (destError) throw destError;
+      
+      destinations = allDests?.filter(d => trackedIds.has(d.id)) || [];
+      console.log(`🎯 Priority mode: Checking ${destinations.length} user-tracked destinations`);
+      
+    } else if (checkMode === "inactive") {
+      // Only check destinations without active user tracking
+      const { data: trackedDests } = await supabase
+        .from("user_destinations")
+        .select("destination_id")
+        .eq("is_active", true);
+      
+      const trackedIds = new Set(trackedDests?.map(d => d.destination_id) || []);
+      
+      const { data: allDests, error: destError } = await supabase
+        .from("destinations")
+        .select("*")
+        .eq("is_active", true);
+      
+      if (destError) throw destError;
+      
+      destinations = allDests?.filter(d => !trackedIds.has(d.id)) || [];
+      console.log(`💤 Inactive mode: Checking ${destinations.length} destinations without active users`);
+      
+    } else {
+      // "all" mode - check everything
+      const { data: allDests, error: destError } = await supabase
+        .from("destinations")
+        .select("*")
+        .eq("is_active", true);
+      
+      if (destError) throw destError;
+      
+      destinations = allDests || [];
+      console.log(`🌍 All mode: Checking ${destinations.length} active destinations`);
     }
 
-    console.log(`Checking prices for ${destinations?.length || 0} destinations`);
+    if (destinations.length === 0) {
+      console.log("⚠️ No destinations to check in this mode");
+      return new Response(
+        JSON.stringify({
+          success: true,
+          checkMode,
+          destinationsChecked: 0,
+          alertsTriggered: 0,
+          message: `No destinations found for '${checkMode}' mode`
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
 
     const results = [];
     let alertsTriggered = 0;
@@ -609,9 +677,15 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
+        checkMode,
         destinationsChecked: results.length,
         alertsTriggered,
         results,
+        apiUsage: {
+          amadeus: { successes: amadeusSuccess, failures: amadeusFailures },
+          serpApi: { successes: serpApiSuccess, failures: serpApiFailures },
+          fallbackRate: fallbackRate
+        }
       }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },

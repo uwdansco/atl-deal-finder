@@ -98,10 +98,11 @@ const ComprehensiveTest = () => {
     try {
       toast.info("🚀 Starting comprehensive test...", { duration: 3000 });
 
-      // STEP 1: Price Check
-      toast.info("Step 1/3: Checking flight prices...", { duration: 5000 });
+      // STEP 1: Price Check (all mode for comprehensive test)
+      toast.info("Step 1/3: Checking flight prices (all destinations)...", { duration: 5000 });
       const { data: priceCheckData, error: priceCheckError } = await supabase.functions.invoke(
-        "check-flight-prices"
+        "check-flight-prices",
+        { body: { check_mode: "all" } }
       );
 
       if (priceCheckError) {
@@ -148,11 +149,49 @@ const ComprehensiveTest = () => {
       } else {
         toast.warning("⚠️ Test completed but no emails were sent. Check if there are active user destinations.", { duration: 5000 });
       }
+
     } catch (error: any) {
-      console.error("Comprehensive test error:", error);
-      toast.error(`Test failed: ${error.message}`, { duration: 5000 });
+      console.error("Test failed:", error);
+      toast.error(`Test failed: ${error.message}`);
     } finally {
       setIsRunningFullTest(false);
+      await fetchSystemStatus();
+    }
+  };
+
+  const runPriorityCheck = async () => {
+    try {
+      toast.info("🎯 Checking priority destinations only...");
+      const { data, error } = await supabase.functions.invoke(
+        "check-flight-prices",
+        { body: { check_mode: "priority" } }
+      );
+      
+      if (error) throw error;
+      
+      toast.success(`✅ Priority check complete! Checked ${data.destinationsChecked} destinations, ${data.alertsTriggered} alerts triggered`);
+      await fetchSystemStatus();
+      await fetchRecentAlerts();
+    } catch (error: any) {
+      toast.error(`Priority check failed: ${error.message}`);
+    }
+  };
+
+  const runInactiveCheck = async () => {
+    try {
+      toast.info("💤 Checking inactive destinations...");
+      const { data, error } = await supabase.functions.invoke(
+        "check-flight-prices",
+        { body: { check_mode: "inactive" } }
+      );
+      
+      if (error) throw error;
+      
+      toast.success(`✅ Inactive check complete! Checked ${data.destinationsChecked} destinations, ${data.alertsTriggered} alerts triggered`);
+      await fetchSystemStatus();
+      await fetchRecentAlerts();
+    } catch (error: any) {
+      toast.error(`Inactive check failed: ${error.message}`);
     }
   };
 
@@ -203,24 +242,50 @@ const ComprehensiveTest = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button
-            onClick={runFullTest}
-            disabled={isRunningFullTest}
-            size="lg"
-            className="w-full"
-          >
-            {isRunningFullTest ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Running Comprehensive Test...
-              </>
-            ) : (
-              <>
-                <PlayCircle className="mr-2 h-5 w-5" />
-                Start Full System Test
-              </>
-            )}
-          </Button>
+          <div className="flex flex-col gap-3">
+            <Button
+              onClick={runFullTest}
+              disabled={isRunningFullTest}
+              size="lg"
+              className="w-full"
+            >
+              {isRunningFullTest ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Running Comprehensive Test...
+                </>
+              ) : (
+                <>
+                  <PlayCircle className="mr-2 h-5 w-5" />
+                  Start Full System Test (All Destinations)
+                </>
+              )}
+            </Button>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                onClick={runPriorityCheck}
+                disabled={isRunningFullTest}
+                variant="outline"
+                size="lg"
+              >
+                🎯 Test Priority Mode
+              </Button>
+              
+              <Button
+                onClick={runInactiveCheck}
+                disabled={isRunningFullTest}
+                variant="outline"
+                size="lg"
+              >
+                💤 Test Inactive Mode
+              </Button>
+            </div>
+            
+            <p className="text-sm text-muted-foreground text-center mt-2">
+              Priority = User-tracked destinations | Inactive = No active users
+            </p>
+          </div>
         </CardContent>
       </Card>
 
