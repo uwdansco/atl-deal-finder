@@ -63,10 +63,10 @@ const Pricing = () => {
         <div className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
             <Plane className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl font-bold text-foreground mb-4">
               Choose Your Plan
             </h1>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Start your 7-day free trial. No credit card required during trial.
             </p>
           </div>
@@ -249,7 +249,7 @@ const Pricing = () => {
             </Card>
           </div>
 
-          <div className="mt-12 text-center text-white/80">
+          <div className="mt-12 text-center text-muted-foreground">
             <p className="text-sm">
               By subscribing, you agree to our Terms of Service and Refund Policy.
             </p>
