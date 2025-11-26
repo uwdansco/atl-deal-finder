@@ -27,7 +27,9 @@ export const DashboardSidebar = () => {
 
   const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    isActive ? 'bg-primary text-primary-foreground font-medium' : 'hover:bg-muted/50';
+    isActive 
+      ? 'bg-primary text-primary-foreground font-semibold' 
+      : 'text-foreground/90 hover:bg-muted hover:text-foreground';
 
   // Add Booking Guarantee link for annual subscribers
   const items = planType === 'annual' 
