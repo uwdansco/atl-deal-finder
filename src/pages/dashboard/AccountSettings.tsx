@@ -26,13 +26,19 @@ const AccountSettings = () => {
   const { toast } = useToast();
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [preferencesLoading, setPreferencesLoading] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
+  const [emailFrequency, setEmailFrequency] = useState('instant');
+  const [maxAlertsPerWeek, setMaxAlertsPerWeek] = useState(10);
+  const [quietHoursStart, setQuietHoursStart] = useState(22);
+  const [quietHoursEnd, setQuietHoursEnd] = useState(8);
   const [destinationCount, setDestinationCount] = useState(0);
 
   useEffect(() => {
     if (user) {
       setFullName(user.user_metadata?.full_name || '');
       fetchDestinationCount();
+      fetchUserPreferences();
     }
   }, [user]);
 
@@ -46,6 +52,63 @@ const AccountSettings = () => {
       .eq('is_active', true);
 
     setDestinationCount(count || 0);
+  };
+
+  const fetchUserPreferences = async () => {
+    if (!user) return;
+
+    const { data, error } = await (supabase as any)
+      .from('user_preferences')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      console.error('Error fetching preferences:', error);
+      return;
+    }
+
+    if (data) {
+      setEmailNotifications(data.email_notifications_enabled);
+      setEmailFrequency(data.email_frequency || 'instant');
+      setMaxAlertsPerWeek(data.max_alerts_per_week || 10);
+      setQuietHoursStart(data.quiet_hours_start ?? 22);
+      setQuietHoursEnd(data.quiet_hours_end ?? 8);
+    }
+  };
+
+  const handleUpdatePreferences = async () => {
+    setPreferencesLoading(true);
+
+    try {
+      const { error } = await (supabase as any)
+        .from('user_preferences')
+        .upsert({
+          user_id: user?.id,
+          email_notifications_enabled: emailNotifications,
+          email_frequency: emailFrequency,
+          max_alerts_per_week: maxAlertsPerWeek,
+          quiet_hours_start: quietHoursStart,
+          quiet_hours_end: quietHoursEnd,
+        }, {
+          onConflict: 'user_id'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Success!',
+        description: 'Your notification preferences have been updated.',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setPreferencesLoading(false);
+    }
   };
 
   const handleUpdateProfile = async () => {
@@ -126,7 +189,7 @@ const AccountSettings = () => {
           <CardTitle>Email Preferences</CardTitle>
           <CardDescription>Manage how you receive notifications</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label>Price Alert Notifications</Label>
@@ -142,10 +205,110 @@ const AccountSettings = () => {
 
           <Separator />
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             <Label>Email Frequency</Label>
-            <p className="text-sm text-muted-foreground">Coming soon: Instant, Daily digest, Weekly digest</p>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="instant"
+                  name="frequency"
+                  value="instant"
+                  checked={emailFrequency === 'instant'}
+                  onChange={(e) => setEmailFrequency(e.target.value)}
+                  className="h-4 w-4"
+                />
+                <Label htmlFor="instant" className="font-normal cursor-pointer">
+                  Instant - Get notified immediately when deals are found
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="daily"
+                  name="frequency"
+                  value="daily_digest"
+                  checked={emailFrequency === 'daily_digest'}
+                  onChange={(e) => setEmailFrequency(e.target.value)}
+                  className="h-4 w-4"
+                />
+                <Label htmlFor="daily" className="font-normal cursor-pointer">
+                  Daily Digest - Receive a summary once per day
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="weekly"
+                  name="frequency"
+                  value="weekly_digest"
+                  checked={emailFrequency === 'weekly_digest'}
+                  onChange={(e) => setEmailFrequency(e.target.value)}
+                  className="h-4 w-4"
+                />
+                <Label htmlFor="weekly" className="font-normal cursor-pointer">
+                  Weekly Digest - Receive a summary once per week
+                </Label>
+              </div>
+            </div>
           </div>
+
+          <Separator />
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label>Maximum Alerts Per Week</Label>
+              <Badge variant="secondary">{maxAlertsPerWeek}</Badge>
+            </div>
+            <Input
+              type="range"
+              min="1"
+              max="20"
+              value={maxAlertsPerWeek}
+              onChange={(e) => setMaxAlertsPerWeek(Number(e.target.value))}
+              className="w-full"
+            />
+            <p className="text-xs text-muted-foreground">
+              Limit the number of price alerts you receive each week
+            </p>
+          </div>
+
+          <Separator />
+
+          <div className="space-y-3">
+            <Label>Quiet Hours</Label>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="quietStart" className="text-sm font-normal">Start</Label>
+                <Input
+                  id="quietStart"
+                  type="number"
+                  min="0"
+                  max="23"
+                  value={quietHoursStart}
+                  onChange={(e) => setQuietHoursStart(Number(e.target.value))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="quietEnd" className="text-sm font-normal">End</Label>
+                <Input
+                  id="quietEnd"
+                  type="number"
+                  min="0"
+                  max="23"
+                  value={quietHoursEnd}
+                  onChange={(e) => setQuietHoursEnd(Number(e.target.value))}
+                />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Don't send alerts during these hours (24-hour format)
+            </p>
+          </div>
+
+          <Button onClick={handleUpdatePreferences} disabled={preferencesLoading}>
+            {preferencesLoading ? 'Saving...' : 'Save Preferences'}
+          </Button>
         </CardContent>
       </Card>
 

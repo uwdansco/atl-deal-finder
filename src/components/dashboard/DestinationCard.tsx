@@ -95,6 +95,19 @@ export const DestinationCard = ({
             <span className="font-semibold">${Math.round(threshold)}</span>
           </div>
 
+          {/* Alert Settings */}
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline" className="text-xs">
+              {destination.alert_cooldown_days || 7}d cooldown
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              {destination.min_deal_quality || 'good'}+ deals
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              {destination.min_price_drop_percent || 5}% min drop
+            </Badge>
+          </div>
+
           {/* Price below threshold indicator */}
           {currentPrice && currentPrice <= threshold && (
             <Badge variant="destructive" className="w-full justify-center">

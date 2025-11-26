@@ -14,6 +14,8 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import type { TrackedDestination } from '@/pages/dashboard/MyDestinations';
 
 interface EditThresholdDialogProps {
@@ -31,6 +33,9 @@ export const EditThresholdDialog = ({
 }: EditThresholdDialogProps) => {
   const { toast } = useToast();
   const [threshold, setThreshold] = useState(destination.price_threshold);
+  const [cooldownDays, setCooldownDays] = useState(destination.alert_cooldown_days || 7);
+  const [minDealQuality, setMinDealQuality] = useState(destination.min_deal_quality || 'good');
+  const [minPriceDrop, setMinPriceDrop] = useState(destination.min_price_drop_percent || 5);
   const [loading, setLoading] = useState(false);
   const [loadingAI, setLoadingAI] = useState(false);
   const [aiRecommendation, setAiRecommendation] = useState<{
@@ -91,14 +96,19 @@ export const EditThresholdDialog = ({
     try {
       const { error } = await (supabase as any)
         .from('user_destinations')
-        .update({ price_threshold: threshold })
+        .update({ 
+          price_threshold: threshold,
+          alert_cooldown_days: cooldownDays,
+          min_deal_quality: minDealQuality,
+          min_price_drop_percent: minPriceDrop,
+        })
         .eq('id', destination.id);
 
       if (error) throw error;
 
       toast({
         title: 'Success!',
-        description: 'Price threshold updated',
+        description: 'Alert settings updated',
       });
 
       onSuccess();
@@ -182,6 +192,69 @@ export const EditThresholdDialog = ({
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>${minPrice}</span>
               <span>${maxPrice}</span>
+            </div>
+          </div>
+
+          <Separator />
+
+          <div className="space-y-4">
+            <Label>Alert Settings</Label>
+            
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-normal">Alert Cooldown</Label>
+                  <Badge variant="secondary">{cooldownDays} days</Badge>
+                </div>
+                <Slider
+                  value={[cooldownDays]}
+                  onValueChange={([value]) => setCooldownDays(value)}
+                  min={1}
+                  max={30}
+                  step={1}
+                  className="w-full"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Wait this many days before sending another alert for this destination
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-normal">Minimum Deal Quality</Label>
+                <Select value={minDealQuality} onValueChange={setMinDealQuality}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="any">Any Deal</SelectItem>
+                    <SelectItem value="good">Good or Better</SelectItem>
+                    <SelectItem value="great">Great or Better</SelectItem>
+                    <SelectItem value="excellent">Excellent or Better</SelectItem>
+                    <SelectItem value="exceptional">Only Exceptional</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  Only alert me for deals of this quality or better
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-normal">Minimum Price Drop</Label>
+                  <Badge variant="secondary">{minPriceDrop}%</Badge>
+                </div>
+                <Slider
+                  value={[minPriceDrop]}
+                  onValueChange={([value]) => setMinPriceDrop(value)}
+                  min={0}
+                  max={30}
+                  step={1}
+                  className="w-full"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Only alert when price drops by at least this percentage
+                </p>
+              </div>
             </div>
           </div>
         </div>
