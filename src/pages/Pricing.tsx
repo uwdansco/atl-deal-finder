@@ -183,7 +183,7 @@ const Pricing = () => {
 
           {/* FAQ Section */}
           <div className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-white text-center mb-8">
+            <h2 className="text-3xl font-bold text-foreground text-center mb-8">
               Frequently Asked Questions
             </h2>
             <Card>
