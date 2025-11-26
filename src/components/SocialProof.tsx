@@ -9,7 +9,7 @@ const stats = [
   },
   {
     icon: Globe,
-    value: "50+",
+    value: "Any",
     label: "Destinations Tracked",
     color: "text-accent",
   },

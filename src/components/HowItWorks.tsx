@@ -5,7 +5,7 @@ const steps = [
   {
     icon: Search,
     title: "We Track Prices",
-    description: "Our system monitors flight prices from Atlanta to 50+ destinations daily using advanced automation.",
+    description: "Our system monitors flight prices from Atlanta to any destination daily using advanced automation.",
   },
   {
     icon: Bell,

@@ -114,7 +114,7 @@ export default function About() {
               <div>
                 <h3 className="text-xl font-bold mb-2">1. Daily Price Monitoring</h3>
                 <p className="text-muted-foreground">
-                  We check flight prices from Atlanta to 50+ destinations every single day using official airline APIs. 
+                  We check flight prices from Atlanta to any destination every single day using official airline APIs. 
                   This ensures you always have the most up-to-date pricing information.
                 </p>
               </div>

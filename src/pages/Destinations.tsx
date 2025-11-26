@@ -40,7 +40,7 @@ export default function Destinations() {
   return (
     <>
       <SEO
-        title="Cheap Flights from Atlanta to 50+ Destinations"
+        title="Cheap Flights from Atlanta to Any Destination"
         description="Browse all destinations with cheap flights from Atlanta (ATL). Compare prices, track deals, and find the best time to book your next trip."
         keywords="Atlanta flights, ATL destinations, cheap flights, flight deals, international flights from Atlanta"
       />
@@ -54,7 +54,7 @@ export default function Destinations() {
                 Discover Cheap Flights from Atlanta
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Track prices to 50+ destinations worldwide. Get alerts when prices drop to your budget.
+                Track prices to any destination worldwide. Get alerts when prices drop to your budget.
               </p>
 
               {/* Search Bar */}

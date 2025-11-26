@@ -16,7 +16,7 @@ const steps = [
   {
     icon: MapPin,
     title: "Choose Destinations",
-    description: "Select up to 10 destinations you want to track from our list of 50+ locations worldwide.",
+    description: "Select up to 10 destinations you want to track from our list of locations worldwide.",
     time: "2 minutes",
   },
   {
@@ -47,7 +47,7 @@ const benefits = [
 const faqs = [
   {
     question: "How often do you check prices?",
-    answer: "We check flight prices from Atlanta to all 50+ destinations every 24 hours. This ensures you always have the most current pricing information and never miss a deal.",
+    answer: "We check flight prices from Atlanta to all destinations every 24 hours. This ensures you always have the most current pricing information and never miss a deal.",
   },
   {
     question: "Will I get spammed with emails?",
