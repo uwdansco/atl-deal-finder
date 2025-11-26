@@ -6,15 +6,49 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SEO } from "@/components/SEO";
 import { useState } from "react";
-import { Search, TrendingDown } from "lucide-react";
+import { Search, TrendingDown, Target } from "lucide-react";
 import Footer from "@/components/Footer";
+import { useAuth } from "@/contexts/AuthContext";
+import { Badge } from "@/components/ui/badge";
 
 export default function Destinations() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  const { user } = useAuth();
 
   const { data: destinations, isLoading } = useQuery({
-    queryKey: ["public-destinations", searchTerm],
+    queryKey: ["destinations", searchTerm, user?.id, showAll],
     queryFn: async () => {
+      // If user is logged in and not showing all, get only tracked destinations
+      if (user && !showAll) {
+        const { data: userDestinations, error: userError } = await supabase
+          .from("user_destinations")
+          .select(`
+            destination_id,
+            price_threshold,
+            is_active,
+            destination:destinations (
+              *,
+              price_statistics (
+                avg_90day,
+                all_time_low
+              )
+            )
+          `)
+          .eq("user_id", user.id)
+          .eq("is_active", true);
+
+        if (userError) throw userError;
+
+        // Transform to match expected format
+        return userDestinations?.map((ud: any) => ({
+          ...ud.destination,
+          user_threshold: ud.price_threshold,
+          is_tracked: true,
+        })) || [];
+      }
+
+      // Otherwise show all destinations
       let query = supabase
         .from("destinations")
         .select(`
@@ -74,15 +108,64 @@ export default function Destinations() {
         {/* Destinations Grid */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-2">All Destinations</h2>
-              <p className="text-muted-foreground">
-                {destinations?.length || 0} destinations available
-              </p>
+            <div className="mb-8 flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                  {user && !showAll ? (
+                    <>
+                      <Target className="h-6 w-6 text-primary" />
+                      My Tracked Destinations
+                    </>
+                  ) : (
+                    "All Destinations"
+                  )}
+                </h2>
+                <p className="text-muted-foreground">
+                  {destinations?.length || 0} destinations {user && !showAll ? "tracked" : "available"}
+                </p>
+              </div>
+              
+              {user && (
+                <div className="flex gap-2">
+                  <Button
+                    variant={!showAll ? "default" : "outline"}
+                    onClick={() => setShowAll(false)}
+                    size="sm"
+                  >
+                    <Target className="h-4 w-4 mr-2" />
+                    My Destinations
+                  </Button>
+                  <Button
+                    variant={showAll ? "default" : "outline"}
+                    onClick={() => setShowAll(true)}
+                    size="sm"
+                  >
+                    Browse All
+                  </Button>
+                </div>
+              )}
             </div>
 
             {isLoading ? (
               <div className="text-center py-12">Loading destinations...</div>
+            ) : destinations?.length === 0 ? (
+              <div className="text-center py-16 bg-card rounded-lg border-2 border-dashed">
+                <div className="max-w-md mx-auto">
+                  <h3 className="text-2xl font-semibold mb-2">
+                    {user && !showAll ? "No Tracked Destinations" : "No Destinations Found"}
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    {user && !showAll 
+                      ? "You haven't tracked any destinations yet. Start tracking prices to your favorite destinations!"
+                      : "No destinations match your search."}
+                  </p>
+                  {user && !showAll && (
+                    <Button onClick={() => setShowAll(true)} size="lg">
+                      Browse All Destinations
+                    </Button>
+                  )}
+                </div>
+              </div>
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {destinations?.map((dest: any) => (
@@ -91,7 +174,12 @@ export default function Destinations() {
                     to={`/destinations/${dest.city_name.toLowerCase().replace(/\s+/g, "-")}`}
                     state={{ destination: dest }}
                   >
-                    <Card className="h-full hover:shadow-lg transition-shadow">
+                    <Card className="h-full hover:shadow-lg transition-shadow relative">
+                      {dest.is_tracked && (
+                        <Badge className="absolute top-4 right-4 bg-green-600">
+                          Tracking
+                        </Badge>
+                      )}
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between mb-3">
                           <div>
@@ -103,17 +191,25 @@ export default function Destinations() {
                           </span>
                         </div>
 
+                        {dest.user_threshold && (
+                          <div className="mb-2 p-2 bg-primary/5 rounded">
+                            <p className="text-sm font-semibold text-primary">
+                              Your Alert: ${dest.user_threshold}
+                            </p>
+                          </div>
+                        )}
+
                         {dest.price_statistics?.[0] && (
                           <div className="space-y-2">
                             <div className="flex items-center gap-2">
                               <TrendingDown className="h-4 w-4 text-green-600" />
                               <span className="text-sm">
-                                Avg Price: <span className="font-bold">${dest.price_statistics[0].avg_90day}</span>
+                                Avg Price: <span className="font-bold">${Math.round(dest.price_statistics[0].avg_90day)}</span>
                               </span>
                             </div>
                             {dest.price_statistics[0].all_time_low && (
                               <p className="text-xs text-muted-foreground">
-                                Best deal: ${dest.price_statistics[0].all_time_low}
+                                Best deal: ${Math.round(dest.price_statistics[0].all_time_low)}
                               </p>
                             )}
                           </div>
