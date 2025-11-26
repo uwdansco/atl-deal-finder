@@ -40,7 +40,7 @@ export const WelcomeEmail = ({
 
             <div style={highlightBox}>
               <h3 style={h3}>What to Expect:</h3>
-              <p style={bulletPoint}>✈️ Daily monitoring of 50+ destinations worldwide</p>
+              <p style={bulletPoint}>✈️ Daily monitoring of any destination worldwide</p>
               <p style={bulletPoint}>⚡ Instant alerts when prices drop</p>
               <p style={bulletPoint}>💰 Exclusive deals sent straight to your inbox</p>
               <p style={bulletPoint}>📅 Flexible travel dates to maximize savings</p>

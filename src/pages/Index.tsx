@@ -11,7 +11,7 @@ const Index = () => {
     <>
       <SEO
         title="Cheap Flights from Atlanta"
-        description="Get personalized flight price alerts from Atlanta (ATL) to 50+ destinations. Track deals, set your budget, and never miss cheap flights again. Free to use."
+        description="Get personalized flight price alerts from Atlanta (ATL) to any destination. Track deals, set your budget, and never miss cheap flights again. Free to use."
         keywords="cheap flights Atlanta, ATL flights, Atlanta flight deals, flight price alerts, cheap flights from Atlanta"
         canonicalUrl={window.location.origin}
       />
@@ -19,7 +19,7 @@ const Index = () => {
         name="Cheap Atlanta Flights"
         url={window.location.origin}
         logo={`${window.location.origin}/logo.png`}
-        description="Automated flight price tracking and alerts from Atlanta to 50+ destinations worldwide"
+        description="Automated flight price tracking and alerts from Atlanta to any destination worldwide"
       />
       <WebSiteSchema name="Cheap Atlanta Flights" url={window.location.origin} />
 

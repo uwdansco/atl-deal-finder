@@ -196,7 +196,7 @@ const Hero = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-muted-foreground">50+ Destinations</span>
+              <span className="text-muted-foreground">Any Destination</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
