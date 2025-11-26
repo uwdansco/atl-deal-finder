@@ -4,6 +4,7 @@ import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import {
   Sidebar,
   SidebarContent,
@@ -62,7 +63,10 @@ export const DashboardSidebar = () => {
   };
 
   return (
-    <Sidebar className={open ? 'w-60 bg-sidebar border-r shadow-sm' : 'w-14 bg-sidebar border-r shadow-sm'}>
+    <Sidebar className={cn(
+      'hidden md:flex',
+      open ? 'w-60 bg-sidebar border-r shadow-sm' : 'w-14 bg-sidebar border-r shadow-sm'
+    )}>
       <SidebarContent className="flex flex-col bg-sidebar text-sidebar-foreground">
         {/* Logo Header */}
         <div className="p-4 flex items-center gap-2 border-b border-sidebar-border">

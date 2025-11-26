@@ -13,7 +13,7 @@ export const DashboardLayout = () => {
         <DashboardSidebar />
         <div className="flex-1 flex flex-col">
           <DashboardHeader />
-          <main className="flex-1 p-4 md:p-6 bg-secondary/10 pb-20 md:pb-6">
+          <main className="flex-1 p-3 md:p-6 bg-secondary/10 pb-20 md:pb-6 overflow-x-hidden">
             <Outlet />
           </main>
         </div>

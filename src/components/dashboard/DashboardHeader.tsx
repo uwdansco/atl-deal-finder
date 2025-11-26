@@ -38,33 +38,34 @@ export const DashboardHeader = () => {
   };
 
   return (
-    <header className="h-16 border-b bg-background flex items-center justify-between px-4">
+    <header className="h-14 md:h-16 border-b bg-card/95 backdrop-blur-md flex items-center justify-between px-3 md:px-4 sticky top-0 z-30">
       <div className="flex items-center gap-2">
-        <SidebarTrigger />
-        <h1 className="text-xl font-semibold">Dashboard</h1>
+        <SidebarTrigger className="hidden md:flex" />
+        <h1 className="text-lg md:text-xl font-semibold hidden md:block">Dashboard</h1>
+        <h1 className="text-base font-semibold md:hidden">Flight Tracker</h1>
       </div>
 
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
+      <div className="flex items-center gap-2 md:gap-4">
+        <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10">
+          <Bell className="h-4 w-4 md:h-5 md:w-5" />
           {/* Notification badge */}
-          {/* <span className="absolute top-1 right-1 h-2 w-2 bg-destructive rounded-full" /> */}
+          {/* <span className="absolute top-1 right-1 h-2 w-2 bg-destructive rounded-full animate-pulse" /> */}
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary text-primary-foreground">
+            <Button variant="ghost" className="flex items-center gap-2 h-9 md:h-10 px-2 md:px-3">
+              <Avatar className="h-7 w-7 md:h-8 md:w-8">
+                <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground text-xs md:text-sm">
                   {getUserInitials()}
                 </AvatarFallback>
               </Avatar>
-              <span className="hidden sm:inline">
+              <span className="hidden sm:inline text-sm">
                 {user?.user_metadata?.full_name || user?.email}
               </span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-background z-50">
+          <DropdownMenuContent align="end" className="w-56 bg-card z-50">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
