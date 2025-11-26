@@ -51,6 +51,8 @@ export const AddDestinationDialog = ({
     threshold: number;
     reasoning: string;
     confidence: string;
+    has_historical_data?: boolean;
+    data_samples?: number;
   } | null>(null);
 
   // New destination form
@@ -85,8 +87,16 @@ export const AddDestinationDialog = ({
             threshold: data.recommended_threshold,
             reasoning: data.reasoning,
             confidence: data.confidence,
+            has_historical_data: data.has_historical_data,
+            data_samples: data.data_samples,
           });
           setThreshold(data.recommended_threshold);
+          toast({
+            title: data.has_historical_data 
+              ? `AI analyzed ${data.data_samples} price samples` 
+              : "AI recommendation generated",
+            description: data.reasoning,
+          });
         }
       } catch (error: any) {
         console.error('Error getting AI suggestion:', error);
@@ -275,22 +285,32 @@ export const AddDestinationDialog = ({
                 ) : (
                   <>
                     {aiRecommendation && (
-                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
-                        <div className="flex items-center gap-2 mb-1">
+                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20 space-y-2">
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <Sparkles className="h-4 w-4 text-primary" />
                           <span className="text-sm font-medium">AI Recommendation</span>
+                          {aiRecommendation.has_historical_data && (
+                            <Badge variant="default" className="text-xs">
+                              {aiRecommendation.data_samples} samples
+                            </Badge>
+                          )}
                           <Badge
                             variant={
                               aiRecommendation.confidence === 'high' ? 'default' : 'secondary'
                             }
                             className="text-xs"
                           >
-                            {aiRecommendation.confidence} confidence
+                            {aiRecommendation.confidence}
                           </Badge>
                         </div>
                         <p className="text-xs text-muted-foreground italic">
                           {aiRecommendation.reasoning}
                         </p>
+                        {aiRecommendation.has_historical_data && (
+                          <p className="text-xs text-primary font-medium">
+                            Based on real price history
+                          </p>
+                        )}
                       </div>
                     )}
 
