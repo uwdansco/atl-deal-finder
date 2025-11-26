@@ -85,7 +85,11 @@ const Pricing = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Real-time price alerts for up to 10 destinations</span>
+                    <span className="font-semibold text-primary">Track unlimited destinations worldwide</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                    <span>Real-time price alerts to any destination</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
@@ -136,11 +140,19 @@ const Pricing = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Everything in Monthly Plan</span>
+                    <span className="font-semibold text-primary">Track unlimited destinations worldwide</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                    <span>Real-time price alerts to any destination</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
                     <span className="font-semibold">Booking Guarantee: Full refund if you don't book a flight within the year</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                    <span>Historical price data and trends</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
