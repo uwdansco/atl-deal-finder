@@ -42,8 +42,8 @@ export const DashboardSidebar = () => {
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? 'bg-primary text-primary-foreground font-semibold shadow-sm'
-      : 'text-foreground hover:bg-secondary hover:text-foreground';
+      ? 'bg-sidebar-accent text-sidebar-accent-foreground font-semibold shadow-sm'
+      : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground';
 
   // Add Booking Guarantee link for annual subscribers
   const items = planType === 'annual'
@@ -62,18 +62,18 @@ export const DashboardSidebar = () => {
   };
 
   return (
-    <Sidebar className={open ? 'w-60 bg-secondary border-r shadow-sm' : 'w-14 bg-secondary border-r shadow-sm'}>
-      <SidebarContent className="flex flex-col bg-secondary text-foreground">
+    <Sidebar className={open ? 'w-60 bg-sidebar border-r shadow-sm' : 'w-14 bg-sidebar border-r shadow-sm'}>
+      <SidebarContent className="flex flex-col bg-sidebar text-sidebar-foreground">
         {/* Logo Header */}
-        <div className="p-4 flex items-center gap-2 border-b border-border/80">
-          <Plane className="h-6 w-6 text-primary flex-shrink-0" />
-          {open && <span className="font-bold text-lg tracking-tight">Flight Tracker</span>}
+        <div className="p-4 flex items-center gap-2 border-b border-sidebar-border">
+          <Plane className="h-6 w-6 text-sidebar-primary flex-shrink-0" />
+          {open && <span className="font-bold text-lg tracking-tight text-sidebar-foreground">Flight Tracker</span>}
         </div>
 
         {/* Navigation */}
         <div className="flex-1">
           <SidebarGroup>
-            <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
+            <SidebarGroupLabel className="text-xs font-semibold text-sidebar-foreground/70 tracking-wide uppercase">
               Dashboard
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -104,7 +104,7 @@ export const DashboardSidebar = () => {
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="" alt={user?.email || 'User'} />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                    <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground">
                       {getUserInitials()}
                     </AvatarFallback>
                   </Avatar>
@@ -138,7 +138,7 @@ export const DashboardSidebar = () => {
                 <Button variant="ghost" size="icon" className="w-full">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="" alt={user?.email || 'User'} />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                    <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground">
                       {getUserInitials()}
                     </AvatarFallback>
                   </Avatar>
