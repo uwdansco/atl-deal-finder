@@ -40,14 +40,13 @@ export const DashboardSidebar = () => {
   const { planType } = useSubscription();
   const currentPath = location.pathname;
 
-  const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    isActive 
-      ? 'bg-primary text-primary-foreground font-semibold' 
-      : 'text-foreground/90 hover:bg-muted hover:text-foreground';
+    isActive
+      ? 'bg-primary text-primary-foreground font-semibold shadow-sm'
+      : 'text-foreground hover:bg-secondary hover:text-foreground';
 
   // Add Booking Guarantee link for annual subscribers
-  const items = planType === 'annual' 
+  const items = planType === 'annual'
     ? [...baseItems, { title: 'Booking Guarantee', url: '/dashboard/guarantee', icon: Shield }]
     : baseItems;
 
@@ -63,18 +62,20 @@ export const DashboardSidebar = () => {
   };
 
   return (
-    <Sidebar className={open ? 'w-60' : 'w-14'}>
-      <SidebarContent className="flex flex-col">
+    <Sidebar className={open ? 'w-60 bg-secondary border-r shadow-sm' : 'w-14 bg-secondary border-r shadow-sm'}>
+      <SidebarContent className="flex flex-col bg-secondary text-foreground">
         {/* Logo Header */}
-        <div className="p-4 flex items-center gap-2 border-b">
+        <div className="p-4 flex items-center gap-2 border-b border-border/80">
           <Plane className="h-6 w-6 text-primary flex-shrink-0" />
-          {open && <span className="font-bold text-lg">Flight Tracker</span>}
+          {open && <span className="font-bold text-lg tracking-tight">Flight Tracker</span>}
         </div>
 
         {/* Navigation */}
         <div className="flex-1">
           <SidebarGroup>
-            <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground tracking-wide uppercase">
+              Dashboard
+            </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
