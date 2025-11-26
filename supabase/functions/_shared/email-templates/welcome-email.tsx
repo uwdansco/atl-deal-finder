@@ -35,8 +35,16 @@ export const WelcomeEmail = ({
           <div style={content}>
             <h2 style={h2}>Welcome aboard, {name || 'Traveler'}! 🎉</h2>
             <p style={paragraph}>
-              Your subscription is now active! You're all set to receive the best flight deals from Atlanta.
+              Your 7-day free trial has started! You're all set to receive the best flight deals from Atlanta.
             </p>
+
+            <div style={trialBox}>
+              <h3 style={h3}>About Your Free Trial:</h3>
+              <p style={bulletPoint}>🎉 You have 7 days of full access at no cost</p>
+              <p style={bulletPoint}>💳 Your card is on file but won't be charged until after the trial</p>
+              <p style={bulletPoint}>⏰ Cancel anytime during the trial at no cost</p>
+              <p style={bulletPoint}>✅ No action needed - enjoy your trial!</p>
+            </div>
 
             <div style={highlightBox}>
               <h3 style={h3}>What to Expect:</h3>
@@ -160,6 +168,13 @@ const paragraph = {
   lineHeight: '24px',
   textAlign: 'left' as const,
   margin: '16px 0',
+};
+
+const trialBox = {
+  backgroundColor: '#f0fdf4',
+  borderLeft: '4px solid #16a34a',
+  padding: '20px',
+  margin: '24px 0',
 };
 
 const highlightBox = {
