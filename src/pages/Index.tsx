@@ -1,6 +1,8 @@
 import Hero from "@/components/Hero";
 import RecentDeals from "@/components/RecentDeals";
 import HowItWorks from "@/components/HowItWorks";
+import PricingPreview from "@/components/PricingPreview";
+import FAQ from "@/components/FAQ";
 import SocialProof from "@/components/SocialProof";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -27,7 +29,9 @@ const Index = () => {
         <Hero />
         <RecentDeals />
         <HowItWorks />
+        <PricingPreview />
         <SocialProof />
+        <FAQ />
         <Footer />
       </main>
     </>

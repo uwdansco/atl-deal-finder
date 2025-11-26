@@ -1,4 +1,5 @@
 import { Plane } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -31,9 +32,14 @@ const Footer = () => {
             <h4 className="font-semibold mb-4 text-foreground">Quick Links</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <a href="#deals" className="hover:text-primary transition-colors">
+                <Link to="/pricing" className="hover:text-primary transition-colors">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/deals" className="hover:text-primary transition-colors">
                   Recent Deals
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#how-it-works" className="hover:text-primary transition-colors">
@@ -41,8 +47,8 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#subscribe" className="hover:text-primary transition-colors">
-                  Subscribe
+                <a href="#faq" className="hover:text-primary transition-colors">
+                  FAQ
                 </a>
               </li>
             </ul>

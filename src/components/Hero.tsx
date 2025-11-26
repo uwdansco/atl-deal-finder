@@ -134,6 +134,11 @@ const Hero = () => {
             </>
           ) : (
             <>
+              <Button asChild variant="ghost" className="bg-card/60 backdrop-blur-sm">
+                <Link to="/pricing">
+                  Pricing
+                </Link>
+              </Button>
               <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
                 <Link to="/login">
                   <LogIn className="h-4 w-4 mr-2" />
