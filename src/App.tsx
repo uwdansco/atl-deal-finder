@@ -43,6 +43,7 @@ const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 const TestEmailAlerts = lazy(() => import("./pages/admin/TestEmailAlerts"));
 const TestEmail = lazy(() => import("./pages/admin/TestEmail"));
 const TestAlerts = lazy(() => import("./pages/admin/TestAlerts"));
+const ComprehensiveTest = lazy(() => import("./pages/admin/ComprehensiveTest"));
 const GuaranteeClaims = lazy(() => import("./pages/admin/GuaranteeClaims"));
 
 // Dashboard pages
@@ -130,6 +131,7 @@ const App = () => (
               <Route path="guarantee-claims" element={<GuaranteeClaims />} />
               <Route path="send-email" element={<SendEmailPage />} />
               <Route path="monitoring" element={<PriceMonitoring />} />
+              <Route path="comprehensive-test" element={<ComprehensiveTest />} />
               <Route path="test-alerts" element={<TestEmailAlerts />} />
               <Route path="test-email" element={<TestEmail />} />
               <Route path="test-system" element={<TestAlerts />} />

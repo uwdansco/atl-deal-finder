@@ -11,7 +11,8 @@ import {
   Activity,
   TestTube2,
   FlaskConical,
-  Shield
+  Shield,
+  Zap
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,7 @@ const menuItems = [
   { title: "Guarantee Claims", url: "/admin/guarantee-claims", icon: Shield },
   { title: "Send Email", url: "/admin/send-email", icon: Mail },
   { title: "Price Monitoring", url: "/admin/monitoring", icon: Activity },
+  { title: "Comprehensive Test", url: "/admin/comprehensive-test", icon: Zap },
   { title: "Test Alerts", url: "/admin/test-alerts", icon: TestTube2 },
   { title: "Test System", url: "/admin/test-system", icon: FlaskConical },
   { title: "Audit Log", url: "/admin/audit", icon: Mail },
