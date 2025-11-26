@@ -174,7 +174,11 @@ export const OnboardingDestinations = ({ selectedDestinations, onNext, onBack }:
                         <h3 className="font-semibold text-lg">{dest.city_name}</h3>
                         <p className="text-sm text-muted-foreground">{dest.country}</p>
                       </div>
-                      <Checkbox checked={selected.has(dest.id)} />
+                      <Checkbox 
+                        checked={selected.has(dest.id)}
+                        onCheckedChange={() => toggleSelection(dest)}
+                        onClick={(e) => e.stopPropagation()}
+                      />
                     </div>
                     <div className="flex items-center justify-between mt-3">
                       <Badge variant="secondary">{dest.airport_code}</Badge>
