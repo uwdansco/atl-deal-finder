@@ -503,7 +503,7 @@ serve(async (req) => {
           // All checks passed - create price alert with Google Flights URL
           const bookingLink = `https://www.google.com/travel/flights?q=flights+from+${origin}+to+${destination.airport_code}+on+${departureDate}+returning+${returnDate}`;
           
-          const { error: alertError } = await supabase
+          const { data: alertData, error: alertError } = await supabase
             .from("price_alerts")
             .insert({
               user_id: userDest.user_id,
@@ -521,18 +521,23 @@ serve(async (req) => {
               threshold_price: userDest.price_threshold,
               outbound_date: departureDate,
               return_date: returnDate
-            });
+            })
+            .select()
+            .single();
 
-          if (alertError) {
+          if (alertError || !alertData) {
             console.error("Error creating price alert:", alertError);
             continue;
           }
 
-          // Queue email notification
+          console.log(`✅ Created price alert ${alertData.id} for ${destination.city_name}`);
+
+          // Queue email notification with alert_id for tracking
           const emailResult = await supabase.rpc("queue_email", {
             p_user_id: userDest.user_id,
             p_email_type: "price_alert",
             p_email_data: {
+              alert_id: alertData.id,
               destination: {
                 city_name: destination.city_name,
                 country: destination.country,
