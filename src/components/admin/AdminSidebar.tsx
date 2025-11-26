@@ -89,8 +89,8 @@ export function AdminSidebar() {
               cn(
                 "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                  ? "bg-primary text-primary-foreground font-semibold"
+                  : "text-foreground/80 hover:bg-muted hover:text-foreground"
               )
             }
           >
