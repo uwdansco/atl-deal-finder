@@ -64,9 +64,9 @@ export default function DestinationDetail() {
   return (
     <>
       <SEO
-        title={`Cheap Flights from Atlanta to ${destination.city_name}`}
-        description={`Find the best flight deals from Atlanta (ATL) to ${destination.city_name}, ${destination.country}. Track prices, get alerts, and book at the perfect time.`}
-        keywords={`Atlanta to ${destination.city_name}, ATL to ${destination.airport_code}, cheap flights ${destination.city_name}, ${destination.city_name} flight deals`}
+        title={`Cheap Flights from Singapore to ${destination.city_name}`}
+        description={`Find the best flight deals from Singapore (SIN) to ${destination.city_name}, ${destination.country}. Track prices, get alerts, and book at the perfect time.`}
+        keywords={`Singapore to ${destination.city_name}, SIN to ${destination.airport_code}, cheap flights ${destination.city_name}, ${destination.city_name} flight deals`}
       />
 
       <main className="min-h-screen bg-background">
@@ -80,7 +80,7 @@ export default function DestinationDetail() {
 
             <div className="max-w-4xl">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Cheap Flights from Atlanta to {destination.city_name}
+                Cheap Flights from Singapore to {destination.city_name}
               </h1>
               <p className="text-xl text-muted-foreground mb-6">
                 {destination.country} • {destination.airport_code}
@@ -179,7 +179,7 @@ export default function DestinationDetail() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      Delta, United, and American Airlines offer regular service from Atlanta to {destination.city_name}.
+                      Major airlines offer regular service from Singapore to {destination.city_name}.
                     </p>
                   </CardContent>
                 </Card>

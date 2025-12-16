@@ -15,17 +15,17 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
-    slug: "cheapest-international-destinations-atlanta-2025",
-    title: "10 Cheapest International Destinations from Atlanta in 2025",
-    excerpt: "Discover the most affordable international destinations you can fly to from Atlanta this year. We've analyzed thousands of flight prices to bring you the best deals.",
+    slug: "cheapest-international-destinations-singapore-2025",
+    title: "10 Cheapest International Destinations from Singapore in 2025",
+    excerpt: "Discover the most affordable international destinations you can fly to from Singapore this year. We've analyzed thousands of flight prices to bring you the best deals.",
     content: `
-# 10 Cheapest International Destinations from Atlanta in 2025
+# 10 Cheapest International Destinations from Singapore in 2025
 
-Planning your next international adventure from Atlanta? We've analyzed thousands of flight prices to identify the most affordable destinations for 2025. Here are the top 10 cheapest international destinations from ATL.
+Planning your next international adventure from Singapore? We've analyzed thousands of flight prices to identify the most affordable destinations for 2025. Here are the top 10 cheapest international destinations from SIN.
 
 ## 1. Cancún, Mexico - Average: $250
 
-Cancún consistently offers some of the best deals from Atlanta. With multiple daily flights and fierce competition between airlines, you can often find round-trip tickets for under $250.
+Cancún consistently offers some of the best deals from Singapore. With multiple daily flights and fierce competition between airlines, you can often find round-trip tickets for under $250.
 
 **Best Time to Book:** 3-4 months in advance
 **Peak Season:** December-April
@@ -33,7 +33,7 @@ Cancún consistently offers some of the best deals from Atlanta. With multiple d
 
 ## 2. Montego Bay, Jamaica - Average: $280
 
-Jamaica's vibrant culture and stunning beaches are more accessible than ever from Atlanta. Direct flights make this Caribbean paradise a quick getaway.
+Jamaica's vibrant culture and stunning beaches are more accessible than ever from Singapore. Direct flights make this Caribbean paradise a quick getaway.
 
 **Best Time to Book:** 2-3 months in advance
 **Peak Season:** December-March
@@ -41,7 +41,7 @@ Jamaica's vibrant culture and stunning beaches are more accessible than ever fro
 
 ## 3. San José, Costa Rica - Average: $320
 
-Costa Rica's eco-tourism paradise offers excellent value from ATL. Multiple airlines service this route, keeping prices competitive.
+Costa Rica's eco-tourism paradise offers excellent value from SIN. Multiple airlines service this route, keeping prices competitive.
 
 **Best Time to Book:** 3 months in advance
 **Peak Season:** December-April
@@ -57,7 +57,7 @@ All-inclusive resorts and pristine beaches await in Punta Cana. This destination
 
 ## 5. London, United Kingdom - Average: $450
 
-Europe's most connected city offers surprising value from Atlanta. Multiple airlines and daily flights keep competition high.
+Europe's most connected city offers surprising value from Singapore. Multiple airlines and daily flights keep competition high.
 
 **Best Time to Book:** 2-4 months in advance
 **Peak Season:** June-August
@@ -65,7 +65,7 @@ Europe's most connected city offers surprising value from Atlanta. Multiple airl
 
 ## 6. Paris, France - Average: $480
 
-The City of Light is within reach. Delta's hub status in Atlanta means excellent connectivity to European destinations.
+The City of Light is within reach. Singapore's strong connectivity means excellent options to European destinations.
 
 **Best Time to Book:** 3 months in advance
 **Peak Season:** May-September
@@ -89,7 +89,7 @@ Mexico's capital offers culture, cuisine, and history at unbeatable prices. Dail
 
 ## 9. Aruba - Average: $350
 
-One Happy Island lives up to its name with consistent sunshine and competitive flight prices from Atlanta.
+One Happy Island lives up to its name with consistent sunshine and competitive flight prices from Singapore.
 
 **Best Time to Book:** 3 months in advance
 **Peak Season:** December-April
@@ -105,7 +105,7 @@ The Cayman Islands offer Caribbean luxury at accessible prices, especially with 
 
 ## How to Find These Deals
 
-Set up price alerts on Cheap Atlanta Flights to get notified when prices drop to these destinations. Our users save an average of $200 per ticket by booking at the right time.
+Set up price alerts on Cheap Singapore Flights to get notified when prices drop to these destinations. Our users save an average of $200 per ticket by booking at the right time.
 
 ## Start Tracking
 
@@ -120,13 +120,13 @@ Ready to book your next adventure? Sign up today and start tracking prices to yo
   },
   {
     id: "2",
-    slug: "best-time-book-flights-atlanta",
-    title: "Best Time to Book Flights from Atlanta: Month-by-Month Guide",
-    excerpt: "Learn when to book flights from Atlanta for the best prices. Our comprehensive month-by-month analysis helps you save hundreds on airfare.",
+    slug: "best-time-book-flights-singapore",
+    title: "Best Time to Book Flights from Singapore: Month-by-Month Guide",
+    excerpt: "Learn when to book flights from Singapore for the best prices. Our comprehensive month-by-month analysis helps you save hundreds on airfare.",
     content: `
-# Best Time to Book Flights from Atlanta: Month-by-Month Guide
+# Best Time to Book Flights from Singapore: Month-by-Month Guide
 
-Timing is everything when it comes to booking flights. Based on our analysis of millions of flight prices from Atlanta, here's your month-by-month guide to finding the best deals.
+Timing is everything when it comes to booking flights. Based on our analysis of millions of flight prices from Singapore, here's your month-by-month guide to finding the best deals.
 
 ## January: Post-Holiday Deals
 
@@ -231,7 +231,7 @@ December splits into cheap (early month) and expensive (holidays) periods. Plan 
 2. **Tuesday/Wednesday Departures:** Save 10-20% on average
 3. **Morning Flights:** Often cheaper than afternoon/evening
 4. **Flexibility:** Being flexible with dates can save $100-300
-5. **Set Price Alerts:** Let Cheap Atlanta Flights track prices for you
+5. **Set Price Alerts:** Let Cheap Singapore Flights track prices for you
 
 ## Use Our Price Tracking
 

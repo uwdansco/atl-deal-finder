@@ -56,8 +56,8 @@ const Pricing = () => {
   return (
     <>
       <SEO
-        title="Pricing - Cheap Atlanta Flights"
-        description="Choose the perfect plan for your travel needs. Get real-time flight deal alerts from Atlanta with our monthly or annual subscription."
+        title="Pricing - Cheap Singapore Flights"
+        description="Choose the perfect plan for your travel needs. Get real-time flight deal alerts from Singapore with our monthly or annual subscription."
       />
       <div className="min-h-screen bg-gradient-hero">
         <div className="container mx-auto px-4 py-16">
@@ -234,7 +234,7 @@ const Pricing = () => {
                   <AccordionItem value="item-7">
                     <AccordionTrigger>How often are prices updated?</AccordionTrigger>
                     <AccordionContent>
-                      We monitor flight prices daily from Atlanta to destinations worldwide. When a price drops below your threshold, you'll receive an instant email alert so you can book before the deal expires.
+                      We monitor flight prices daily from Singapore to destinations worldwide. When a price drops below your threshold, you'll receive an instant email alert so you can book before the deal expires.
                     </AccordionContent>
                   </AccordionItem>
 

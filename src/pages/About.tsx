@@ -9,9 +9,9 @@ export default function About() {
   return (
     <>
       <SEO
-        title="About Us - Cheap Atlanta Flights"
-        description="Learn about Cheap Atlanta Flights - our mission to make affordable travel accessible to everyone through smart price tracking and personalized alerts."
-        keywords="about cheap atlanta flights, our mission, who we are, flight price tracking"
+        title="About Us - Cheap Singapore Flights"
+        description="Learn about Cheap Singapore Flights - our mission to make affordable travel accessible to everyone through smart price tracking and personalized alerts."
+        keywords="about cheap singapore flights, our mission, who we are, flight price tracking"
       />
 
       <main className="min-h-screen bg-background">
@@ -22,7 +22,7 @@ export default function About() {
               Making Cheap Flights Accessible to Everyone
             </h1>
             <p className="text-xl text-muted-foreground">
-              We believe everyone deserves to travel. Our mission is to help you find the best flight deals from Atlanta.
+              We believe everyone deserves to travel. Our mission is to help you find the best flight deals from Singapore.
             </p>
           </div>
         </section>
@@ -33,14 +33,14 @@ export default function About() {
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-muted-foreground mb-4">
-                Cheap Atlanta Flights was born from a simple frustration: why is it so hard to find good flight deals? 
+                Cheap Singapore Flights was born from a simple frustration: why is it so hard to find good flight deals? 
                 We spent countless hours manually checking prices, setting calendar reminders, and missing out on amazing deals 
                 because we checked just a day too late.
               </p>
               <p className="text-muted-foreground mb-4">
                 In 2024, we decided to build the solution we wished existed. A tool that would monitor flight prices 24/7, 
                 alert us the moment prices dropped, and help us book at the perfect time. What started as a personal project 
-                quickly grew into a platform serving thousands of Atlanta travelers.
+                quickly grew into a platform serving thousands of Singapore travelers.
               </p>
               <p className="text-muted-foreground">
                 Today, we're proud to help our users save an average of $220 per ticket by booking at exactly the right moment. 
@@ -114,7 +114,7 @@ export default function About() {
               <div>
                 <h3 className="text-xl font-bold mb-2">1. Daily Price Monitoring</h3>
                 <p className="text-muted-foreground">
-                  We check flight prices from Atlanta to any destination every single day using official airline APIs. 
+                  We check flight prices from Singapore to any destination every single day using official airline APIs. 
                   This ensures you always have the most up-to-date pricing information.
                 </p>
               </div>

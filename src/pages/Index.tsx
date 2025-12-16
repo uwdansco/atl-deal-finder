@@ -12,18 +12,18 @@ const Index = () => {
   return (
     <>
       <SEO
-        title="Cheap Flights from Atlanta"
-        description="Get personalized flight price alerts from Atlanta (ATL) to any destination. Track deals, set your budget, and never miss cheap flights again. Free to use."
-        keywords="cheap flights Atlanta, ATL flights, Atlanta flight deals, flight price alerts, cheap flights from Atlanta"
+        title="Cheap Flights from Singapore"
+        description="Get personalized flight price alerts from Singapore (SIN) to any destination. Track deals, set your budget, and never miss cheap flights again. Free to use."
+        keywords="cheap flights Singapore, SIN flights, Singapore flight deals, flight price alerts, cheap flights from Singapore"
         canonicalUrl={window.location.origin}
       />
       <OrganizationSchema
-        name="Cheap Atlanta Flights"
+        name="Cheap Singapore Flights"
         url={window.location.origin}
         logo={`${window.location.origin}/logo.png`}
-        description="Automated flight price tracking and alerts from Atlanta to any destination worldwide"
+        description="Automated flight price tracking and alerts from Singapore to any destination worldwide"
       />
-      <WebSiteSchema name="Cheap Atlanta Flights" url={window.location.origin} />
+      <WebSiteSchema name="Cheap Singapore Flights" url={window.location.origin} />
 
       <main className="min-h-screen bg-background">
         <Hero />

@@ -349,7 +349,8 @@ serve(async (req) => {
 
     const results = [];
     let alertsTriggered = 0;
-    const origin = "ATL";
+    // Single-origin (Singapore Changi) clone: always search from SIN.
+    const origin = "SIN";
     
     // Track API usage statistics
     let amadeusSuccess = 0;

@@ -18,7 +18,7 @@ export const OnboardingWelcome = ({ userName, onNext }: OnboardingWelcomeProps) 
         <Card className="text-center">
           <CardHeader>
             <CardTitle className="text-4xl mb-2">
-              Welcome to Cheap Atlanta Flights{userName ? `, ${userName}` : ''}!
+              Welcome to Cheap Singapore Flights{userName ? `, ${userName}` : ''}!
             </CardTitle>
             <CardDescription className="text-lg">
               Let's set up your personalized flight alerts in 2 easy steps
@@ -30,7 +30,7 @@ export const OnboardingWelcome = ({ userName, onNext }: OnboardingWelcomeProps) 
               <div className="p-6 rounded-lg bg-secondary">
                 <h3 className="font-semibold text-lg mb-2">📍 Choose Destinations</h3>
                 <p className="text-muted-foreground">
-                  Select up to 10 destinations you'd like to track from Atlanta
+                  Select up to 10 destinations you'd like to track from Singapore
                 </p>
               </div>
               <div className="p-6 rounded-lg bg-secondary">

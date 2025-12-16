@@ -22,14 +22,14 @@ export const VerificationEmail = ({
         <div style={container}>
           {/* Header */}
           <div style={header}>
-            <h1 style={h1}>✈️ Cheap Atlanta Flights</h1>
+            <h1 style={h1}>✈️ Cheap Singapore Flights</h1>
           </div>
 
           {/* Main Content */}
           <div style={content}>
-            <h2 style={h2}>Welcome to Cheap Atlanta Flights!</h2>
+            <h2 style={h2}>Welcome to Cheap Singapore Flights!</h2>
             <p style={paragraph}>
-              Thanks for subscribing! We're excited to help you find the best flight deals from Atlanta.
+              Thanks for subscribing! We're excited to help you find the best flight deals from Singapore.
             </p>
             <p style={paragraph}>
               Click the button below to confirm your email address and start receiving daily deal alerts:
@@ -51,7 +51,7 @@ export const VerificationEmail = ({
             </p>
 
             <p style={smallText}>
-              This link will expire in 24 hours. If you didn't subscribe to Cheap Atlanta Flights,
+              This link will expire in 24 hours. If you didn't subscribe to Cheap Singapore Flights,
               you can safely ignore this email.
             </p>
           </div>
@@ -59,7 +59,7 @@ export const VerificationEmail = ({
           {/* Footer */}
           <div style={footer}>
             <p style={footerText}>
-              Cheap Atlanta Flights - Your source for the best flight deals from ATL
+              Cheap Singapore Flights - Your source for the best flight deals from SIN
             </p>
             <p style={footerText}>
               <a href={unsubscribeUrl} style={footerLink}>

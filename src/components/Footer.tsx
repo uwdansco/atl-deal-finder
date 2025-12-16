@@ -15,10 +15,10 @@ const Footer = () => {
               <div className="w-10 h-10 bg-gradient-sky rounded-lg flex items-center justify-center">
                 <Plane className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold">Cheap Atlanta Flights</span>
+              <span className="text-xl font-bold">Cheap Singapore Flights</span>
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
-              Your trusted source for exclusive flight deals from Atlanta (ATL). 
+              Your trusted source for exclusive flight deals from Singapore (SIN). 
               We track prices daily so you can travel more and spend less.
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -81,10 +81,10 @@ const Footer = () => {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
             <p>
-              © {currentYear} Cheap Atlanta Flights. All rights reserved.
+              © {currentYear} Cheap Singapore Flights. All rights reserved.
             </p>
             <p className="text-center md:text-right">
-              Made with ❤️ for Atlanta travelers. 
+              Made with ❤️ for Singapore travelers. 
               <span className="ml-2">Not affiliated with any airline.</span>
             </p>
           </div>

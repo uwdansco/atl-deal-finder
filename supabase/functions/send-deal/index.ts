@@ -93,7 +93,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const siteUrl = Deno.env.get("SITE_URL") || "https://cheapatlantaflights.com";
-    const subject = `🎯 Deal Alert: Atlanta to ${deal.destinations.city_name} from $${deal.price}`;
+    const subject = `🎯 Deal Alert: Singapore to ${deal.destinations.city_name} from $${deal.price}`;
     
     let sentCount = 0;
 
@@ -120,7 +120,7 @@ const handler = async (req: Request): Promise<Response> => {
           })
         );
 
-        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <alerts@cheapatlantaflights.online>";
+        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Singapore Flights <alerts@cheapatlantaflights.online>";
         await resend.emails.send({
           from: emailFrom,
           to: [subscriber.email],

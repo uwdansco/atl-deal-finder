@@ -112,10 +112,10 @@ const Deals = () => {
   return (
     <>
       <Helmet>
-        <title>Flight Deals from Atlanta | Cheap Atlanta Flights</title>
-        <meta name="description" content="Browse all flight deals from Atlanta. Find cheap flights to destinations worldwide with our curated deals." />
-        <meta property="og:title" content="Flight Deals from Atlanta" />
-        <meta property="og:description" content="Browse all flight deals from Atlanta. Find cheap flights to destinations worldwide." />
+        <title>Flight Deals from Singapore | Cheap Singapore Flights</title>
+        <meta name="description" content="Browse all flight deals from Singapore. Find cheap flights to destinations worldwide with our curated deals." />
+        <meta property="og:title" content="Flight Deals from Singapore" />
+        <meta property="og:description" content="Browse all flight deals from Singapore. Find cheap flights to destinations worldwide." />
       </Helmet>
 
       <main className="min-h-screen bg-background">
@@ -123,7 +123,7 @@ const Deals = () => {
         <section className="py-16 px-4 bg-gradient-sunset">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              All Flight Deals from Atlanta
+              All Flight Deals from Singapore
             </h1>
             <p className="text-lg text-white/90 max-w-2xl mx-auto">
               Browse {deals.length} curated flight deals to destinations worldwide

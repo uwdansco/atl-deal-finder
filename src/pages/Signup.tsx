@@ -99,14 +99,14 @@ const Signup = () => {
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center mb-8">
           <Plane className="h-12 w-12 text-primary mr-3" />
-          <h1 className="text-3xl font-bold text-foreground">Cheap Atlanta Flights</h1>
+          <h1 className="text-3xl font-bold text-foreground">Cheap Singapore Flights</h1>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>Create Account</CardTitle>
             <CardDescription>
-              Start tracking amazing flight deals from Atlanta
+              Start tracking amazing flight deals from Singapore
             </CardDescription>
           </CardHeader>
           <CardContent>

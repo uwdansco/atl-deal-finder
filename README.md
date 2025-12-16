@@ -1,6 +1,6 @@
-# Cheap Atlanta Flights
+# Cheap Singapore Flights
 
-Flight price tracking and alert platform monitoring prices from Atlanta (ATL) to 50+ destinations worldwide.
+Flight price tracking and alert platform monitoring prices from Singapore (SIN) to 50+ destinations worldwide.
 
 ## Features
 

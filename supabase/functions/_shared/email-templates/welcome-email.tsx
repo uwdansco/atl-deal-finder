@@ -28,14 +28,14 @@ export const WelcomeEmail = ({
         <div style={container}>
           {/* Header */}
           <div style={header}>
-            <h1 style={h1}>✈️ Cheap Atlanta Flights</h1>
+            <h1 style={h1}>✈️ Cheap Singapore Flights</h1>
           </div>
 
           {/* Main Content */}
           <div style={content}>
             <h2 style={h2}>Welcome aboard, {name || 'Traveler'}! 🎉</h2>
             <p style={paragraph}>
-              Your 7-day free trial has started! You're all set to receive the best flight deals from Atlanta.
+              Your 7-day free trial has started! You're all set to receive the best flight deals from Singapore.
             </p>
 
             <div style={trialBox}>
@@ -97,7 +97,7 @@ export const WelcomeEmail = ({
               Happy travels!
             </p>
             <p style={footerText}>
-              The Cheap Atlanta Flights Team
+              The Cheap Singapore Flights Team
             </p>
             <p style={footerText}>
               <a href={unsubscribeUrl} style={footerLink}>

@@ -112,7 +112,7 @@ export const ArticleSchema = ({
     },
     publisher: {
       "@type": "Organization",
-      name: "Cheap Atlanta Flights",
+      name: "Cheap Singapore Flights",
       logo: {
         "@type": "ImageObject",
         url: `${window.location.origin}/logo.png`,

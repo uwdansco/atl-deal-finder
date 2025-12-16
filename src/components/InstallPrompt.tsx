@@ -71,7 +71,7 @@ export const InstallPrompt = () => {
         </div>
         
         <div className="flex-1">
-          <h3 className="font-semibold mb-1">Install ATL Flights</h3>
+          <h3 className="font-semibold mb-1">Install SIN Flights</h3>
           <p className="text-sm text-muted-foreground mb-3">
             Get instant access to flight alerts right from your home screen
           </p>

@@ -188,10 +188,10 @@ const DealDetails = () => {
   return (
     <>
       <Helmet>
-        <title>{`${deal.destination.city_name} Flight Deal - $${deal.price} from Atlanta`}</title>
+        <title>{`${deal.destination.city_name} Flight Deal - $${deal.price} from Singapore`}</title>
         <meta 
           name="description" 
-          content={`Fly to ${deal.destination.city_name}, ${deal.destination.country} for just $${deal.price} roundtrip from Atlanta. Book now!`} 
+          content={`Fly to ${deal.destination.city_name}, ${deal.destination.country} for just $${deal.price} roundtrip from Singapore. Book now!`} 
         />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -272,7 +272,7 @@ const DealDetails = () => {
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">Atlanta (ATL)</span>
+                    <span className="font-semibold">Singapore (SIN)</span>
                   </div>
                   <Plane className="w-5 h-5 text-muted-foreground" />
                   <div className="flex items-center gap-2">
@@ -357,7 +357,7 @@ const DealDetails = () => {
               Never Miss a Deal
             </h2>
             <p className="text-lg text-white/90 mb-8">
-              Subscribe to get daily flight deals from Atlanta sent to your inbox
+              Subscribe to get daily flight deals from Singapore sent to your inbox
             </p>
             <Link to="/pricing">
               <Button size="lg" variant="secondary">

@@ -30,7 +30,7 @@ export const MobileMenu = () => {
       <SheetContent side="left" className="w-[280px] sm:w-[350px]">
         <div className="flex items-center gap-2 mb-8">
           <Plane className="h-6 w-6 text-primary" />
-          <span className="font-bold text-lg">ATL Flights</span>
+          <span className="font-bold text-lg">SIN Flights</span>
         </div>
         
         <nav className="flex flex-col gap-4">

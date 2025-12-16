@@ -9,7 +9,7 @@ const CheckEmail = () => {
     <>
       <SEO 
         title="Check Your Email"
-        description="Verify your email to start receiving flight deal alerts from Atlanta."
+        description="Verify your email to start receiving flight deal alerts from Singapore."
       />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 px-4">
         <Card className="max-w-md w-full p-8 text-center space-y-6">
@@ -22,7 +22,7 @@ const CheckEmail = () => {
           <div className="space-y-2">
             <h1 className="text-2xl font-bold">Check Your Email!</h1>
             <p className="text-muted-foreground">
-              We've sent you a verification link. Click it to confirm your subscription and start receiving amazing flight deals from Atlanta.
+              We've sent you a verification link. Click it to confirm your subscription and start receiving amazing flight deals from Singapore.
             </p>
           </div>
 
