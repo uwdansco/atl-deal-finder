@@ -158,7 +158,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20">
-            <span className="text-sm font-semibold text-accent">✈️ Atlanta's #1 Flight Deal Newsletter</span>
+            <span className="text-sm font-semibold text-accent">✈️ Memphis's #1 Flight Deal Newsletter</span>
           </div>
 
           {/* Headline */}
@@ -166,7 +166,7 @@ const Hero = () => {
             <span className="text-foreground drop-shadow-lg">Cheap Flights from</span>
             <br />
             <span className="text-foreground drop-shadow-lg">
-              Atlanta <span className="text-accent">(ATL)</span>
+              Memphis <span className="text-accent">(MEM)</span>
             </span>
           </h1>
 

@@ -28,14 +28,14 @@ export const WelcomeEmail = ({
         <div style={container}>
           {/* Header */}
           <div style={header}>
-            <h1 style={h1}>✈️ Cheap Atlanta Flights</h1>
+            <h1 style={h1}>✈️ Cheap Memphis Flights</h1>
           </div>
 
           {/* Main Content */}
           <div style={content}>
             <h2 style={h2}>Welcome aboard, {name || 'Traveler'}! 🎉</h2>
             <p style={paragraph}>
-              Your 7-day free trial has started! You're all set to receive the best flight deals from Atlanta.
+              Your 7-day free trial has started! You're all set to receive the best flight deals from Memphis.
             </p>
 
             <div style={trialBox}>
@@ -74,7 +74,7 @@ export const WelcomeEmail = ({
             </p>
 
             <div style={buttonContainer}>
-              <a style={button} href="https://cheapatlantaflights.com/deals">
+              <a style={button} href="https://cheapmemphisflights.com/deals">
                 Browse Current Deals
               </a>
             </div>
@@ -97,13 +97,13 @@ export const WelcomeEmail = ({
               Happy travels!
             </p>
             <p style={footerText}>
-              The Cheap Atlanta Flights Team
+              The Cheap Memphis Flights Team
             </p>
             <p style={footerText}>
               <a href={unsubscribeUrl} style={footerLink}>
                 Unsubscribe
               </a> • 
-              <a href="mailto:support@cheapatlantaflights.com" style={footerLink}>
+              <a href="mailto:support@cheapmemphisflights.com" style={footerLink}>
                 {' '}Contact Us
               </a>
             </p>

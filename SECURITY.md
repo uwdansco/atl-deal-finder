@@ -1,8 +1,8 @@
-# Security Policy - Cheap Atlanta Flights
+# Security Policy - Cheap Memphis Flights
 
 ## 🔒 Security Overview
 
-This document outlines the security measures, policies, and procedures for the Cheap Atlanta Flights platform.
+This document outlines the security measures, policies, and procedures for the Cheap Memphis Flights platform.
 
 ## 🛡️ Security Features
 
@@ -234,8 +234,8 @@ Never logged or exposed:
 
 ### Security Contacts
 
-- **Security Issues**: security@cheapatlantaflights.com
-- **Data Privacy**: privacy@cheapatlantaflights.com
+- **Security Issues**: security@cheapmemphisflights.com
+- **Data Privacy**: privacy@cheapmemphisflights.com
 - **On-Call Developer**: [Phone number]
 
 ## 🔍 Vulnerability Reporting
@@ -245,7 +245,7 @@ Never logged or exposed:
 If you discover a security vulnerability:
 
 1. **DO NOT** disclose publicly
-2. Email security@cheapatlantaflights.com with:
+2. Email security@cheapmemphisflights.com with:
    - Description of vulnerability
    - Steps to reproduce
    - Potential impact
@@ -314,4 +314,4 @@ We thank security researchers who help us keep our platform secure. Acknowledged
 **Last Updated**: [Current Date]
 **Next Review**: [Date + 3 months]
 
-For questions or concerns, contact: security@cheapatlantaflights.com
+For questions or concerns, contact: security@cheapmemphisflights.com
