@@ -40,7 +40,6 @@ serve(async (req) => {
 
     // Try to find existing destination with price history
     let existingStats = null;
-    let destinationName = `${city}, ${country}`;
     
     const { data: destination } = await supabase
       .from('destinations')
@@ -212,14 +211,15 @@ Consider typical flight costs from Memphis to this destination and what would be
       }
     );
 
-  } catch (error: any) {
-    console.error('Error in suggest-threshold function:', error);
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    console.error('Error in suggest-threshold function:', err);
     return new Response(
       JSON.stringify({
         recommended_threshold: 500,
         confidence: 'low',
         reasoning: 'Error occurred - using default threshold',
-        error: error.message,
+        error: err.message,
       }),
       {
         status: 200,

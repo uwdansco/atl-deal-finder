@@ -14,16 +14,15 @@ import { Badge } from "@/components/ui/badge";
 export default function Destinations() {
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useAuth();
-
-  // Redirect to login if not authenticated
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  const userId = user?.id;
 
   const { data: destinations, isLoading } = useQuery({
-    queryKey: ["user-tracked-destinations", searchTerm, user.id],
+    queryKey: ["user-tracked-destinations", searchTerm, userId],
+    enabled: !!userId,
     queryFn: async () => {
-      let query = supabase
+      if (!userId) return [];
+
+      const query = supabase
         .from("user_destinations")
         .select(`
           destination_id,
@@ -40,7 +39,7 @@ export default function Destinations() {
             )
           )
         `)
-        .eq("user_id", user.id)
+        .eq("user_id", userId)
         .eq("is_active", true);
 
       const { data: userDestinations, error } = await query;
@@ -64,6 +63,11 @@ export default function Destinations() {
       return results;
     },
   });
+
+  // Redirect to login if not authenticated
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <>
