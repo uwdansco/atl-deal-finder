@@ -17,7 +17,7 @@ export const OrganizationSchema = ({ name, url, logo, description }: Organizatio
     description,
     contactPoint: {
       "@type": "ContactPoint",
-      email: "support@cheapatlantaflights.com",
+      email: "support@cheapmemphisflights.com",
       contactType: "Customer Service",
     },
   };
@@ -112,7 +112,7 @@ export const ArticleSchema = ({
     },
     publisher: {
       "@type": "Organization",
-      name: "Cheap Atlanta Flights",
+      name: "Cheap Memphis Flights",
       logo: {
         "@type": "ImageObject",
         url: `${window.location.origin}/logo.png`,

@@ -77,7 +77,7 @@ const RecentDeals = () => {
             <span className="text-sm font-semibold text-accent">Recent Deals</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold">
-            Latest Flight Deals from Atlanta
+            Latest Flight Deals from Memphis
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Real deals sent to our subscribers. Don't miss out on your next adventure!

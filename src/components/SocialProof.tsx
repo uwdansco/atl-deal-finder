@@ -30,19 +30,19 @@ const stats = [
 const testimonials = [
   {
     name: "Sarah M.",
-    location: "Atlanta, GA",
+    location: "Memphis, TN",
     text: "Found a roundtrip to Paris for $399! This newsletter has saved me so much money on flights.",
     rating: 5,
   },
   {
     name: "Michael R.",
-    location: "Decatur, GA",
+    location: "Germantown, TN",
     text: "I never miss a deal now. The alerts are timely and the prices are legitimately amazing.",
     rating: 5,
   },
   {
     name: "Jessica L.",
-    location: "Marietta, GA",
+    location: "Collierville, TN",
     text: "As someone who travels frequently for work, this service has been a game-changer for my personal trips too.",
     rating: 5,
   },
@@ -82,7 +82,7 @@ const SocialProof = () => {
         <div className="space-y-8">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-5xl font-bold">
-              Loved by Atlanta Travelers
+              Loved by Memphis Travelers
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Don't just take our word for it. Here's what our subscribers have to say.

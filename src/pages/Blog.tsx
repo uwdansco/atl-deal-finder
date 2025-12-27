@@ -15,8 +15,8 @@ export default function Blog() {
     <>
       <SEO
         title="Flight Deals Blog - Tips & Guides"
-        description="Expert tips on finding cheap flights from Atlanta, travel guides, destination insights, and money-saving strategies for budget travelers."
-        keywords="flight deals blog, cheap flights tips, travel guides, Atlanta travel, budget travel"
+        description="Expert tips on finding cheap flights from Memphis, travel guides, destination insights, and money-saving strategies for budget travelers."
+        keywords="flight deals blog, cheap flights tips, travel guides, Memphis travel, budget travel"
       />
 
       <main className="min-h-screen bg-background">

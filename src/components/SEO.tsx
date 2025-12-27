@@ -20,7 +20,7 @@ export const SEO = ({
   canonicalUrl,
 }: SEOProps) => {
   const siteUrl = window.location.origin;
-  const fullTitle = `${title} | Cheap Atlanta Flights`;
+  const fullTitle = `${title} | Cheap Memphis Flights`;
   const canonical = canonicalUrl || window.location.href;
 
   return (
@@ -38,7 +38,7 @@ export const SEO = ({
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={`${siteUrl}${ogImage}`} />
-      <meta property="og:site_name" content="Cheap Atlanta Flights" />
+      <meta property="og:site_name" content="Cheap Memphis Flights" />
 
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
