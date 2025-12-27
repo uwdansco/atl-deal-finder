@@ -9,14 +9,14 @@ import Footer from "@/components/Footer";
 const steps = [
   {
     icon: UserPlus,
-    title: "Sign Up Free",
-    description: "Create your free account in less than 30 seconds. No credit card required, ever.",
+    title: "Start Free Trial",
+    description: "Create your account in less than 30 seconds. Get 7 days free to try everything.",
     time: "30 seconds",
   },
   {
     icon: MapPin,
     title: "Choose Destinations",
-    description: "Select up to 10 destinations you want to track from our list of locations worldwide.",
+    description: "Track unlimited destinations worldwide. Select anywhere you want to travel.",
     time: "2 minutes",
   },
   {
@@ -34,13 +34,14 @@ const steps = [
 ];
 
 const benefits = [
-  "Track up to 10 destinations for free",
-  "Daily price monitoring",
+  "Track unlimited destinations",
+  "Price monitoring every 2 hours",
   "Instant email alerts",
   "Historical price charts",
   "Price trend analysis",
   "Deal quality indicators",
   "No ads or spam",
+  "7-day free trial",
   "Cancel anytime",
 ];
 
@@ -76,7 +77,7 @@ export default function HowItWorksPage() {
               Save money on flights with our simple 4-step process. Start tracking prices in under 5 minutes.
             </p>
             <Button size="lg" asChild>
-              <Link to="/signup">Get Started Free</Link>
+              <Link to="/pricing">Start 7-Day Free Trial</Link>
             </Button>
           </div>
         </section>
@@ -104,10 +105,9 @@ export default function HowItWorksPage() {
           </div>
         </section>
 
-        {/* What You Get */}
         <section className="py-16 bg-secondary/10">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-3xl font-bold mb-8 text-center">What's Included (Free Forever)</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center">What's Included</h2>
             <div className="grid gap-4 md:grid-cols-2">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-3">
@@ -137,7 +137,7 @@ export default function HowItWorksPage() {
             <div className="mt-12 text-center">
               <p className="text-lg mb-6">Have more questions?</p>
               <Button variant="outline" asChild>
-                <Link to="/faq">View Full FAQ</Link>
+                <Link to="/pricing">View Pricing & Full FAQ</Link>
               </Button>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function HowItWorksPage() {
               Join thousands of travelers who never overpay for flights.
             </p>
             <Button size="lg" asChild>
-              <Link to="/signup">Create Free Account</Link>
+              <Link to="/pricing">Start 7-Day Free Trial</Link>
             </Button>
           </div>
         </section>

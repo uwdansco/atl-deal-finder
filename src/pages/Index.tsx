@@ -13,7 +13,7 @@ const Index = () => {
     <>
       <SEO
         title="Cheap Flights from Memphis"
-        description="Get personalized flight price alerts from Memphis (MEM) to any destination. Track deals, set your budget, and never miss cheap flights again. Free to use."
+        description="Get personalized flight price alerts from Memphis (MEM) to any destination. Track deals, set your budget, and never miss cheap flights again. Start your 7-day free trial."
         keywords="cheap flights Memphis, MEM flights, Memphis flight deals, flight price alerts, cheap flights from Memphis"
         canonicalUrl={window.location.origin}
       />
