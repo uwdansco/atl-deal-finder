@@ -73,9 +73,9 @@ export default function Destinations() {
     <>
 
       <SEO
-        title="My Tracked Destinations - Cheap Flights from Atlanta"
-        description="Track flight prices to your favorite destinations from Atlanta (ATL). Get instant alerts when prices drop to your budget."
-        keywords="Atlanta flights, tracked flights, price alerts, flight deals, ATL destinations"
+        title="My Tracked Destinations - Cheap Flights from Memphis"
+        description="Track flight prices to your favorite destinations from Memphis (MEM). Get instant alerts when prices drop to your budget."
+        keywords="Memphis flights, tracked flights, price alerts, flight deals, MEM destinations"
       />
 
       <main className="min-h-screen bg-background">

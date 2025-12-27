@@ -5,7 +5,7 @@ const steps = [
   {
     icon: Search,
     title: "We Track Prices",
-    description: "Our system monitors flight prices from Atlanta to any destination daily using advanced automation.",
+    description: "Our system monitors flight prices from Memphis to any destination every 2 hours using advanced automation.",
   },
   {
     icon: Bell,
@@ -20,7 +20,7 @@ const steps = [
   {
     icon: Plane,
     title: "Book & Save",
-    description: "Click through to book your flight and save hundreds on your next adventure from Atlanta.",
+    description: "Click through to book your flight and save hundreds on your next adventure from Memphis.",
   },
 ];
 
@@ -81,7 +81,7 @@ const HowItWorks = () => {
           <div className="inline-flex flex-col items-center gap-4 p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20">
             <h3 className="text-2xl font-bold">Ready to start saving?</h3>
             <p className="text-muted-foreground max-w-md">
-              Join thousands of Atlanta travelers who never miss a deal. It's completely free.
+              Join thousands of Memphis travelers who never miss a deal.
             </p>
             <Link 
               to="/pricing" 

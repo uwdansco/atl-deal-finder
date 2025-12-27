@@ -47,7 +47,7 @@ const benefits = [
 const faqs = [
   {
     question: "How often do you check prices?",
-    answer: "We check flight prices from Atlanta to all destinations every 24 hours. This ensures you always have the most current pricing information and never miss a deal.",
+    answer: "We check flight prices from Memphis to all destinations every 2 hours. This ensures you always have the most current pricing information and never miss a deal.",
   },
   {
     question: "Will I get spammed with emails?",
@@ -60,8 +60,8 @@ export default function HowItWorksPage() {
     <>
       <SEO
         title="How It Works - Flight Price Tracking Made Simple"
-        description="Learn how Cheap Atlanta Flights helps you save money on airfare with automated price tracking, smart alerts, and personalized notifications."
-        keywords="how flight tracking works, price alerts, save on flights, automated price monitoring"
+        description="Learn how Cheap Memphis Flights helps you save money on airfare with automated price tracking, smart alerts, and personalized notifications."
+        keywords="how flight tracking works, price alerts, save on flights, automated price monitoring, Memphis flights"
       />
       <FAQSchema faqs={faqs} />
 
@@ -70,7 +70,7 @@ export default function HowItWorksPage() {
         <section className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-20">
           <div className="container mx-auto px-4 max-w-4xl text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              How Cheap Atlanta Flights Works
+              How Cheap Memphis Flights Works
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
               Save money on flights with our simple 4-step process. Start tracking prices in under 5 minutes.
