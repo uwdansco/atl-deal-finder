@@ -87,46 +87,38 @@ serve(async (req) => {
 
     if (existingStats) {
       // We have real historical data - use it for much better recommendations
-      systemPrompt = `You are an expert flight pricing analyst. Analyze the historical price data and recommend an optimal price alert threshold.
+      systemPrompt = `You are a flight pricing analyst. Your task is to recommend a price alert threshold based on historical data.
 
-Your goal: Recommend a threshold that captures genuinely good deals (around 20-30th percentile) while avoiding alerts for average or above-average prices.
+IMPORTANT: You must respond with ONLY a valid JSON object. No other text, no markdown, no explanations outside the JSON.
 
-Return ONLY a JSON object with these exact fields (no markdown, no code blocks):
-{
-  "recommended_threshold": <number between all_time_low and percentile_50>,
-  "confidence": "high",
-  "reasoning": "<1 sentence explaining your recommendation based on the data>"
-}`;
+Response format:
+{"recommended_threshold": NUMBER, "confidence": "high", "reasoning": "YOUR_REASONING"}
 
-      userPrompt = `Analyze this historical price data for flights from Memphis (MEM) to ${city}, ${country}:
+The recommended_threshold should be between the all_time_low and percentile_50 values provided.`;
 
-Historical Statistics (based on ${existingStats.total_samples} price samples):
+      userPrompt = `Historical price data for flights from Memphis International Airport (MEM) to ${city}, ${country}:
+
 - All-time low: $${existingStats.all_time_low}
 - 25th percentile: $${existingStats.percentile_25}
 - 50th percentile (median): $${existingStats.percentile_50}
 - 90-day average: $${existingStats.avg_90day}
+- Total samples: ${existingStats.total_samples}
 
-Recommend a threshold that will alert users to exceptional deals (below typical good prices) but not too low to be unrealistic.`;
+Recommend a threshold between the all-time low and 25th percentile for this Memphis route.`;
     } else {
       // No historical data - use AI estimation
-      systemPrompt = `You are an expert flight pricing analyst. Based on the destination provided, recommend an optimal price alert threshold for round-trip flights from Memphis (MEM).
+      systemPrompt = `You are a flight pricing analyst. Your task is to recommend a price alert threshold for round-trip flights from Memphis International Airport (MEM).
 
-Consider:
-- Typical flight costs from Memphis to this destination
-- Distance, region, and seasonal patterns
-- Whether it's a popular/budget or premium destination
-- Realistic "good deal" prices travelers would want to be alerted about
+IMPORTANT: You must respond with ONLY a valid JSON object. No other text, no markdown, no explanations outside the JSON.
 
-Return ONLY a JSON object with these exact fields (no markdown, no code blocks):
-{
-  "recommended_threshold": <number between 200-1500>,
-  "confidence": "medium",
-  "reasoning": "<brief 1-sentence explanation>"
-}`;
+Response format:
+{"recommended_threshold": NUMBER, "confidence": "medium", "reasoning": "YOUR_REASONING"}
 
-      userPrompt = `Suggest a price alert threshold for flights from Memphis (MEM) to ${city}, ${country}${airport_code ? ` (${airport_code})` : ''}.
+The NUMBER should be between 200 and 1500 USD.`;
 
-What price point would indicate a genuinely good deal for this route?`;
+      userPrompt = `Recommend a price alert threshold for round-trip flights from Memphis (MEM) to ${city}, ${country}${airport_code ? ` (${airport_code})` : ''}.
+
+Consider typical flight costs from Memphis to this destination and what would be a genuinely good deal price.`;
     }
 
     console.log('Calling Lovable AI for threshold suggestion...');
