@@ -98,7 +98,7 @@ Return ONLY a JSON object with these exact fields (no markdown, no code blocks):
   "reasoning": "<1 sentence explaining your recommendation based on the data>"
 }`;
 
-      userPrompt = `Analyze this historical price data for flights from Atlanta (ATL) to ${city}, ${country}:
+      userPrompt = `Analyze this historical price data for flights from Memphis (MEM) to ${city}, ${country}:
 
 Historical Statistics (based on ${existingStats.total_samples} price samples):
 - All-time low: $${existingStats.all_time_low}
@@ -109,10 +109,10 @@ Historical Statistics (based on ${existingStats.total_samples} price samples):
 Recommend a threshold that will alert users to exceptional deals (below typical good prices) but not too low to be unrealistic.`;
     } else {
       // No historical data - use AI estimation
-      systemPrompt = `You are an expert flight pricing analyst. Based on the destination provided, recommend an optimal price alert threshold for round-trip flights from Atlanta (ATL).
+      systemPrompt = `You are an expert flight pricing analyst. Based on the destination provided, recommend an optimal price alert threshold for round-trip flights from Memphis (MEM).
 
 Consider:
-- Typical flight costs from Atlanta to this destination
+- Typical flight costs from Memphis to this destination
 - Distance, region, and seasonal patterns
 - Whether it's a popular/budget or premium destination
 - Realistic "good deal" prices travelers would want to be alerted about
@@ -124,7 +124,7 @@ Return ONLY a JSON object with these exact fields (no markdown, no code blocks):
   "reasoning": "<brief 1-sentence explanation>"
 }`;
 
-      userPrompt = `Suggest a price alert threshold for flights from Atlanta (ATL) to ${city}, ${country}${airport_code ? ` (${airport_code})` : ''}.
+      userPrompt = `Suggest a price alert threshold for flights from Memphis (MEM) to ${city}, ${country}${airport_code ? ` (${airport_code})` : ''}.
 
 What price point would indicate a genuinely good deal for this route?`;
     }

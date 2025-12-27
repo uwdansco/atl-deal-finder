@@ -68,11 +68,11 @@ export const DealAlertEmail = ({
       <Head>
         <title>Flight Price Alert</title>
       </Head>
-      <Preview>🎉 {deal_quality} Deal: Atlanta to {destination_city} - ${Math.round(current_price).toString()}</Preview>
+      <Preview>🎉 {deal_quality} Deal: Memphis to {destination_city} - ${Math.round(current_price).toString()}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
-            <Heading style={h1}>✈️ Cheap Atlanta Flights</Heading>
+            <Heading style={h1}>✈️ Cheap Memphis Flights</Heading>
             <Text style={dealBadge}>{deal_quality}</Text>
           </Section>
 
@@ -84,7 +84,7 @@ export const DealAlertEmail = ({
 
           <Section style={content}>
             <Heading style={destinationHeading}>
-              Atlanta → {destination_city}
+              Memphis → {destination_city}
             </Heading>
             <Text style={countryText}>{destination_country}</Text>
 
@@ -136,7 +136,7 @@ export const DealAlertEmail = ({
                 <strong>🏠 Return:</strong> {formatDate(return_date)}
               </Text>
               <Text style={detailRow}>
-                <strong>📍 From:</strong> Atlanta (ATL)
+                <strong>📍 From:</strong> Memphis (MEM)
               </Text>
             </Section>
 
@@ -152,7 +152,7 @@ export const DealAlertEmail = ({
 
           <Section style={footer}>
             <Text style={footerText}>
-              You're receiving this because you subscribed to Cheap Atlanta Flights price alerts.
+              You're receiving this because you subscribed to Cheap Memphis Flights price alerts.
             </Text>
             <Text style={footerLinks}>
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>

@@ -128,7 +128,7 @@ export default function SendEmailPage() {
 We've found some incredible deals for you...
 
 Best regards,
-Cheap Atlanta Flights Team"
+Cheap Memphis Flights Team"
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 rows={12}
@@ -162,7 +162,7 @@ Cheap Atlanta Flights Team"
                       </div>
                     </div>
                     <div className="mt-6 pt-4 border-t text-xs text-muted-foreground">
-                      <p>© {new Date().getFullYear()} Cheap Atlanta Flights</p>
+                      <p>© {new Date().getFullYear()} Cheap Memphis Flights</p>
                       <p>You're receiving this because you subscribed to our flight deals.</p>
                     </div>
                   </div>

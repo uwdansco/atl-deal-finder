@@ -15,39 +15,39 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
-    slug: "cheapest-international-destinations-atlanta-2025",
-    title: "10 Cheapest International Destinations from Atlanta in 2025",
-    excerpt: "Discover the most affordable international destinations you can fly to from Atlanta this year. We've analyzed thousands of flight prices to bring you the best deals.",
+    slug: "cheapest-international-destinations-memphis-2025",
+    title: "10 Cheapest International Destinations from Memphis in 2025",
+    excerpt: "Discover the most affordable international destinations you can fly to from Memphis this year. We've analyzed thousands of flight prices to bring you the best deals.",
     content: `
-# 10 Cheapest International Destinations from Atlanta in 2025
+# 10 Cheapest International Destinations from Memphis in 2025
 
-Planning your next international adventure from Atlanta? We've analyzed thousands of flight prices to identify the most affordable destinations for 2025. Here are the top 10 cheapest international destinations from ATL.
+Planning your next international adventure from Memphis? We've analyzed thousands of flight prices to identify the most affordable destinations for 2025. Here are the top 10 cheapest international destinations from MEM.
 
-## 1. Cancún, Mexico - Average: $250
+## 1. Cancún, Mexico - Average: $280
 
-Cancún consistently offers some of the best deals from Atlanta. With multiple daily flights and fierce competition between airlines, you can often find round-trip tickets for under $250.
+Cancún consistently offers some of the best deals from Memphis. With connecting flights through major hubs and competitive pricing, you can often find round-trip tickets for under $300.
 
 **Best Time to Book:** 3-4 months in advance
 **Peak Season:** December-April
 **Budget Tip:** Travel in May or September for the lowest prices
 
-## 2. Montego Bay, Jamaica - Average: $280
+## 2. Montego Bay, Jamaica - Average: $320
 
-Jamaica's vibrant culture and stunning beaches are more accessible than ever from Atlanta. Direct flights make this Caribbean paradise a quick getaway.
+Jamaica's vibrant culture and stunning beaches are accessible from Memphis with convenient connections. The Caribbean paradise awaits!
 
 **Best Time to Book:** 2-3 months in advance
 **Peak Season:** December-March
 **Budget Tip:** Look for shoulder season deals in April and November
 
-## 3. San José, Costa Rica - Average: $320
+## 3. San José, Costa Rica - Average: $350
 
-Costa Rica's eco-tourism paradise offers excellent value from ATL. Multiple airlines service this route, keeping prices competitive.
+Costa Rica's eco-tourism paradise offers excellent value from MEM. Multiple routing options keep prices competitive.
 
 **Best Time to Book:** 3 months in advance
 **Peak Season:** December-April
 **Budget Tip:** Visit during the green season (May-November) for 40% savings
 
-## 4. Punta Cana, Dominican Republic - Average: $290
+## 4. Punta Cana, Dominican Republic - Average: $330
 
 All-inclusive resorts and pristine beaches await in Punta Cana. This destination frequently appears in our price alerts.
 
@@ -55,49 +55,49 @@ All-inclusive resorts and pristine beaches await in Punta Cana. This destination
 **Peak Season:** December-April
 **Budget Tip:** Book last-minute for flash sales
 
-## 5. London, United Kingdom - Average: $450
+## 5. London, United Kingdom - Average: $520
 
-Europe's most connected city offers surprising value from Atlanta. Multiple airlines and daily flights keep competition high.
+Europe's most connected city offers good value from Memphis with connections through major hubs like Charlotte, Dallas, and Chicago.
 
 **Best Time to Book:** 2-4 months in advance
 **Peak Season:** June-August
 **Budget Tip:** Fly on weekdays and book for January-March
 
-## 6. Paris, France - Average: $480
+## 6. Paris, France - Average: $550
 
-The City of Light is within reach. Delta's hub status in Atlanta means excellent connectivity to European destinations.
+The City of Light is within reach. Memphis offers excellent connectivity to European destinations through major airline hubs.
 
 **Best Time to Book:** 3 months in advance
 **Peak Season:** May-September
 **Budget Tip:** Visit in November or February for best prices
 
-## 7. Nassau, Bahamas - Average: $260
+## 7. Nassau, Bahamas - Average: $290
 
-Just a short flight away, the Bahamas offers crystal-clear waters and island vibes at budget-friendly prices.
+The Bahamas offers crystal-clear waters and island vibes at budget-friendly prices from Memphis.
 
 **Best Time to Book:** 4-6 weeks in advance
 **Peak Season:** December-April
 **Budget Tip:** Travel midweek for 20% savings
 
-## 8. Mexico City, Mexico - Average: $270
+## 8. Mexico City, Mexico - Average: $300
 
-Mexico's capital offers culture, cuisine, and history at unbeatable prices. Daily direct flights make it easily accessible.
+Mexico's capital offers culture, cuisine, and history at unbeatable prices. Good connections make it easily accessible from Memphis.
 
 **Best Time to Book:** 2 months in advance
 **Peak Season:** November-March
 **Budget Tip:** Avoid holiday weekends for better deals
 
-## 9. Aruba - Average: $350
+## 9. Aruba - Average: $380
 
-One Happy Island lives up to its name with consistent sunshine and competitive flight prices from Atlanta.
+One Happy Island lives up to its name with consistent sunshine and competitive flight prices from Memphis.
 
 **Best Time to Book:** 3 months in advance
 **Peak Season:** December-April
 **Budget Tip:** Book for May or November for shoulder season savings
 
-## 10. Grand Cayman - Average: $380
+## 10. Grand Cayman - Average: $420
 
-The Cayman Islands offer Caribbean luxury at accessible prices, especially with advance planning.
+The Cayman Islands offer Caribbean luxury at accessible prices, especially with advance planning from Memphis.
 
 **Best Time to Book:** 4 months in advance
 **Peak Season:** December-April
@@ -105,7 +105,7 @@ The Cayman Islands offer Caribbean luxury at accessible prices, especially with 
 
 ## How to Find These Deals
 
-Set up price alerts on Cheap Atlanta Flights to get notified when prices drop to these destinations. Our users save an average of $200 per ticket by booking at the right time.
+Set up price alerts on Cheap Memphis Flights to get notified when prices drop to these destinations. Our users save an average of $200 per ticket by booking at the right time.
 
 ## Start Tracking
 
@@ -120,13 +120,13 @@ Ready to book your next adventure? Sign up today and start tracking prices to yo
   },
   {
     id: "2",
-    slug: "best-time-book-flights-atlanta",
-    title: "Best Time to Book Flights from Atlanta: Month-by-Month Guide",
-    excerpt: "Learn when to book flights from Atlanta for the best prices. Our comprehensive month-by-month analysis helps you save hundreds on airfare.",
+    slug: "best-time-book-flights-memphis",
+    title: "Best Time to Book Flights from Memphis: Month-by-Month Guide",
+    excerpt: "Learn when to book flights from Memphis for the best prices. Our comprehensive month-by-month analysis helps you save hundreds on airfare.",
     content: `
-# Best Time to Book Flights from Atlanta: Month-by-Month Guide
+# Best Time to Book Flights from Memphis: Month-by-Month Guide
 
-Timing is everything when it comes to booking flights. Based on our analysis of millions of flight prices from Atlanta, here's your month-by-month guide to finding the best deals.
+Timing is everything when it comes to booking flights. Based on our analysis of millions of flight prices from Memphis, here's your month-by-month guide to finding the best deals.
 
 ## January: Post-Holiday Deals
 
@@ -231,7 +231,7 @@ December splits into cheap (early month) and expensive (holidays) periods. Plan 
 2. **Tuesday/Wednesday Departures:** Save 10-20% on average
 3. **Morning Flights:** Often cheaper than afternoon/evening
 4. **Flexibility:** Being flexible with dates can save $100-300
-5. **Set Price Alerts:** Let Cheap Atlanta Flights track prices for you
+5. **Set Price Alerts:** Let Cheap Memphis Flights track prices for you
 
 ## Use Our Price Tracking
 

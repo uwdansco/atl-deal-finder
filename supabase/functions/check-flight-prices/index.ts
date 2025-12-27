@@ -349,7 +349,7 @@ serve(async (req) => {
 
     const results = [];
     let alertsTriggered = 0;
-    const origin = "ATL";
+    const origin = "MEM";
     
     // Track API usage statistics
     let amadeusSuccess = 0;
