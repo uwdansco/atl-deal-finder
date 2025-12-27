@@ -151,10 +151,10 @@ export default function About() {
           <div className="container mx-auto px-4 max-w-2xl text-center">
             <h2 className="text-3xl font-bold mb-4">Join Thousands of Smart Travelers</h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Start tracking prices and never overpay for flights again. It's completely free to get started.
+              Start your 7-day free trial and never overpay for flights again.
             </p>
             <Button size="lg" asChild>
-              <Link to="/signup">Start Saving on Flights</Link>
+              <Link to="/pricing">Start Free Trial</Link>
             </Button>
           </div>
         </section>
