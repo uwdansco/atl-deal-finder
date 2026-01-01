@@ -81,7 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
         switch (item.email_type) {
           case "welcome": {
             const destinations = item.email_data.destinations || [];
-            emailSubject = "Welcome to Cheap Atlanta Flights! ✈️";
+            emailSubject = "Welcome to Cheap Memphis Flights! ✈️";
             emailHtml = generateWelcomeEmail({
               name: userName,
               destinations,
@@ -95,7 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
             const data = item.email_data;
             console.log(`Processing price alert for ${data.destination?.city_name || 'unknown destination'}`);
             
-            emailSubject = `✈️ ${data.deal_quality || 'Price Alert'}: Atlanta to ${data.destination.city_name} - Now $${Math.round(data.price)}!`;
+            emailSubject = `✈️ ${data.deal_quality || 'Price Alert'}: Memphis to ${data.destination.city_name} - Now $${Math.round(data.price)}!`;
             
             const trackingBookingLink = `${supabaseUrl}/functions/v1/track-email-click?queue_id=${item.id}&url=${encodeURIComponent(data.booking_link)}`;
             
@@ -130,7 +130,7 @@ const handler = async (req: Request): Promise<Response> => {
         console.log(`Sending ${item.email_type} email to ${userEmail} with subject: ${emailSubject}`);
         
         // Get custom email domain from environment (or use default Resend domain)
-        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <onboarding@resend.dev>";
+        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Memphis Flights <onboarding@resend.dev>";
         
         const { data: sendData, error: sendError } = await resend.emails.send({
           from: emailFrom,
@@ -209,19 +209,19 @@ function generateWelcomeEmail(props: any): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Cheap Atlanta Flights</title>
+  <title>Welcome to Cheap Memphis Flights</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f6f9fc; margin: 0; padding: 20px;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden;">
     <div style="background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%); padding: 32px; text-align: center;">
-      <h1 style="color: #ffffff; margin: 0;">✈️ Cheap Atlanta Flights</h1>
+      <h1 style="color: #ffffff; margin: 0;">✈️ Cheap Memphis Flights</h1>
     </div>
     
     <div style="padding: 32px;">
       <h2 style="color: #1E40AF; margin: 0 0 16px;">Welcome, ${props.name}! 🎉</h2>
       
       <p style="color: #333; font-size: 16px; line-height: 24px;">
-        Thanks for joining! You're now tracking <strong>${props.destinations.length} destination${props.destinations.length !== 1 ? 's' : ''}</strong> from Atlanta.
+        Thanks for joining! You're now tracking <strong>${props.destinations.length} destination${props.destinations.length !== 1 ? 's' : ''}</strong> from Memphis.
       </p>
 
       ${props.destinations.length > 0 ? `
@@ -257,7 +257,7 @@ function generateWelcomeEmail(props: any): string {
         <a href="${props.unsubscribeUrl}" style="color: #1E40AF;">Unsubscribe</a>
       </p>
       <p style="color: #8898aa; font-size: 12px; margin: 4px 0;">
-        © 2025 Cheap Atlanta Flights. All rights reserved.
+        © 2025 Cheap Memphis Flights. All rights reserved.
       </p>
     </div>
   </div>
@@ -295,7 +295,7 @@ function generatePriceAlertEmailV2(props: any): string {
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden;">
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%); padding: 24px; text-align: center;">
-      <h1 style="color: #ffffff; margin: 0 0 8px; font-size: 24px; font-weight: bold;">✈️ Cheap Atlanta Flights</h1>
+      <h1 style="color: #ffffff; margin: 0 0 8px; font-size: 24px; font-weight: bold;">✈️ Cheap Memphis Flights</h1>
       <div style="background-color: #FF6B35; color: #ffffff; display: inline-block; font-size: 14px; font-weight: bold; padding: 6px 16px; border-radius: 20px; margin: 0;">
         ${props.deal_quality || 'GOOD DEAL'}
       </div>
@@ -311,7 +311,7 @@ function generatePriceAlertEmailV2(props: any): string {
     <!-- Content -->
     <div style="padding: 32px 48px;">
       <h2 style="color: #1E40AF; margin: 0 0 16px; font-size: 32px; font-weight: bold; text-align: center;">
-        Atlanta → ${props.destination.city_name}
+        Memphis → ${props.destination.city_name}
       </h2>
       <p style="color: #737373; font-size: 18px; margin: 0 0 24px; text-align: center;">
         ${props.destination.country}
@@ -367,7 +367,7 @@ function generatePriceAlertEmailV2(props: any): string {
           <strong>🏠 Return:</strong> ${formatDate(props.return_date)}
         </p>
         <p style="font-size: 16px; margin: 8px 0; color: #333333;">
-          <strong>📍 From:</strong> Atlanta (ATL)
+          <strong>📍 From:</strong> Memphis (MEM)
         </p>
       </div>
 
@@ -385,7 +385,7 @@ function generatePriceAlertEmailV2(props: any): string {
     <!-- Footer -->
     <div style="background-color: #f6f9fc; padding: 32px 48px; text-align: center;">
       <p style="color: #737373; font-size: 14px; margin: 8px 0;">
-        You're receiving this because you subscribed to Cheap Atlanta Flights price alerts.
+        You're receiving this because you subscribed to Cheap Memphis Flights price alerts.
       </p>
       <p style="font-size: 14px; margin: 16px 0 0;">
         <a href="${props.dashboardUrl}" style="color: #0066CC; text-decoration: underline;">Manage Destinations</a> |
