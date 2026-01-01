@@ -83,7 +83,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Get site URL from environment or use default
-    const siteUrl = Deno.env.get("SITE_URL") || "https://cheapatlantaflights.com";
+    const siteUrl = Deno.env.get("SITE_URL") || "https://cheapmemphisflights.com";
     const verificationUrl = `${siteUrl}/verify?token=${verificationToken}`;
     const unsubscribeUrl = `${siteUrl}/unsubscribe`;
 
@@ -97,11 +97,11 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     // Send verification email
-    const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <noreply@cheapatlantaflights.online>";
+    const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Memphis Flights <noreply@cheapmemphisflights.online>";
     const emailResponse = await resend.emails.send({
       from: emailFrom,
       to: [email],
-      subject: "Confirm your subscription to Cheap Atlanta Flights",
+      subject: "Confirm your subscription to Cheap Memphis Flights",
       html: emailHtml,
     });
 

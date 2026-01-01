@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
       .limit(1)
       .single();
 
-    const siteUrl = Deno.env.get("SITE_URL") || "https://cheapatlantaflights.com";
+    const siteUrl = Deno.env.get("SITE_URL") || "https://cheapmemphisflights.com";
     const unsubscribeUrl = `${siteUrl}/unsubscribe`;
 
     let dealData = undefined;
@@ -84,11 +84,11 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     // Send welcome email
-    const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <noreply@cheapatlantaflights.online>";
+    const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Memphis Flights <noreply@cheapmemphisflights.online>";
     const emailResponse = await resend.emails.send({
       from: emailFrom,
       to: [email],
-      subject: "Welcome to Cheap Atlanta Flights! ✈️",
+      subject: "Welcome to Cheap Memphis Flights! ✈️",
       html: emailHtml,
     });
 

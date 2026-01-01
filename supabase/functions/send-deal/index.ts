@@ -92,8 +92,8 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error("No active subscribers found");
     }
 
-    const siteUrl = Deno.env.get("SITE_URL") || "https://cheapatlantaflights.com";
-    const subject = `🎯 Deal Alert: Atlanta to ${deal.destinations.city_name} from $${deal.price}`;
+    const siteUrl = Deno.env.get("SITE_URL") || "https://cheapmemphisflights.com";
+    const subject = `🎯 Deal Alert: Memphis to ${deal.destinations.city_name} from $${deal.price}`;
     
     let sentCount = 0;
 
@@ -120,7 +120,7 @@ const handler = async (req: Request): Promise<Response> => {
           })
         );
 
-        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Atlanta Flights <alerts@cheapatlantaflights.online>";
+        const emailFrom = Deno.env.get("EMAIL_FROM") || "Cheap Memphis Flights <alerts@cheapmemphisflights.online>";
         await resend.emails.send({
           from: emailFrom,
           to: [subscriber.email],
