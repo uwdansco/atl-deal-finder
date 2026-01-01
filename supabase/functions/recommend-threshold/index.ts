@@ -80,12 +80,14 @@ serve(async (req) => {
     }
 
     // Use AI to analyze the price data and recommend threshold
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    if (!LOVABLE_API_KEY) {
+      throw new Error('LOVABLE_API_KEY not configured');
     }
 
     const systemPrompt = `You are an expert flight pricing analyst. Analyze historical price data and recommend an optimal price alert threshold.
+
+All flights are from Memphis International Airport (MEM) to the specified destination.
 
 Your goal: Find the sweet spot where users get notified of genuinely good deals without too many alerts.
 
@@ -102,7 +104,7 @@ Return your analysis as a JSON object with these exact fields:
   "reasoning": "<1-2 sentence explanation of why this threshold is optimal>"
 }`;
 
-    const userPrompt = `Analyze this flight pricing data for ${destination?.city_name}, ${destination?.country} (${destination?.airport_code}):
+    const userPrompt = `Analyze this flight pricing data for flights from Memphis International Airport (MEM) to ${destination?.city_name}, ${destination?.country} (${destination?.airport_code}):
 
 **Price Statistics:**
 - 7-day average: $${stats.avg_7day?.toFixed(2) || 'N/A'}
@@ -124,19 +126,18 @@ Recommend an optimal price threshold that will:
 
 Consider that prices below the 30th percentile are generally good deals, and prices near the all-time low are exceptional.`;
 
-    const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'google/gemini-2.5-flash',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.3, // Lower temperature for more consistent recommendations
       }),
     });
 
