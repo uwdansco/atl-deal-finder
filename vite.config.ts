@@ -17,9 +17,9 @@ export default defineConfig(({ mode }) => ({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt', 'hero-plane.jpg'],
       manifest: {
-        name: 'Cheap Atlanta Flights',
-        short_name: 'ATL Flights',
-        description: 'Track flight prices from Atlanta and get deal alerts',
+        name: 'Cheap Memphis Flights',
+        short_name: 'MEM Flights',
+        description: 'Track flight prices from Memphis and get deal alerts',
         theme_color: '#2BA5F7',
         background_color: '#FAFBFE',
         display: 'standalone',
