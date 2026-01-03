@@ -548,8 +548,9 @@ serve(async (req) => {
             }
           }
 
-          // All checks passed - create price alert with Google Flights URL
-          const bookingLink = `https://www.google.com/travel/flights?q=flights+from+${origin}+to+${destination.airport_code}+on+${departureDate}+returning+${returnDate}`;
+          // All checks passed - create price alert with improved Google Flights URL
+          // Using structured URL format for better compatibility
+          const bookingLink = `https://www.google.com/travel/flights?hl=en&curr=USD&tfs=CBwQAhooEgoyMDI2LTAyLTAxagcIARIDJHtvcmlnaW59cgcIARIDJHtkZXN0aW5hdGlvbi5haXJwb3J0X2NvZGV9&departure_id=${origin}&arrival_id=${destination.airport_code}&outbound_date=${departureDate}&return_date=${returnDate}&travel_class=1&adults=1&stop=0`;
           
           const { data: alertData, error: alertError } = await supabase
             .from("price_alerts")
