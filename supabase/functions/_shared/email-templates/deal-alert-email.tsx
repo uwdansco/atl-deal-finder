@@ -147,6 +147,9 @@ export const DealAlertEmail = ({
               <Text style={ctaSubtext}>
                 Click to search flights with your dates pre-filled
               </Text>
+              <Text style={disclaimerText}>
+                * Prices are checked every 2 hours and may vary slightly based on availability when you click through.
+              </Text>
             </Section>
           </Section>
 
@@ -352,5 +355,13 @@ const ctaSubtext = {
   color: '#737373',
   fontSize: '14px',
   margin: '12px 0 0',
+  textAlign: 'center' as const,
+};
+
+const disclaimerText = {
+  color: '#9ca3af',
+  fontSize: '12px',
+  fontStyle: 'italic' as const,
+  margin: '16px 0 0',
   textAlign: 'center' as const,
 };
