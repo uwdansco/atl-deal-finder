@@ -799,6 +799,7 @@ export type Database = {
         Returns: string
       }
       refresh_price_statistics: { Args: never; Returns: undefined }
+      verify_subscriber_token: { Args: { p_token: string }; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "user"
