@@ -364,32 +364,32 @@ serve(async (req) => {
         const departureDate = getNextDepartureDate();
         const returnDate = getReturnDate(departureDate);
         
-        // TRY AMADEUS FIRST
-        let price = await searchFlights(accessToken, origin, destination.airport_code, departureDate);
-        let priceSource = "amadeus";
+        // TRY GOOGLE FLIGHTS (SERPAPI) FIRST - prices match what users see on booking link
+        let price = await searchFlightsWithSerpApi(
+          origin,
+          destination.airport_code,
+          departureDate,
+          returnDate
+        );
+        let priceSource = "google_flights";
 
         if (price !== null) {
-          amadeusSuccess++;
+          serpApiSuccess++;
         } else {
-          amadeusFailures++;
+          serpApiFailures++;
         }
 
-        // FALLBACK TO GOOGLE FLIGHTS (SERPAPI) IF AMADEUS FAILS
+        // FALLBACK TO AMADEUS IF GOOGLE FLIGHTS FAILS
         if (price === null) {
-          console.log(`⚠️ Amadeus failed for ${destination.city_name}, trying Google Flights...`);
+          console.log(`⚠️ Google Flights failed for ${destination.city_name}, trying Amadeus...`);
           
-          price = await searchFlightsWithSerpApi(
-            origin,
-            destination.airport_code,
-            departureDate,
-            returnDate
-          );
-          priceSource = "google_flights";
+          price = await searchFlights(accessToken, origin, destination.airport_code, departureDate);
+          priceSource = "amadeus";
           
           if (price !== null) {
-            serpApiSuccess++;
+            amadeusSuccess++;
           } else {
-            serpApiFailures++;
+            amadeusFailures++;
           }
         }
 
