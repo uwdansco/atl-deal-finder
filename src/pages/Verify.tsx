@@ -4,6 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface VerifyTokenResponse {
+  success: boolean;
+  error?: string;
+  already_verified?: boolean;
+  email?: string;
+  name?: string;
+}
+
 const Verify = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -21,45 +29,36 @@ const Verify = () => {
       }
 
       try {
-        // Find subscriber with this token
-        const { data: subscriber, error: fetchError } = await supabase
-          .from("subscribers")
-          .select("id, email, name, is_verified")
-          .eq("verification_token", token)
-          .single();
+        // Use the secure RPC function to verify token
+        const { data, error } = await supabase.rpc("verify_subscriber_token", {
+          p_token: token,
+        }) as { data: VerifyTokenResponse | null; error: Error | null };
 
-        if (fetchError || !subscriber) {
+        if (error) {
+          console.error("Verification RPC error:", error);
           setStatus("error");
-          setMessage("Invalid or expired verification link. Please try subscribing again.");
+          setMessage("An error occurred during verification. Please try again or contact support.");
           return;
         }
 
-        if (subscriber.is_verified) {
+        if (!data.success) {
+          setStatus("error");
+          setMessage(data.error || "Invalid or expired verification link. Please try subscribing again.");
+          return;
+        }
+
+        if (data.already_verified) {
           setStatus("success");
           setMessage("Your email is already verified! You're all set to receive flight deals.");
           return;
-        }
-
-        // Update subscriber as verified and active
-        const { error: updateError } = await supabase
-          .from("subscribers")
-          .update({
-            is_verified: true,
-            is_active: true,
-            verification_token: null,
-          })
-          .eq("id", subscriber.id);
-
-        if (updateError) {
-          throw updateError;
         }
 
         // Send welcome email
         try {
           await supabase.functions.invoke("send-welcome", {
             body: {
-              email: subscriber.email,
-              name: subscriber.name,
+              email: data.email,
+              name: data.name,
             },
           });
         } catch (emailError) {
