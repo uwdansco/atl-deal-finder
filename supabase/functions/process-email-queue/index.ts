@@ -94,30 +94,64 @@ const handler = async (req: Request): Promise<Response> => {
           case "price_alert": {
             const data = item.email_data;
             console.log(`Processing price alert for ${data.destination?.city_name || 'unknown destination'}`);
+            console.log(`  Price: $${data.price}, Source: ${data.price_source || 'unknown'}`);
+            console.log(`  Booking link: ${data.booking_link?.substring(0, 60)}...`);
             
             emailSubject = `✈️ ${data.deal_quality || 'Price Alert'}: Memphis to ${data.destination.city_name} - Now $${Math.round(data.price)}!`;
             
+            // Create tracking link for the booking URL
             const trackingBookingLink = `${supabaseUrl}/functions/v1/track-email-click?queue_id=${item.id}&url=${encodeURIComponent(data.booking_link)}`;
             
-            // Use improved HTML template with React Email styling
-            emailHtml = generatePriceAlertEmailV2({
-              name: userName,
-              destination: data.destination,
-              price: data.price,
-              threshold: data.threshold,
-              outbound_date: data.outbound_date,
-              return_date: data.return_date,
-              booking_link: trackingBookingLink,
-              dashboardUrl: `${baseUrl}/dashboard`,
-              unsubscribeUrl: `${baseUrl}/unsubscribe?email=${encodeURIComponent(userEmail)}`,
-              trackingPixelUrl,
-              deal_quality: data.deal_quality,
-              savings_percent: data.savings_percent,
-              recommendation: data.recommendation,
-              urgency: data.urgency,
-              avg_90day: data.avg_90day,
-              all_time_low: data.all_time_low,
-            });
+            // Use the React Email DealAlertEmail template for consistent rendering
+            try {
+              emailHtml = await renderAsync(
+                React.createElement(DealAlertEmail, {
+                  destination_city: data.destination.city_name,
+                  destination_country: data.destination.country,
+                  current_price: data.price,
+                  user_threshold: data.threshold,
+                  outbound_date: data.outbound_date,
+                  return_date: data.return_date,
+                  booking_link: trackingBookingLink,
+                  unsubscribeUrl: `${baseUrl}/unsubscribe?email=${encodeURIComponent(userEmail)}`,
+                  deal_quality: data.deal_quality,
+                  savings_percent: data.savings_percent,
+                  recommendation: data.recommendation,
+                  urgency: data.urgency,
+                  avg_90day: data.avg_90day,
+                  all_time_low: data.all_time_low,
+                  current_percentile: data.current_percentile,
+                  price_source: data.price_source || "google_flights"
+                })
+              );
+              
+              // Append tracking pixel after the template
+              emailHtml = emailHtml.replace('</body>', `<img src="${trackingPixelUrl}" width="1" height="1" alt="" style="display:block" /></body>`);
+              
+              console.log(`✅ Rendered DealAlertEmail template for ${data.destination.city_name}`);
+            } catch (renderError) {
+              console.error("Failed to render DealAlertEmail template:", renderError);
+              // Fallback to inline HTML if template fails
+              emailHtml = generatePriceAlertEmailFallback({
+                name: userName,
+                destination: data.destination,
+                price: data.price,
+                threshold: data.threshold,
+                outbound_date: data.outbound_date,
+                return_date: data.return_date,
+                booking_link: trackingBookingLink,
+                dashboardUrl: `${baseUrl}/dashboard`,
+                unsubscribeUrl: `${baseUrl}/unsubscribe?email=${encodeURIComponent(userEmail)}`,
+                trackingPixelUrl,
+                deal_quality: data.deal_quality,
+                savings_percent: data.savings_percent,
+                recommendation: data.recommendation,
+                urgency: data.urgency,
+                avg_90day: data.avg_90day,
+                all_time_low: data.all_time_low,
+                price_source: data.price_source || "google_flights"
+              });
+            }
             break;
           }
 
@@ -266,8 +300,8 @@ function generateWelcomeEmail(props: any): string {
   `;
 }
 
-// Enhanced price alert email with better styling
-function generatePriceAlertEmailV2(props: any): string {
+// Fallback price alert email if React template fails
+function generatePriceAlertEmailFallback(props: any): string {
   const formatDate = (dateStr: string) => {
     try {
       const date = new Date(dateStr);
@@ -344,6 +378,9 @@ function generatePriceAlertEmailV2(props: any): string {
           <strong>Your Savings:</strong> <span style="color: #059669; font-size: 18px;">$${savings} (${props.savings_percent}%)</span>
         </p>
         ` : ''}
+        <p style="font-size: 12px; color: #64748b; margin: 8px 0;">
+          <strong>Source:</strong> Google Flights
+        </p>
       </div>
 
       <!-- Urgency Indicator -->
@@ -378,6 +415,9 @@ function generatePriceAlertEmailV2(props: any): string {
         </a>
         <p style="color: #737373; font-size: 14px; margin: 12px 0 0; text-align: center;">
           Click to search flights with your dates pre-filled
+        </p>
+        <p style="color: #9ca3af; font-size: 12px; font-style: italic; margin: 16px 0 0; text-align: center;">
+          * Prices are checked every 2 hours and may vary slightly based on availability when you click through.
         </p>
       </div>
     </div>
