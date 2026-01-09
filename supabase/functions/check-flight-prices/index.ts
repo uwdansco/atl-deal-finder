@@ -32,6 +32,17 @@ interface AmadeusFlightResponse {
   data: FlightOffer[];
 }
 
+// Return type for SerpApi search - includes both price and the exact Google Flights URL
+interface SerpApiSearchResult {
+  price: number;
+  googleFlightsUrl: string;
+  topFlight?: {
+    airline: string;
+    stops: number;
+    duration: string;
+  };
+}
+
 async function getAmadeusAccessToken(): Promise<string> {
   const clientId = Deno.env.get("AMADEUS_CLIENT_ID");
   const clientSecret = Deno.env.get("AMADEUS_CLIENT_SECRET");
@@ -129,13 +140,13 @@ function getReturnDate(departureDate: string): string {
   return date.toISOString().split('T')[0];
 }
 
-// Google Flights fallback using SerpApi
+// Google Flights search using SerpApi - returns price AND exact Google Flights URL
 async function searchFlightsWithSerpApi(
   origin: string,
   destination: string,
   departureDate: string,
   returnDate: string
-): Promise<number | null> {
+): Promise<SerpApiSearchResult | null> {
   const serpApiKey = Deno.env.get("SERPAPI_API_KEY");
   
   if (!serpApiKey) {
@@ -155,14 +166,36 @@ async function searchFlightsWithSerpApi(
       api_key: serpApiKey
     });
 
+    console.log(`🔍 SerpApi request for ${origin} → ${destination} (${departureDate} - ${returnDate})`);
+    
     const response = await fetch(`https://serpapi.com/search?${params.toString()}`);
 
     if (!response.ok) {
-      console.error(`❌ SerpApi error: ${response.status} for ${destination}`);
+      const errorText = await response.text();
+      console.error(`❌ SerpApi HTTP error: ${response.status} for ${destination}`);
+      console.error(`   Response: ${errorText.substring(0, 200)}`);
       return null;
     }
 
     const data = await response.json();
+    
+    // Log SerpApi response metadata for debugging
+    if (data.search_metadata) {
+      console.log(`📊 SerpApi metadata: status=${data.search_metadata.status}, id=${data.search_metadata.id}`);
+    }
+    
+    // Check for SerpApi-level errors
+    if (data.error) {
+      console.error(`❌ SerpApi error response: ${data.error}`);
+      return null;
+    }
+    
+    // Extract the exact Google Flights URL from SerpApi response
+    const googleFlightsUrl = data.search_metadata?.google_flights_url;
+    
+    if (!googleFlightsUrl) {
+      console.warn(`⚠️ No google_flights_url in SerpApi response for ${destination}`);
+    }
     
     // Extract cheapest price from best_flights or other_flights
     const allFlights = [
@@ -177,16 +210,43 @@ async function searchFlightsWithSerpApi(
 
     const prices = allFlights.map((flight: any) => flight.price).filter((p: number) => p > 0);
     if (prices.length === 0) {
+      console.log(`No valid prices in Google Flights response for ${destination}`);
       return null;
     }
 
     const cheapestPrice = Math.min(...prices);
+    
+    // Get top flight info for potential future use
+    const topFlight = allFlights[0];
+    const topFlightInfo = topFlight ? {
+      airline: topFlight.flights?.[0]?.airline || 'Unknown',
+      stops: (topFlight.flights?.length || 1) - 1,
+      duration: topFlight.total_duration ? `${Math.floor(topFlight.total_duration / 60)}h ${topFlight.total_duration % 60}m` : 'Unknown'
+    } : undefined;
+    
     console.log(`✅ Google Flights price for ${destination}: $${cheapestPrice}`);
-    return cheapestPrice;
+    console.log(`   URL: ${googleFlightsUrl?.substring(0, 80)}...`);
+    
+    return {
+      price: cheapestPrice,
+      googleFlightsUrl: googleFlightsUrl || buildFallbackGoogleFlightsUrl(origin, destination, departureDate, returnDate),
+      topFlight: topFlightInfo
+    };
   } catch (error) {
     console.error(`❌ SerpApi exception for ${destination}:`, error);
     return null;
   }
+}
+
+// Fallback URL builder - uses clean Google Flights URL format without broken tfs parameter
+function buildFallbackGoogleFlightsUrl(
+  origin: string,
+  destination: string,
+  departureDate: string,
+  returnDate: string
+): string {
+  // Use the clean Google Flights explore URL format
+  return `https://www.google.com/travel/flights?q=Flights%20to%20${destination}%20from%20${origin}%20on%20${departureDate}%20through%20${returnDate}&curr=USD`;
 }
 
 async function classifyDeal(currentPrice: number, stats: any): Promise<{
@@ -356,6 +416,7 @@ serve(async (req) => {
     let amadeusFailures = 0;
     let serpApiSuccess = 0;
     let serpApiFailures = 0;
+    let alertsSkippedDueToAmadeusFallback = 0;
 
     for (const destination of destinations || []) {
       try {
@@ -365,29 +426,35 @@ serve(async (req) => {
         const returnDate = getReturnDate(departureDate);
         
         // TRY GOOGLE FLIGHTS (SERPAPI) FIRST - prices match what users see on booking link
-        let price = await searchFlightsWithSerpApi(
+        const serpResult = await searchFlightsWithSerpApi(
           origin,
           destination.airport_code,
           departureDate,
           returnDate
         );
+        
+        let price: number | null = null;
         let priceSource = "google_flights";
+        let bookingLink: string | null = null;
 
-        if (price !== null) {
+        if (serpResult !== null) {
           serpApiSuccess++;
+          price = serpResult.price;
+          bookingLink = serpResult.googleFlightsUrl;
+          console.log(`✅ Got price from Google Flights for ${destination.city_name}: $${price}`);
         } else {
           serpApiFailures++;
-        }
-
-        // FALLBACK TO AMADEUS IF GOOGLE FLIGHTS FAILS
-        if (price === null) {
-          console.log(`⚠️ Google Flights failed for ${destination.city_name}, trying Amadeus...`);
+          console.log(`⚠️ Google Flights failed for ${destination.city_name}, trying Amadeus for price history only...`);
           
-          price = await searchFlights(accessToken, origin, destination.airport_code, departureDate);
-          priceSource = "amadeus";
+          // FALLBACK TO AMADEUS - but ONLY for price history, NOT for alerts
+          const amadeusPrice = await searchFlights(accessToken, origin, destination.airport_code, departureDate);
           
-          if (price !== null) {
+          if (amadeusPrice !== null) {
             amadeusSuccess++;
+            price = amadeusPrice;
+            priceSource = "amadeus";
+            // DO NOT set bookingLink - we won't create alerts for Amadeus prices
+            console.log(`📊 Got Amadeus price for ${destination.city_name}: $${price} (for history only, no alerts)`);
           } else {
             amadeusFailures++;
           }
@@ -403,9 +470,7 @@ serve(async (req) => {
           continue;
         }
 
-        console.log(`✅ Got price from ${priceSource} for ${destination.city_name}: $${price}`);
-
-        // Save to price history with source tracking
+        // Save to price history with source tracking (always save, regardless of source)
         await supabase
           .from("price_history")
           .insert({
@@ -414,7 +479,8 @@ serve(async (req) => {
             outbound_date: departureDate,
             return_date: returnDate,
             checked_at: new Date().toISOString(),
-            price_source: priceSource
+            price_source: priceSource,
+            booking_link: bookingLink // Will be null for Amadeus
           });
 
         // Refresh price statistics
@@ -429,6 +495,23 @@ serve(async (req) => {
 
         // Classify the deal
         const dealClassification = await classifyDeal(price, stats);
+
+        // ⚠️ CRITICAL: Only create alerts when we have a Google Flights price
+        // This ensures the email price matches what users see when they click through
+        if (priceSource !== "google_flights" || !bookingLink) {
+          console.log(`⏭️ Skipping alerts for ${destination.city_name}: price source is ${priceSource}, not Google Flights`);
+          alertsSkippedDueToAmadeusFallback++;
+          results.push({
+            destination: destination.city_name,
+            price,
+            priceSource,
+            quality: dealClassification.quality,
+            savings: dealClassification.savingsPercent,
+            alertsSkipped: true,
+            reason: "Price from Amadeus fallback - would mismatch Google Flights"
+          });
+          continue;
+        }
 
         // Fetch admin settings
         const { data: adminSettings } = await supabase
@@ -548,10 +631,7 @@ serve(async (req) => {
             }
           }
 
-          // All checks passed - create price alert with improved Google Flights URL
-          // Using structured URL format for better compatibility
-          const bookingLink = `https://www.google.com/travel/flights?hl=en&curr=USD&tfs=CBwQAhooEgoyMDI2LTAyLTAxagcIARIDJHtvcmlnaW59cgcIARIDJHtkZXN0aW5hdGlvbi5haXJwb3J0X2NvZGV9&departure_id=${origin}&arrival_id=${destination.airport_code}&outbound_date=${departureDate}&return_date=${returnDate}&travel_class=1&adults=1&stop=0`;
-          
+          // All checks passed - create price alert with the EXACT Google Flights URL from SerpApi
           const { data: alertData, error: alertError } = await supabase
             .from("price_alerts")
             .insert({
@@ -559,7 +639,7 @@ serve(async (req) => {
               destination_id: destination.id,
               price: price,
               dates: `${departureDate} - ${returnDate}`,
-              booking_link: bookingLink,
+              booking_link: bookingLink, // Use the exact URL from SerpApi
               deal_quality: dealClassification.quality,
               tracking_threshold: userDest.price_threshold,
               all_time_low: stats.all_time_low,
@@ -596,14 +676,15 @@ serve(async (req) => {
               threshold: userDest.price_threshold,
               outbound_date: departureDate,
               return_date: returnDate,
-              booking_link: bookingLink,
+              booking_link: bookingLink, // Use the exact URL from SerpApi
               deal_quality: dealClassification.badge,
               savings_percent: dealClassification.savingsPercent,
               recommendation: dealClassification.recommendation,
               urgency: dealClassification.urgency,
               avg_90day: stats.avg_90day,
               all_time_low: stats.all_time_low,
-              current_percentile: dealClassification.currentPercentile
+              current_percentile: dealClassification.currentPercentile,
+              price_source: "google_flights" // Track source in email data
             }
           });
 
@@ -626,6 +707,7 @@ serve(async (req) => {
         results.push({
           destination: destination.city_name,
           price,
+          priceSource,
           quality: dealClassification.quality,
           savings: dealClassification.savingsPercent,
         });
@@ -643,13 +725,14 @@ serve(async (req) => {
     }
 
     const totalAttempts = amadeusSuccess + serpApiSuccess;
-    const fallbackRate = totalAttempts > 0 ? (serpApiSuccess / totalAttempts * 100).toFixed(1) : "0.0";
+    const googleFlightsRate = totalAttempts > 0 ? (serpApiSuccess / totalAttempts * 100).toFixed(1) : "0.0";
     
     console.log(`
 📊 API Usage Summary:
-  Amadeus: ${amadeusSuccess} successes, ${amadeusFailures} failures
   Google Flights (SerpApi): ${serpApiSuccess} successes, ${serpApiFailures} failures
-  Fallback Rate: ${fallbackRate}%
+  Amadeus (fallback, history only): ${amadeusSuccess} successes, ${amadeusFailures} failures
+  Alerts skipped (Amadeus fallback): ${alertsSkippedDueToAmadeusFallback}
+  Google Flights Success Rate: ${googleFlightsRate}%
   Total Price Checks: ${totalAttempts}
     `);
 
@@ -661,11 +744,12 @@ serve(async (req) => {
         checkMode,
         destinationsChecked: results.length,
         alertsTriggered,
+        alertsSkippedDueToAmadeusFallback,
         results,
         apiUsage: {
+          googleFlights: { successes: serpApiSuccess, failures: serpApiFailures },
           amadeus: { successes: amadeusSuccess, failures: amadeusFailures },
-          serpApi: { successes: serpApiSuccess, failures: serpApiFailures },
-          fallbackRate: fallbackRate
+          googleFlightsRate: googleFlightsRate
         }
       }),
       {

@@ -29,6 +29,7 @@ interface DealAlertEmailProps {
   avg_90day?: number;
   all_time_low?: number;
   current_percentile?: number;
+  price_source?: string;
 }
 
 export const DealAlertEmail = ({
@@ -46,7 +47,8 @@ export const DealAlertEmail = ({
   urgency = 'moderate',
   avg_90day,
   all_time_low,
-  current_percentile = 50
+  current_percentile = 50,
+  price_source = 'google_flights'
 }: DealAlertEmailProps) => {
   const formatDate = (dateStr: string) => {
     try {
@@ -115,6 +117,9 @@ export const DealAlertEmail = ({
               )}
               <Text style={priceRow}>
                 <strong>Deal Quality:</strong> {deal_quality}
+              </Text>
+              <Text style={priceRow}>
+                <strong>Source:</strong> {price_source === 'google_flights' ? 'Google Flights' : 'Airline API'}
               </Text>
             </Section>
 
